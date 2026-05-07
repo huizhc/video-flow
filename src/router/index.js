@@ -1,8 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/LoginView.vue'),
+      meta: { menuKey: null },
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('@/views/RegisterView.vue'),
+      meta: { menuKey: null },
+    },
+    {
+      path: '/forgot-password',
+      name: 'forgot-password',
+      component: () => import('@/views/ForgotPasswordView.vue'),
+      meta: { menuKey: null },
+    },
     {
       path: '/',
       component: () => import('@/layouts/MainLayout.vue'),
@@ -11,13 +30,13 @@ const router = createRouter({
           path: '',
           name: 'my-tasks',
           component: () => import('@/views/MyTasksView.vue'),
-          meta: { menuKey: 'my-tasks' },
+          meta: { menuKey: 'my-tasks', requiresAuth: true },
         },
         {
           path: 'task-square',
           name: 'task-square',
           component: () => import('@/views/TaskSquareView.vue'),
-          meta: { menuKey: 'task-square' },
+          meta: { menuKey: 'task-square', requiresAuth: true },
         },
         {
           path: 'tools/all',
@@ -53,23 +72,43 @@ const router = createRouter({
           path: 'cloud',
           name: 'cloud-disk',
           component: () => import('@/views/CloudDiskView.vue'),
-          meta: { menuKey: 'cloud' },
+          meta: { menuKey: 'cloud', requiresAuth: true },
         },
         {
           path: 'background-tasks',
           name: 'background-tasks',
           component: () => import('@/views/BackgroundTasksView.vue'),
-          meta: { menuKey: 'background' },
+          meta: { menuKey: 'background', requiresAuth: true },
         },
         {
           path: 'profile',
           name: 'personal-center',
           component: () => import('@/views/PersonalCenterView.vue'),
-          meta: { menuKey: 'profile' },
+          meta: { menuKey: 'profile', requiresAuth: true },
         },
       ],
     },
   ],
+})
+
+router.beforeEach((to) => {
+  const auth = useAuthStore()
+
+  if (!auth.isLoggedIn && to.name === 'my-tasks') return { name: 'tools-all' }
+
+  if (!auth.isLoggedIn && to.meta?.requiresAuth) {
+    return {
+      name: 'login',
+      query: { redirect: to.fullPath },
+    }
+  }
+
+  if (auth.isLoggedIn && (to.name === 'login' || to.name === 'register' || to.name === 'forgot-password')) {
+    const redirect = typeof to.query.redirect === 'string' ? to.query.redirect : '/'
+    return redirect
+  }
+
+  return true
 })
 
 export default router

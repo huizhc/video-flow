@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import {
   NAvatar,
   NButton,
@@ -15,8 +16,11 @@ import {
   NIcon,
 } from 'naive-ui'
 import { Currency, TrashCan } from '@vicons/carbon'
+import { useAuthStore } from '@/stores/auth'
 
 const activeTab = ref('flow')
+const router = useRouter()
+const auth = useAuthStore()
 
 const bizType = ref(null)
 const dateRange = ref(null)
@@ -59,6 +63,11 @@ const pwdForm = ref({
 
 function handleSearchFlow() {}
 function clearCache() {}
+
+function handleLogout() {
+  auth.logout()
+  router.replace({ name: 'login' })
+}
 </script>
 
 <template>
@@ -249,9 +258,12 @@ function clearCache() {}
                 placeholder="请再次输入新密码"
               />
             </n-form-item>
-            <n-button type="primary">
-              保存
-            </n-button>
+            <div class="flex items-center gap-3">
+              <n-button type="primary">保存</n-button>
+              <n-button secondary class="!bg-[#2d2d2d] !text-gray-300" @click="handleLogout">
+                退出登录
+              </n-button>
+            </div>
           </n-form>
         </div>
       </n-tab-pane>

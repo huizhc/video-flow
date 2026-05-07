@@ -1,5 +1,5 @@
 <script setup>
-import { h, ref, watch } from 'vue'
+import { computed, h, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   NButton,
@@ -32,12 +32,16 @@ import {
   User,
   Video,
 } from '@vicons/carbon'
+import { useAuthStore } from '@/stores/auth'
 
 const route = useRoute()
 const router = useRouter()
+const auth = useAuthStore()
+
+const isLoggedIn = computed(() => auth.isLoggedIn)
 
 const collapsed = ref(false)
-const activeKey = ref('my-tasks')
+const activeKey = ref(null)
 
 const langOptions = [
   { label: '简体中文', key: 'zh-CN' },
@@ -48,6 +52,7 @@ watch(
   () => route.meta.menuKey,
   (k) => {
     if (typeof k === 'string') activeKey.value = k
+    else activeKey.value = null
   },
   { immediate: true },
 )
@@ -56,7 +61,7 @@ function menuIcon(IconComp) {
   return () => h(NIcon, { size: 18, component: IconComp })
 }
 
-const menuOptions = [
+const menuOptions = computed(() => [
   {
     type: 'group',
     label: '项目',
@@ -88,7 +93,7 @@ const menuOptions = [
       { label: '个人中心', key: 'profile', icon: menuIcon(User) },
     ],
   },
-]
+].filter((g) => g.key !== 'group-project' || isLoggedIn.value))
 
 const menuRouteByKey = {
   'my-tasks': 'my-tasks',
@@ -107,6 +112,10 @@ function onMenuUpdate(key) {
   const name = menuRouteByKey[key]
   if (name) router.push({ name })
 }
+
+function onLoginClick() {
+  router.push({ name: 'login', query: { redirect: route.fullPath } })
+}
 </script>
 
 <template>
@@ -119,15 +128,41 @@ function onMenuUpdate(key) {
         <span
           class="w-9 h-9 rounded-full bg-gradient-to-br from-[#14b8a6] via-[#0ea5e9] to-[#8b5cf6] shrink-0 shadow-lg shadow-teal-900/30"
         />
-        <span class="text-white font-semibold text-sm tracking-tight">Cosar</span>
+        <span class="text-white font-semibold text-sm tracking-tight">AIKC</span>
         <span
           class="px-1.5 py-0.5 rounded text-[10px] font-semibold text-white bg-gradient-to-r from-[#0d9488] to-[#0ea5e9]"
         >
           AI
         </span>
-        <span class="text-white/90 text-sm">科赛</span>
       </div>
-      <div class="flex items-center gap-5 text-sm text-gray-400">
+      <div v-if="!isLoggedIn" class="flex items-center gap-5 text-sm text-gray-400">
+        <button
+          type="button"
+          class="flex items-center gap-1.5 hover:text-gray-200 transition-colors bg-transparent border-0 cursor-pointer p-0"
+        >
+          <n-icon :size="16" :component="DocumentTasks" />
+          服务条款
+        </button>
+        <button
+          type="button"
+          class="flex items-center gap-1.5 hover:text-gray-200 transition-colors bg-transparent border-0 cursor-pointer p-0"
+        >
+          <n-icon :size="16" :component="Document" />
+          隐私政策
+        </button>
+        <n-button type="primary" size="small" @click="onLoginClick">登录</n-button>
+        <n-dropdown trigger="click" :options="langOptions">
+          <n-button quaternary size="small" class="!text-gray-300">
+            <span class="flex items-center gap-1">
+              <n-icon :size="16" :component="Language" />
+              简体中文
+              <n-icon :size="14" :component="ChevronDown" />
+            </span>
+          </n-button>
+        </n-dropdown>
+      </div>
+
+      <div v-else class="flex items-center gap-5 text-sm text-gray-400">
         <button
           type="button"
           class="flex items-center gap-1.5 hover:text-gray-200 transition-colors bg-transparent border-0 cursor-pointer p-0"
@@ -198,7 +233,7 @@ function onMenuUpdate(key) {
           v-if="!collapsed"
           class="px-2 py-2 text-[10px] text-gray-600 text-center leading-snug border-t border-[#ffffff0f]"
         >
-          © 2026 Cosar AI 科赛
+          © 2026 AIKC
         </div>
         <div class="p-3 border-t border-[#ffffff0f] shrink-0 flex justify-center">
           <n-button circle quaternary @click="collapsed = !collapsed">
