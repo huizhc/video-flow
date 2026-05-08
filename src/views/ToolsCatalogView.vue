@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { NCard, NEmpty, NIcon } from 'naive-ui'
 import { Currency } from '@vicons/carbon'
-import { categoryTitles, getToolPreviewClass, toolsCatalog } from '@/data/toolsCatalog'
+import { categoryTitles, toolsCatalog } from '@/data/toolsCatalog'
 
 const route = useRoute()
 
@@ -40,18 +40,24 @@ const list = computed(() => {
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4"
     >
       <n-card
-        v-for="(tool, index) in list"
+        v-for="tool in list"
         :key="tool.id + tool.title"
-        class="!bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl overflow-hidden cursor-pointer transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+        class="group !bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl overflow-hidden cursor-pointer transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
         :bordered="false"
         size="small"
         :content-style="{ padding: '0' }"
       >
         <div
-          class="aspect-[16/10] w-full flex items-center justify-center bg-gradient-to-br shrink-0"
-          :class="getToolPreviewClass(index)"
+          class="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-[#151515]"
         >
-          <span class="text-5xl font-bold text-white/15 select-none">{{ tool.id }}</span>
+          <img
+            :src="tool.previewImage"
+            :alt="tool.title"
+            class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-108"
+            loading="lazy"
+            referrerpolicy="no-referrer"
+          />
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/22 via-transparent to-white/6" />
         </div>
         <div class="p-3.5">
           <div class="flex items-start justify-between gap-2 mb-2">
