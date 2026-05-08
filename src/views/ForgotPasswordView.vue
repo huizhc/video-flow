@@ -66,7 +66,7 @@ async function onSubmit() {
         <div class="auth-hero-content">
           <div class="auth-hero-title">AIKC工具箱</div>
           <div class="auth-hero-desc">
-            手机刮器，以一敌百，单枪匹马搞跨境
+            手机利器，以一敌百，单枪匹马搞跨境
           </div>
           <button type="button" class="auth-hero-more">了解更多</button>
         </div>
