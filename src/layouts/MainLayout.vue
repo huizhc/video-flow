@@ -138,14 +138,14 @@ function onLoginClick() {
       <div v-if="!isLoggedIn" class="flex items-center gap-5 text-sm text-gray-400">
         <button
           type="button"
-          class="flex items-center gap-1.5 hover:text-gray-200 transition-colors bg-transparent border-0 cursor-pointer p-0"
+          class="top-nav-pill-button top-nav-placeholder-button"
         >
           <n-icon :size="16" :component="DocumentTasks" />
           服务条款
         </button>
         <button
           type="button"
-          class="flex items-center gap-1.5 hover:text-gray-200 transition-colors bg-transparent border-0 cursor-pointer p-0"
+          class="top-nav-pill-button top-nav-placeholder-button"
         >
           <n-icon :size="16" :component="Document" />
           隐私政策
@@ -165,28 +165,28 @@ function onLoginClick() {
       <div v-else class="flex items-center gap-5 text-sm text-gray-400">
         <button
           type="button"
-          class="flex items-center gap-1.5 hover:text-gray-200 transition-colors bg-transparent border-0 cursor-pointer p-0"
+          class="top-nav-text-button top-nav-placeholder-button"
         >
           <n-icon :size="16" :component="DocumentTasks" />
           服务条款
         </button>
         <button
           type="button"
-          class="flex items-center gap-1.5 hover:text-gray-200 transition-colors bg-transparent border-0 cursor-pointer p-0"
+          class="top-nav-text-button top-nav-placeholder-button"
         >
           <n-icon :size="16" :component="Document" />
           隐私政策
         </button>
         <button
           type="button"
-          class="flex items-center gap-1.5 hover:text-gray-200 transition-colors bg-transparent border-0 cursor-pointer p-0"
+          class="top-nav-text-button top-nav-placeholder-button"
         >
           <n-icon :size="16" :component="Headset" />
           联系客服
         </button>
         <button
           type="button"
-          class="flex items-center gap-1.5 hover:text-gray-200 transition-colors bg-transparent border-0 cursor-pointer p-0"
+          class="top-nav-text-button top-nav-placeholder-button"
         >
           <n-icon :size="16" :component="Gift" />
           邀请有礼

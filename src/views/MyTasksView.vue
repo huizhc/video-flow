@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { NCard, NEmpty, NGi, NGrid, NIcon, NSelect } from 'naive-ui'
+import { NEmpty, NIcon, NSelect } from 'naive-ui'
 import {
   Archive,
   Document,
@@ -70,51 +70,54 @@ const stats = [
 </script>
 
 <template>
-  <div class="p-4 min-h-full">
-    <n-grid :cols="5" :x-gap="12" :y-gap="12">
-      <n-gi v-for="s in stats" :key="s.key">
-        <n-card size="small" class="rounded-lg border border-[#ffffff0f] bg-[#252525]/90">
-          <div class="flex items-center gap-3">
-            <div
-              class="w-11 h-11 rounded-lg flex items-center justify-center shrink-0"
-              :class="s.iconBg"
-            >
-              <n-icon :size="22" :class="s.iconClass" :component="s.icon" />
-            </div>
-            <div class="flex flex-col min-w-0">
-              <span class="text-2xl font-semibold text-white leading-tight">{{ s.count }}</span>
-              <span class="text-sm text-gray-400 truncate">{{ s.label }}</span>
-            </div>
-          </div>
-        </n-card>
-      </n-gi>
-    </n-grid>
+  <div class="min-h-full bg-[#171717] px-[10px] pt-[10px] pb-4 sm:pb-0">
+    <div class="grid grid-cols-1 gap-[10px] sm:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5">
+      <div
+        v-for="s in stats"
+        :key="s.key"
+        class="flex min-h-[76px] items-center gap-3 rounded-[8px] border border-white/6 bg-[linear-gradient(180deg,rgba(30,30,30,0.96)_0%,rgba(24,24,24,0.98)_100%)] px-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]"
+      >
+        <div
+          class="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-[8px]"
+          :class="s.iconBg"
+        >
+          <n-icon :size="18" :class="s.iconClass" :component="s.icon" />
+        </div>
+        <div class="min-w-0">
+          <div class="text-[24px] leading-[1.1] font-semibold text-white/95">{{ s.count }}</div>
+          <div class="mt-[2px] text-[14px] leading-[1.2] font-semibold text-white/45">{{ s.label }}</div>
+        </div>
+      </div>
+    </div>
 
-    <div class="flex justify-between items-center my-4 flex-wrap gap-3">
-      <div class="flex items-center gap-2">
-        <span class="text-sm text-gray-400 whitespace-nowrap">状态筛选:</span>
+    <div class="mt-[18px] flex flex-col items-stretch justify-between gap-3 rounded-t-[8px] border border-b-0 border-white/5 bg-[linear-gradient(180deg,rgba(21,21,21,0.98)_0%,rgba(18,18,18,0.98)_100%)] px-4 py-[10px] lg:flex-row lg:items-center">
+      <div class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between lg:justify-start lg:gap-3">
+        <span class="whitespace-nowrap text-[14px] text-white/50">状态筛选:</span>
         <n-select
           v-model:value="statusFilter"
           :options="statusOptions"
-          size="small"
-          class="min-w-[140px]"
+          size="medium"
+          class="w-full sm:w-[146px] [&_.n-base-selection]:min-h-[34px] [&_.n-base-selection]:rounded-[4px] [&_.n-base-selection]:border-[1px] [&_.n-base-selection]:border-white/10 [&_.n-base-selection]:bg-[#151515]! [&_.n-base-selection]:text-white/82 [&_.n-base-selection]:shadow-none! [&_.n-base-selection-label]:text-[13px] [&_.n-base-selection-placeholder]:text-white/48"
           :consistent-menu-width="false"
         />
       </div>
-      <div class="flex items-center gap-2">
-        <span class="text-sm text-gray-400 whitespace-nowrap">排序方式:</span>
+      <div class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between lg:justify-start lg:gap-3">
+        <span class="whitespace-nowrap text-[14px] text-white/50">排序方式:</span>
         <n-select
           v-model:value="sortBy"
           :options="sortOptions"
-          size="small"
-          class="min-w-[200px]"
+          size="medium"
+          class="w-full sm:w-[176px] [&_.n-base-selection]:min-h-[34px] [&_.n-base-selection]:rounded-[4px] [&_.n-base-selection]:border-[1px] [&_.n-base-selection]:border-white/10 [&_.n-base-selection]:bg-[#151515]! [&_.n-base-selection]:text-white/82 [&_.n-base-selection]:shadow-none! [&_.n-base-selection-label]:text-[13px] [&_.n-base-selection-placeholder]:text-white/48"
           :consistent-menu-width="false"
         />
       </div>
     </div>
 
-    <div class="flex items-center justify-center min-h-[calc(100vh-16rem)] py-12">
-      <n-empty description="暂无任务数据" />
+    <div class="flex min-h-[calc(100vh-210px)] items-center justify-center rounded-b-[8px] border border-t-0 border-white/5 bg-[linear-gradient(90deg,rgba(25,25,25,0.98)_0%,rgba(29,29,29,0.96)_52%,rgba(24,24,24,0.98)_100%)]">
+      <n-empty
+        description="暂无任务数据"
+        class="[&_.n-empty__description]:text-[14px] [&_.n-empty__description]:font-semibold [&_.n-empty__description]:text-white/40"
+      />
     </div>
   </div>
 </template>

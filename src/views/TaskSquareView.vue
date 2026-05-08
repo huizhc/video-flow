@@ -35,7 +35,7 @@ function handleReset() {
     </div>
 
     <div class="rounded-xl border border-[#2a2a2a] bg-[#1a1a1a] p-4 mb-4">
-      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3">
+      <div class="grid grid-cols-1 sm:grid-cols-5 xl:grid-cols-5 gap-3">
         <n-input
           v-model:value="productName"
           size="medium"

@@ -143,6 +143,10 @@
   gap: 12px;
 }
 
+.auth-input {
+  @apply bg-transparent! [&>div]:bg-#ffffff09! [&>div]:rounded-full!;
+}
+
 .auth-input :deep(.n-input__border),
 .auth-input :deep(.n-input__state-border) {
   border-radius: 9999px;
@@ -181,7 +185,14 @@
 }
 
 .auth-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  appearance: none;
   color: rgba(255, 255, 255, 0.55);
+  font: inherit;
+  line-height: inherit;
+  cursor: pointer;
   transition: color 150ms ease;
 }
 
@@ -190,7 +201,14 @@
 }
 
 .auth-link-primary {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  appearance: none;
   color: rgba(45, 212, 191, 0.95);
+  font: inherit;
+  line-height: inherit;
+  cursor: pointer;
   transition: color 150ms ease;
 }
 
@@ -217,6 +235,75 @@
   color: rgba(255, 255, 255, 0.4);
   text-align: center;
   font-size: 12px;
+}
+
+.top-nav-pill-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+.top-nav-pill-button:hover {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.09);
+  color: #fff;
+}
+
+.top-nav-text-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+
+.top-nav-text-button:hover {
+  color: #fff;
+}
+
+.top-nav-placeholder-button {
+  cursor: default;
+  user-select: none;
+}
+
+.top-nav-pill-button.top-nav-placeholder-button {
+  border-color: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.top-nav-pill-button.top-nav-placeholder-button:hover {
+  border-color: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.top-nav-text-button.top-nav-placeholder-button {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.top-nav-text-button.top-nav-placeholder-button:hover {
+  color: rgba(255, 255, 255, 0.74);
 }
 
 @media (min-width: 1024px) {

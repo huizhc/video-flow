@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   NAvatar,
@@ -15,7 +15,7 @@ import {
   NTabs,
   NIcon,
 } from 'naive-ui'
-import { Currency, TrashCan } from '@vicons/carbon'
+import { Currency, TrashCan, User } from '@vicons/carbon'
 import { useAuthStore } from '@/stores/auth'
 
 const activeTab = ref('flow')
@@ -59,6 +59,48 @@ const pwdForm = ref({
   old: '',
   next: '',
   confirm: '',
+})
+
+const accountForm = reactive({
+  nickname: '9527',
+  email: '',
+  phone: '13232428227',
+})
+
+const rechargePlans = [
+  {
+    key: '200w',
+    power: '200w',
+    bonus: '+20K',
+    price: '2000',
+    extra: '额外赠送 1%',
+  },
+  {
+    key: '500w',
+    power: '500w',
+    bonus: '+100K',
+    price: '5000',
+    extra: '额外赠送 2%',
+    popular: '82%用户选择',
+  },
+  {
+    key: '980w',
+    power: '980w',
+    bonus: '+490K',
+    price: '9800',
+    extra: '额外赠送 5%',
+  },
+]
+
+const selectedRecharge = ref('500w')
+const customRechargeEnabled = ref(false)
+const customRechargeAmount = ref('20')
+const paymentMethod = ref('alipay')
+
+const customRechargePrice = computed(() => {
+  const amount = Number(customRechargeAmount.value || 0)
+  if (!Number.isFinite(amount) || amount <= 0) return '0.00'
+  return (amount * 9.9).toFixed(2)
 })
 
 function handleSearchFlow() {}
@@ -260,36 +302,169 @@ function handleLogout() {
             </n-form-item>
             <div class="flex items-center gap-3">
               <n-button type="primary">保存</n-button>
-              <n-button secondary class="!bg-[#2d2d2d] !text-gray-300" @click="handleLogout">
+              <!-- <n-button secondary class="!bg-[#2d2d2d] !text-gray-300" @click="handleLogout">
                 退出登录
-              </n-button>
+              </n-button> -->
             </div>
           </n-form>
         </div>
       </n-tab-pane>
 
       <n-tab-pane name="account" tab="账户信息">
-        <div class="rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] p-6 mt-2 max-w-lg space-y-4">
-          <div class="flex justify-between py-2 border-b border-[#2a2a2a] text-sm">
-            <span class="text-gray-500">手机号</span>
-            <span class="text-white">138****0000</span>
-          </div>
-          <div class="flex justify-between py-2 border-b border-[#2a2a2a] text-sm">
-            <span class="text-gray-500">邮箱</span>
-            <span class="text-white">user@example.com</span>
-          </div>
-          <div class="flex justify-between py-2 text-sm">
-            <span class="text-gray-500">注册时间</span>
-            <span class="text-white">2026-05-07</span>
+        <div class="rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] p-6 mt-2">
+          <div class="flex flex-col lg:flex-row gap-8 items-start">
+            <div class="w-[120px] shrink-0 flex flex-col items-center pt-2">
+              <div
+                class="w-[54px] h-[54px] rounded-full border border-[#4a4a4a] text-[#8f8f8f] flex items-center justify-center"
+              >
+                <n-icon :size="28" :component="User" />
+              </div>
+              <button
+                type="button"
+                class="mt-3 text-xs text-[#8a8a8a] bg-transparent border-0 p-0 cursor-pointer hover:text-[#b5b5b5] transition-colors"
+              >
+                点击头像修改
+              </button>
+            </div>
+
+            <div class="flex-1 min-w-0 max-w-[620px]">
+              <n-form
+                :model="accountForm"
+                label-placement="left"
+                label-width="64"
+                class="account-form"
+              >
+                <n-form-item label="昵称">
+                  <n-input v-model:value="accountForm.nickname" />
+                </n-form-item>
+                <n-form-item label="邮箱">
+                  <n-input v-model:value="accountForm.email" />
+                </n-form-item>
+                <n-form-item label="电话">
+                  <n-input v-model:value="accountForm.phone" />
+                </n-form-item>
+                <div class="flex items-center gap-28 pt-1 pl-[64px]">
+                  <n-button color="#ef6b6b" @click="handleLogout">
+                    退出登录
+                  </n-button>
+                  <n-button type="primary">
+                    保存修改
+                  </n-button>
+                </div>
+              </n-form>
+            </div>
           </div>
         </div>
       </n-tab-pane>
 
       <n-tab-pane name="recharge" tab="算力充值">
-        <div
-          class="rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] p-8 mt-2 text-center text-gray-400 text-sm"
-        >
-          请在上方的充值卡片中选择套餐，或点击「更多充值」查看全部档位。
+        <div class="rounded-xl bg-[#1f1f1f] border border-[#2a2a2a] p-3 sm:p-4 mt-2">
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+            <button
+              v-for="plan in rechargePlans"
+              :key="plan.key"
+              type="button"
+              class="relative min-h-[84px] rounded-xl bg-[linear-gradient(180deg,#363636_0%,#2a2a2a_100%)] px-5 py-4 text-left border transition-all"
+              :class="
+                selectedRecharge === plan.key
+                  ? 'border-amber-400/90 shadow-[0_0_18px_rgba(234,179,8,0.22)]'
+                  : 'border-[#3b3b3b] hover:border-amber-400/55'
+              "
+              @click="selectedRecharge = plan.key"
+            >
+              <div class="flex items-center gap-1.5 text-[18px] font-bold text-amber-300">
+                <span>{{ plan.power }}</span>
+                <span
+                  class="rounded-full border border-amber-500/25 bg-[#4b3918] px-1.5 py-[1px] text-[10px] leading-none text-amber-300"
+                >
+                  {{ plan.bonus }}
+                </span>
+              </div>
+              <div class="mt-2 text-[15px] leading-none font-bold text-amber-300">¥ {{ plan.price }}</div>
+              <div class="mt-3 flex items-center gap-2">
+                <span
+                  v-if="plan.popular"
+                  class="rounded-full bg-[#f1d54b] px-2 py-[2px] text-[10px] font-semibold text-[#2d2a17]"
+                >
+                  {{ plan.popular }}
+                </span>
+                <span
+                  class="rounded-full border border-amber-500/20 bg-[#4b3918] px-2 py-[2px] text-[10px] font-semibold text-amber-300"
+                >
+                  {{ plan.extra }}
+                </span>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              class="min-h-[84px] rounded-xl border border-[#3b3b3b] bg-[linear-gradient(180deg,#363636_0%,#2a2a2a_100%)] px-5 py-4 text-left hover:border-amber-400/55 transition-colors"
+            >
+              <div class="text-[18px] font-bold leading-[1.3] text-amber-300">规模用户</div>
+              <div class="mt-1 text-[18px] font-bold leading-[1.3] text-amber-300">获得额外折扣</div>
+              <div class="mt-3">
+                <span class="rounded-full bg-[#f1d54b] px-2 py-[2px] text-[10px] font-semibold text-[#2d2a17]">
+                  联系客服
+                </span>
+              </div>
+            </button>
+          </div>
+
+          <div class="mt-7 flex flex-wrap items-center gap-3 text-sm">
+            <label class="flex items-center">
+              <input
+                v-model="customRechargeEnabled"
+                type="checkbox"
+                class="h-3.5 w-3.5 rounded border border-white/20 bg-transparent accent-[#14d2e2]"
+              />
+            </label>
+
+            <div class="flex items-center rounded-[4px] border border-[#383838] bg-[#262626] h-8 overflow-hidden">
+              <input
+                v-model="customRechargeAmount"
+                type="text"
+                class="w-16 h-full bg-transparent px-3 text-center text-sm text-white outline-none"
+              />
+              <span class="flex h-full w-8 items-center justify-center border-l border-[#383838] text-[#7d7d7d] text-xs">
+                W
+              </span>
+            </div>
+
+            <div class="text-[20px] font-bold text-amber-300">¥{{ customRechargePrice }}</div>
+            <div class="text-[12px] font-semibold text-amber-300">自定义充值：输入算力数量自动计算金额</div>
+          </div>
+
+          <div class="mt-6 flex items-center gap-5 text-sm text-[#bdbdbd]">
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input
+                v-model="paymentMethod"
+                type="radio"
+                name="paymentMethod"
+                value="alipay"
+                class="h-3.5 w-3.5 accent-[#14d2e2]"
+              />
+              <span class="text-[#14d2e2] font-medium">支付宝</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input
+                v-model="paymentMethod"
+                type="radio"
+                name="paymentMethod"
+                value="wechat"
+                class="h-3.5 w-3.5 accent-[#9ca3af]"
+              />
+              <span>微信</span>
+            </label>
+          </div>
+
+          <div class="mt-5">
+            <button
+              type="button"
+              class="h-9 rounded-[4px] bg-[#14d2e2] px-4 text-[13px] font-semibold text-white hover:bg-[#28d9e7] transition-colors"
+            >
+              确认支付
+            </button>
+          </div>
         </div>
       </n-tab-pane>
     </n-tabs>
@@ -318,5 +493,23 @@ function handleLogout() {
 }
 .profile-tabs :deep(.n-data-table-tr:not(.n-data-table-tr--summary):hover .n-data-table-td) {
   background: #222222 !important;
+}
+.account-form :deep(.n-form-item) {
+  margin-bottom: 14px;
+}
+.account-form :deep(.n-form-item-label__text) {
+  color: #b0b0b0;
+  font-size: 14px;
+}
+.account-form :deep(.n-input) {
+  --n-color: #232323;
+  --n-color-focus: #232323;
+  --n-color-disabled: #232323;
+  --n-border: 1px solid rgba(255, 255, 255, 0.1);
+  --n-border-hover: 1px solid rgba(255, 255, 255, 0.18);
+  --n-border-focus: 1px solid rgba(79, 209, 197, 0.55);
+  --n-box-shadow-focus: none;
+  --n-text-color: #f3f4f6;
+  --n-placeholder-color: rgba(255, 255, 255, 0.28);
 }
 </style>
