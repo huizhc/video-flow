@@ -1,11 +1,12 @@
 <script setup>
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { NCard, NEmpty, NIcon } from 'naive-ui'
 import { Currency } from '@vicons/carbon'
 import { categoryTitles, toolsCatalog } from '@/data/toolsCatalog'
 
 const route = useRoute()
+const router = useRouter()
 
 const filter = computed(() => route.meta.toolFilter ?? 'all')
 
@@ -16,6 +17,27 @@ const list = computed(() => {
   if (f === 'all') return toolsCatalog
   return toolsCatalog.filter((t) => t.categories.includes(f))
 })
+
+function openToolDetail(tool) {
+  const detailRouteNameById = {
+    '02': 'tool-remove-watermark',
+    '03': 'tool-video-translate-voice',
+    '04': 'tool-speech-subtitle',
+    '06': 'tool-general-translate',
+    '07': 'tool-batch-video-mix',
+    '08': 'tool-script-shot-analysis',
+    '09': 'tool-text-to-speech',
+    '11': 'tool-audio-driven-avatar',
+    '12': 'tool-script-driven-avatar',
+    '15': 'tool-text-to-video-toolkit',
+    '16': 'tool-voice-clone-audio',
+    '17': 'tool-nurture-video',
+  }
+  const detailRouteName = detailRouteNameById[tool.id]
+  if (!detailRouteName) return
+  const href = router.resolve({ name: detailRouteName }).href
+  window.open(href, '_blank', 'noopener,noreferrer')
+}
 </script>
 
 <template>
@@ -37,15 +59,17 @@ const list = computed(() => {
 
     <div
       v-else
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4"
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
     >
       <n-card
         v-for="tool in list"
         :key="tool.id + tool.title"
-        class="group !bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl overflow-hidden cursor-pointer transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+        class="group !bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl overflow-hidden transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+        :class="['02', '03', '04', '06', '07', '08', '09', '11', '12', '15', '16', '17'].includes(tool.id) ? 'cursor-pointer' : 'cursor-default'"
         :bordered="false"
         size="small"
         :content-style="{ padding: '0' }"
+        @click="openToolDetail(tool)"
       >
         <div
           class="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-[#151515]"

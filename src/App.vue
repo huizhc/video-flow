@@ -1,5 +1,8 @@
 <script setup>
-import { NConfigProvider, darkTheme, dateZhCN, zhCN } from 'naive-ui'
+import { NCard, NConfigProvider, NModal, darkTheme, dateZhCN, zhCN } from 'naive-ui'
+import { useSupportStore } from '@/stores/support'
+
+const supportStore = useSupportStore()
 
 const themeOverrides = {
   common: {
@@ -26,6 +29,23 @@ const themeOverrides = {
     :date-locale="dateZhCN"
   >
     <router-view />
+    <n-modal
+      v-model:show="supportStore.qrVisible"
+      preset="card"
+      class="max-w-[360px]"
+      :mask-closable="true"
+      :bordered="false"
+    >
+    <div class="flex flex-col items-center text-center">
+      <img
+        :src="supportStore.qrCodeSrc"
+        alt="联系客服二维码"
+        class="h-[220px] w-[220px] rounded-lg bg-white p-2"
+        referrerpolicy="no-referrer"
+      />
+      <p class="mt-4 mb-0 text-sm text-white/70">请使用微信扫码联系客服</p>
+    </div>
+    </n-modal>
   </n-config-provider>
 </template>
 

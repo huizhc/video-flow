@@ -80,4 +80,85 @@ export const toolsCatalog = [
     previewImage:
       'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80',
   },
+  {
+    id: '12',
+    title: '数字人(文案驱动)',
+    cost: 1800,
+    description: '照片加声音样本加文案，生成数字人口播视频',
+    categories: ['video', 'audio', 'text'],
+    previewImage:
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: '15',
+    title: '文生视频工具合集',
+    cost: 1000,
+    description: '多渠道建模、生成与处理，提升视频创作效率',
+    categories: ['video', 'text'],
+    previewImage:
+      'https://images.unsplash.com/photo-1516321310764-8d1b15c4cb8d?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: '16',
+    title: '声音克隆音频',
+    cost: 400,
+    description: '用指定的声线，说一段口播文字即可生成音频',
+    categories: ['audio'],
+    previewImage:
+      'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: '17',
+    title: '养号视频',
+    cost: 1000,
+    description: '快速生成多个养号视频，批量用于日常内容运营',
+    categories: ['video'],
+    previewImage:
+      'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: '18',
+    title: 'Seedance视频生成',
+    cost: 6000,
+    description: '国内最强视频模型，适合高质量创意视频生成',
+    categories: ['video'],
+    previewImage:
+      'https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: '19',
+    title: 'Veo3.1视频生成',
+    cost: 5600,
+    description: 'Veo模型生成视频，适合多类画面和风格表达',
+    categories: ['video'],
+    previewImage:
+      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: '62',
+    title: '快速裂变视频',
+    cost: 1000,
+    description: '快速制作批量视频，提高素材复用与裂变效率',
+    categories: ['video'],
+    previewImage:
+      'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: '81',
+    title: '视频剧本作家',
+    cost: 100,
+    description: '只需要提供几句话，就给您爆款视频剧本灵感',
+    categories: ['text', 'video'],
+    previewImage:
+      'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: '90',
+    title: '生成标题及口播文案',
+    cost: 150,
+    description: '给你源源不断的灵感，快速生成标题和口播文案',
+    categories: ['text', 'audio'],
+    previewImage:
+      'https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=900&q=80',
+  },
 ]

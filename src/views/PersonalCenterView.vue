@@ -1,6 +1,6 @@
 <script setup>
-import { computed, reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, reactive, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import {
   NAvatar,
   NButton,
@@ -17,10 +17,13 @@ import {
 } from 'naive-ui'
 import { Currency, TrashCan, User } from '@vicons/carbon'
 import { useAuthStore } from '@/stores/auth'
+import { useSupportStore } from '@/stores/support'
 
 const activeTab = ref('flow')
+const route = useRoute()
 const router = useRouter()
 const auth = useAuthStore()
+const supportStore = useSupportStore()
 
 const bizType = ref(null)
 const dateRange = ref(null)
@@ -103,12 +106,41 @@ const customRechargePrice = computed(() => {
   return (amount * 9.9).toFixed(2)
 })
 
+const validTabs = new Set(['flow', 'password', 'account', 'recharge'])
+
+watch(
+  () => route.query.tab,
+  (tab) => {
+    activeTab.value = typeof tab === 'string' && validTabs.has(tab) ? tab : 'flow'
+  },
+  { immediate: true },
+)
+
 function handleSearchFlow() {}
 function clearCache() {}
 
 function handleLogout() {
   auth.logout()
   router.replace({ name: 'login' })
+}
+
+function switchToRechargeTab(planKey) {
+  if (planKey) selectedRecharge.value = planKey
+  activeTab.value = 'recharge'
+  router.replace({
+    query: {
+      ...route.query,
+      tab: 'recharge',
+    },
+  })
+}
+
+function switchToRechargeTabOnly() {
+  switchToRechargeTab()
+}
+
+function openSupportQr() {
+  supportStore.openQr()
 }
 </script>
 
@@ -144,8 +176,15 @@ function handleLogout() {
       </div>
 
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 xl:flex-[1.4] min-w-0 w-full">
-        <div
-          class="rounded-xl bg-[#242424] border border-[#333333] p-4 flex flex-col items-center text-center gap-2 min-h-[132px] justify-center"
+        <button
+          type="button"
+          class="rounded-xl p-4 flex flex-col items-center text-center gap-2 min-h-[132px] justify-center cursor-pointer transition-colors w-full"
+          :class="
+            selectedRecharge === '200w'
+              ? 'bg-[#242424] border-2 border-amber-400/70 shadow-[0_0_16px_rgba(234,179,8,0.25)]'
+              : 'bg-[#242424] border border-[#333333] hover:bg-[#2a2a2a]'
+          "
+          @click="switchToRechargeTab('200w')"
         >
           <div class="text-amber-400 text-sm font-semibold">
             200w +20K
@@ -158,10 +197,17 @@ function handleLogout() {
           >
             额外赠送 1%
           </span>
-        </div>
+        </button>
 
-        <div
-          class="rounded-xl bg-[#242424] p-4 flex flex-col items-center text-center gap-2 min-h-[132px] justify-center relative border-2 border-amber-400/70 shadow-[0_0_16px_rgba(234,179,8,0.25)]"
+        <button
+          type="button"
+          class="rounded-xl bg-[#242424] p-4 flex flex-col items-center text-center gap-2 min-h-[132px] justify-center relative cursor-pointer transition-colors w-full"
+          :class="
+            selectedRecharge === '500w'
+              ? 'border-2 border-amber-400/70 shadow-[0_0_16px_rgba(234,179,8,0.25)]'
+              : 'border border-[#333333] hover:bg-[#2a2a2a]'
+          "
+          @click="switchToRechargeTab('500w')"
         >
           <span
             class="absolute -top-2 left-1/2 -translate-x-1/2 text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 whitespace-nowrap"
@@ -179,10 +225,17 @@ function handleLogout() {
           >
             额外赠送 2%
           </span>
-        </div>
+        </button>
 
-        <div
-          class="rounded-xl bg-[#242424] border border-[#333333] p-4 flex flex-col items-center text-center gap-2 min-h-[132px] justify-center"
+        <button
+          type="button"
+          class="rounded-xl p-4 flex flex-col items-center text-center gap-2 min-h-[132px] justify-center cursor-pointer transition-colors w-full"
+          :class="
+            selectedRecharge === '980w'
+              ? 'bg-[#242424] border-2 border-amber-400/70 shadow-[0_0_16px_rgba(234,179,8,0.25)]'
+              : 'bg-[#242424] border border-[#333333] hover:bg-[#2a2a2a]'
+          "
+          @click="switchToRechargeTab('980w')"
         >
           <div class="text-amber-400 text-sm font-semibold">
             980w +490K
@@ -195,11 +248,12 @@ function handleLogout() {
           >
             额外赠送 5%
           </span>
-        </div>
+        </button>
 
         <button
           type="button"
-          class="rounded-xl bg-[#242424] p-4 flex flex-col items-center justify-center text-center gap-2 min-h-[132px] border-2 border-amber-400/70 shadow-[0_0_16px_rgba(234,179,8,0.25)] cursor-pointer hover:bg-[#2a2a2a] transition-colors w-full"
+          class="rounded-xl bg-[#242424] border border-[#333333] p-4 flex flex-col items-center text-center gap-2 min-h-[132px] justify-center cursor-pointer hover:bg-[#2a2a2a] transition-colors w-full"
+          @click="switchToRechargeTabOnly"
         >
           <span class="text-amber-400 text-base font-bold">更多充值</span>
           <span class="text-gray-400 text-xs">点击查看</span>
@@ -301,10 +355,7 @@ function handleLogout() {
               />
             </n-form-item>
             <div class="flex items-center gap-3">
-              <n-button type="primary">保存</n-button>
-              <!-- <n-button secondary class="!bg-[#2d2d2d] !text-gray-300" @click="handleLogout">
-                退出登录
-              </n-button> -->
+              <n-button type="primary" class="text-white">保存</n-button>
             </div>
           </n-form>
         </div>
@@ -344,10 +395,10 @@ function handleLogout() {
                   <n-input v-model:value="accountForm.phone" />
                 </n-form-item>
                 <div class="flex items-center gap-28 pt-1 pl-[64px]">
-                  <n-button color="#ef6b6b" @click="handleLogout">
+                  <n-button color="#ef6b6b" class="text-white" @click="handleLogout">
                     退出登录
                   </n-button>
-                  <n-button type="primary">
+                  <n-button type="primary" class="text-white">
                     保存修改
                   </n-button>
                 </div>
@@ -364,7 +415,7 @@ function handleLogout() {
               v-for="plan in rechargePlans"
               :key="plan.key"
               type="button"
-              class="relative min-h-[84px] rounded-xl bg-[linear-gradient(180deg,#363636_0%,#2a2a2a_100%)] px-5 py-4 text-left border transition-all"
+              class="relative cursor-pointer min-h-[84px] rounded-xl bg-[linear-gradient(180deg,#363636_0%,#2a2a2a_100%)] px-5 py-4 text-left border transition-all"
               :class="
                 selectedRecharge === plan.key
                   ? 'border-amber-400/90 shadow-[0_0_18px_rgba(234,179,8,0.22)]'
@@ -398,7 +449,8 @@ function handleLogout() {
 
             <button
               type="button"
-              class="min-h-[84px] rounded-xl border border-[#3b3b3b] bg-[linear-gradient(180deg,#363636_0%,#2a2a2a_100%)] px-5 py-4 text-left hover:border-amber-400/55 transition-colors"
+              class="cursor-pointer min-h-[84px] rounded-xl border border-[#3b3b3b] bg-[linear-gradient(180deg,#363636_0%,#2a2a2a_100%)] px-5 py-4 text-left hover:border-amber-400/55 transition-colors"
+              @click="openSupportQr"
             >
               <div class="text-[18px] font-bold leading-[1.3] text-amber-300">规模用户</div>
               <div class="mt-1 text-[18px] font-bold leading-[1.3] text-amber-300">获得额外折扣</div>
@@ -458,12 +510,12 @@ function handleLogout() {
           </div>
 
           <div class="mt-5">
-            <button
+            <n-button
               type="button"
               class="h-9 rounded-[4px] bg-[#14d2e2] px-4 text-[13px] font-semibold text-white hover:bg-[#28d9e7] transition-colors"
             >
               确认支付
-            </button>
+            </n-button>
           </div>
         </div>
       </n-tab-pane>

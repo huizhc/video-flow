@@ -33,10 +33,12 @@ import {
   Video,
 } from '@vicons/carbon'
 import { useAuthStore } from '@/stores/auth'
+import { useSupportStore } from '@/stores/support'
 
 const route = useRoute()
 const router = useRouter()
 const auth = useAuthStore()
+const supportStore = useSupportStore()
 
 const isLoggedIn = computed(() => auth.isLoggedIn)
 
@@ -116,6 +118,29 @@ function onMenuUpdate(key) {
 function onLoginClick() {
   router.push({ name: 'login', query: { redirect: route.fullPath } })
 }
+
+function goTerms() {
+  const href = router.resolve({ name: 'terms' }).href
+  window.open(href, '_blank', 'noopener,noreferrer')
+}
+
+function goPrivacy() {
+  const href = router.resolve({ name: 'privacy' }).href
+  window.open(href, '_blank', 'noopener,noreferrer')
+}
+
+function goInvite() {
+  const href = router.resolve({ name: 'invite' }).href
+  window.open(href, '_blank', 'noopener,noreferrer')
+}
+
+function goRechargeTab() {
+  router.push({ name: 'personal-center', query: { tab: 'recharge' } })
+}
+
+function openSupportQr() {
+  supportStore.openQr()
+}
 </script>
 
 <template>
@@ -139,6 +164,7 @@ function onLoginClick() {
         <button
           type="button"
           class="top-nav-pill-button top-nav-placeholder-button"
+          @click="goTerms"
         >
           <n-icon :size="16" :component="DocumentTasks" />
           服务条款
@@ -146,6 +172,7 @@ function onLoginClick() {
         <button
           type="button"
           class="top-nav-pill-button top-nav-placeholder-button"
+          @click="goPrivacy"
         >
           <n-icon :size="16" :component="Document" />
           隐私政策
@@ -166,6 +193,7 @@ function onLoginClick() {
         <button
           type="button"
           class="top-nav-text-button top-nav-placeholder-button"
+          @click="goTerms"
         >
           <n-icon :size="16" :component="DocumentTasks" />
           服务条款
@@ -173,6 +201,7 @@ function onLoginClick() {
         <button
           type="button"
           class="top-nav-text-button top-nav-placeholder-button"
+          @click="goPrivacy"
         >
           <n-icon :size="16" :component="Document" />
           隐私政策
@@ -180,6 +209,7 @@ function onLoginClick() {
         <button
           type="button"
           class="top-nav-text-button top-nav-placeholder-button"
+          @click="openSupportQr"
         >
           <n-icon :size="16" :component="Headset" />
           联系客服
@@ -187,14 +217,19 @@ function onLoginClick() {
         <button
           type="button"
           class="top-nav-text-button top-nav-placeholder-button"
+          @click="goInvite"
         >
           <n-icon :size="16" :component="Gift" />
           邀请有礼
         </button>
-        <span class="flex items-center gap-1.5 text-amber-400/90">
+        <button
+          type="button"
+          class="flex items-center gap-1.5 text-amber-400/90 bg-transparent border-0 p-0 cursor-pointer hover:text-amber-300 transition-colors"
+          @click="goRechargeTab"
+        >
           <n-icon :size="16" :component="Currency" />
           5000 算力
-        </span>
+        </button>
         <n-dropdown trigger="click" :options="langOptions">
           <n-button quaternary size="small" class="!text-gray-300">
             <span class="flex items-center gap-1">
