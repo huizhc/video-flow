@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { NIcon, NInput, NSelect } from 'naive-ui'
 import { Add, Search } from '@vicons/carbon'
 
+const router = useRouter()
 const sortValue = ref('created-desc')
 const keyword = ref('')
 
@@ -10,6 +12,10 @@ const sortOptions = [
   { label: '创建时间(新到旧)', value: 'created-desc' },
   { label: '创建时间(旧到新)', value: 'created-asc' },
 ]
+
+function createProject() {
+  router.push({ name: 'tool-batch-video-mix-project' })
+}
 </script>
 
 <template>
@@ -56,6 +62,7 @@ const sortOptions = [
             <button
               type="button"
               class="flex h-full w-full flex-col items-center justify-center gap-3 rounded-[4px] border-0 bg-transparent text-white/28 transition-colors hover:text-white/50"
+              @click="createProject"
             >
               <n-icon :size="34" :component="Add" />
               <span class="text-[11px]">创建项目</span>

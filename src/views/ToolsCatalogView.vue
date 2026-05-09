@@ -32,6 +32,11 @@ function openToolDetail(tool) {
     '15': 'tool-text-to-video-toolkit',
     '16': 'tool-voice-clone-audio',
     '17': 'tool-nurture-video',
+    '18': 'tool-seedance-video',
+    '19': 'tool-veo31-video',
+    '62': 'tool-quick-split-video',
+    '81': 'tool-video-script-writer',
+    '90': 'tool-title-and-script-copy',
   }
   const detailRouteName = detailRouteNameById[tool.id]
   if (!detailRouteName) return
@@ -65,7 +70,7 @@ function openToolDetail(tool) {
         v-for="tool in list"
         :key="tool.id + tool.title"
         class="group !bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl overflow-hidden transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
-        :class="['02', '03', '04', '06', '07', '08', '09', '11', '12', '15', '16', '17'].includes(tool.id) ? 'cursor-pointer' : 'cursor-default'"
+        :class="['02', '03', '04', '06', '07', '08', '09', '11', '12', '15', '16', '17', '18', '19', '62', '81', '90'].includes(tool.id) ? 'cursor-pointer' : 'cursor-default'"
         :bordered="false"
         size="small"
         :content-style="{ padding: '0' }"

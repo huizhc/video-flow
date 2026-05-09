@@ -3,28 +3,19 @@ import { computed, h, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   NButton,
-  NDropdown,
   NIcon,
   NLayout,
   NLayoutContent,
-  NLayoutHeader,
   NLayoutSider,
   NMenu,
   NScrollbar,
 } from 'naive-ui'
 import {
   Apps,
-  ChevronDown,
   Cloud,
-  Currency,
-  Document,
-  DocumentTasks,
   Folder,
-  Gift,
   Grid,
-  Headset,
   Image,
-  Language,
   Menu,
   Music,
   Task,
@@ -32,23 +23,17 @@ import {
   User,
   Video,
 } from '@vicons/carbon'
+import AppTopHeader from '@/components/layout/AppTopHeader.vue'
 import { useAuthStore } from '@/stores/auth'
-import { useSupportStore } from '@/stores/support'
 
 const route = useRoute()
 const router = useRouter()
 const auth = useAuthStore()
-const supportStore = useSupportStore()
 
 const isLoggedIn = computed(() => auth.isLoggedIn)
 
 const collapsed = ref(false)
 const activeKey = ref(null)
-
-const langOptions = [
-  { label: '简体中文', key: 'zh-CN' },
-  { label: 'English', key: 'en-US' },
-]
 
 watch(
   () => route.meta.menuKey,
@@ -114,133 +99,11 @@ function onMenuUpdate(key) {
   const name = menuRouteByKey[key]
   if (name) router.push({ name })
 }
-
-function onLoginClick() {
-  router.push({ name: 'login', query: { redirect: route.fullPath } })
-}
-
-function goTerms() {
-  const href = router.resolve({ name: 'terms' }).href
-  window.open(href, '_blank', 'noopener,noreferrer')
-}
-
-function goPrivacy() {
-  const href = router.resolve({ name: 'privacy' }).href
-  window.open(href, '_blank', 'noopener,noreferrer')
-}
-
-function goInvite() {
-  const href = router.resolve({ name: 'invite' }).href
-  window.open(href, '_blank', 'noopener,noreferrer')
-}
-
-function goRechargeTab() {
-  router.push({ name: 'personal-center', query: { tab: 'recharge' } })
-}
-
-function openSupportQr() {
-  supportStore.openQr()
-}
 </script>
 
 <template>
   <n-layout class="h-screen bg-[#121212]">
-    <n-layout-header
-      bordered
-      class="flex items-center justify-between px-4 h-14 shrink-0 bg-[#121212] border-[#ffffff0f]"
-    >
-      <div class="flex items-center gap-2.5">
-        <span
-          class="w-9 h-9 rounded-full bg-gradient-to-br from-[#14b8a6] via-[#0ea5e9] to-[#8b5cf6] shrink-0 shadow-lg shadow-teal-900/30"
-        />
-        <span class="text-white font-semibold text-sm tracking-tight">AIKC</span>
-        <span
-          class="px-1.5 py-0.5 rounded text-[10px] font-semibold text-white bg-gradient-to-r from-[#0d9488] to-[#0ea5e9]"
-        >
-          AI
-        </span>
-      </div>
-      <div v-if="!isLoggedIn" class="flex items-center gap-5 text-sm text-gray-400">
-        <button
-          type="button"
-          class="top-nav-pill-button top-nav-placeholder-button"
-          @click="goTerms"
-        >
-          <n-icon :size="16" :component="DocumentTasks" />
-          服务条款
-        </button>
-        <button
-          type="button"
-          class="top-nav-pill-button top-nav-placeholder-button"
-          @click="goPrivacy"
-        >
-          <n-icon :size="16" :component="Document" />
-          隐私政策
-        </button>
-        <n-button type="primary" size="small" @click="onLoginClick">登录</n-button>
-        <n-dropdown trigger="click" :options="langOptions">
-          <n-button quaternary size="small" class="!text-gray-300">
-            <span class="flex items-center gap-1">
-              <n-icon :size="16" :component="Language" />
-              简体中文
-              <n-icon :size="14" :component="ChevronDown" />
-            </span>
-          </n-button>
-        </n-dropdown>
-      </div>
-
-      <div v-else class="flex items-center gap-5 text-sm text-gray-400">
-        <button
-          type="button"
-          class="top-nav-text-button top-nav-placeholder-button"
-          @click="goTerms"
-        >
-          <n-icon :size="16" :component="DocumentTasks" />
-          服务条款
-        </button>
-        <button
-          type="button"
-          class="top-nav-text-button top-nav-placeholder-button"
-          @click="goPrivacy"
-        >
-          <n-icon :size="16" :component="Document" />
-          隐私政策
-        </button>
-        <button
-          type="button"
-          class="top-nav-text-button top-nav-placeholder-button"
-          @click="openSupportQr"
-        >
-          <n-icon :size="16" :component="Headset" />
-          联系客服
-        </button>
-        <button
-          type="button"
-          class="top-nav-text-button top-nav-placeholder-button"
-          @click="goInvite"
-        >
-          <n-icon :size="16" :component="Gift" />
-          邀请有礼
-        </button>
-        <button
-          type="button"
-          class="flex items-center gap-1.5 text-amber-400/90 bg-transparent border-0 p-0 cursor-pointer hover:text-amber-300 transition-colors"
-          @click="goRechargeTab"
-        >
-          <n-icon :size="16" :component="Currency" />
-          5000 算力
-        </button>
-        <n-dropdown trigger="click" :options="langOptions">
-          <n-button quaternary size="small" class="!text-gray-300">
-            <span class="flex items-center gap-1">
-              <n-icon :size="16" :component="Language" />
-              简体中文
-              <n-icon :size="14" :component="ChevronDown" />
-            </span>
-          </n-button>
-        </n-dropdown>
-      </div>
-    </n-layout-header>
+    <app-top-header logo-route-name="tools-all" />
 
     <n-layout has-sider class="bg-[#121212]" style="height: calc(100vh - 3.5rem)">
       <n-layout-sider
