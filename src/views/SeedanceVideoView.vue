@@ -49,21 +49,13 @@ const promptLength = computed(() => prompt.value.length)
 </script>
 
 <template>
-  <div
-    class="min-h-[500px] h-full p-[20px] text-white"
-  >
-    <div
-      class="h-full overflow-hidden  border border-white/8  shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]"
-    >
-      <div
-        class="grid h-full grid-cols-1 gap-x-[15px] sm:grid-cols-[550px_400px_minmax(0,1fr)]"
-      >
+  <div class="min-h-[500px] h-full p-[20px] text-white">
+    <div class="h-full overflow-hidden  border border-white/8  shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]">
+      <div class="grid h-full grid-cols-1 gap-x-[15px] sm:grid-cols-[550px_400px_minmax(0,1fr)]">
         <section
-          class="border-b border-white/8 bg-[linear-gradient(180deg,#1f1f20_0%,#1a1a1b_100%)] min-[1200px]:border-b-0 min-[1200px]:border-r"
-        >
+          class="border-b border-white/8 bg-[linear-gradient(180deg,#1f1f20_0%,#1a1a1b_100%)] min-[1200px]:border-b-0 min-[1200px]:border-r">
           <div
-            class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[14px] pb-[13px] pt-[14px] text-[12px] text-white/82"
-          >
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[14px] pb-[13px] pt-[14px] text-[12px] text-white/82">
             视频参数
           </div>
 
@@ -71,15 +63,9 @@ const promptLength = computed(() => prompt.value.length)
             <div class="mb-[12px] flex items-center gap-[10px]">
               <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">模型版本:</div>
               <div class="min-w-0 flex-1">
-                <select
-                  v-model="generationQuality"
-                  class="h-[30px] w-full appearance-none rounded-[4px] border border-white/8 bg-[#161719] px-[10px] text-[11px] text-white/82 outline-none focus:border-[rgba(35,208,228,0.88)]"
-                >
-                  <option
-                    v-for="option in qualityOptions"
-                    :key="option.value"
-                    :value="option.value"
-                  >
+                <select v-model="generationQuality"
+                  class="h-[30px] w-full appearance-none rounded-[4px] border border-white/8 bg-[#161719] px-[10px] text-[11px] text-white/82 outline-none focus:border-[rgba(35,208,228,0.88)]">
+                  <option v-for="option in qualityOptions" :key="option.value" :value="option.value">
                     {{ option.label }}
                   </option>
                 </select>
@@ -97,12 +83,8 @@ const promptLength = computed(() => prompt.value.length)
                   </div>
 
                   <template v-if="!isDurationUnspecified">
-                    <n-input-number
-                      v-model:value="durationSeconds"
-                      min="1"
-                      max="15"
-                      class="w-[120px] [&_.n-input-wrapper]:!h-[30px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__input-el]:!text-center [&_.n-input__input-el]:!text-[11px] [&_.n-input__input-el]:!text-white/82"
-                    />
+                    <n-input-number v-model:value="durationSeconds" min="1" max="15"
+                      class="w-[120px] [&_.n-input-wrapper]:!h-[30px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__input-el]:!text-center [&_.n-input__input-el]:!text-[11px] [&_.n-input__input-el]:!text-white/82" />
                     <span class="text-[10px] text-white/34">秒（4~12，Seedance 2.0 最长 15 秒）</span>
                   </template>
                 </div>
@@ -113,13 +95,9 @@ const promptLength = computed(() => prompt.value.length)
               <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">分辨率:</div>
               <div class="min-w-0 flex-1">
                 <n-radio-group v-model:value="resolution" size="small">
-                    <n-radio-button
-                      v-for="option in resolutionOptions"
-                      :key="option.value"
-                      :value="option.value"
-                      :label="option.label"
-                      class="!border-white/8 !bg-[#151618] !px-[10px] !text-[10px] !text-white/58 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
-                    />
+                  <n-radio-button v-for="option in resolutionOptions" :key="option.value" :value="option.value"
+                    :label="option.label"
+                    class="!border-white/8 !bg-[#151618] !px-[10px] !text-[10px] !text-white/58 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden" />
                 </n-radio-group>
               </div>
             </div>
@@ -128,13 +106,9 @@ const promptLength = computed(() => prompt.value.length)
               <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">宽高比例:</div>
               <div class="min-w-0 flex-1">
                 <n-radio-group v-model:value="aspectRatio" size="small">
-                    <n-radio-button
-                      v-for="option in ratioOptions"
-                      :key="option.value"
-                      :value="option.value"
-                      :label="option.label"
-                      class="!border-white/8 !bg-[#151618] !px-[10px] !text-[10px] !text-white/58 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
-                    />
+                  <n-radio-button v-for="option in ratioOptions" :key="option.value" :value="option.value"
+                    :label="option.label"
+                    class="!border-white/8 !bg-[#151618] !px-[10px] !text-[10px] !text-white/58 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden" />
                 </n-radio-group>
               </div>
             </div>
@@ -142,58 +116,48 @@ const promptLength = computed(() => prompt.value.length)
             <div class="mb-[12px] flex items-center gap-[10px]">
               <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">生成声音:</div>
               <div class="min-w-0 flex-1 flex items-center gap-[8px]">
-                <span class="text-[11px] " :class="!soundEnabled ? 'text-#4fd1c5': ''">关闭</span>
-                <button
-                  type="button"
+                <span class="text-[11px] " :class="!soundEnabled ? 'text-#4fd1c5' : ''">关闭</span>
+                <button type="button"
                   class="relative h-[18px] w-[34px] rounded-[999px] border border-white/10 bg-[#111214] p-0 transition-colors"
-                  :class="
-                    soundEnabled
-                      ? '!border-[rgba(20,199,225,0.75)] !bg-[rgba(20,199,225,0.35)]'
-                      : ''
-                  "
-                  @click="soundEnabled = !soundEnabled"
-                >
+                  :class="soundEnabled
+                    ? '!border-[rgba(20,199,225,0.75)] !bg-[rgba(20,199,225,0.35)]'
+                    : ''
+                    " @click="soundEnabled = !soundEnabled">
                   <span
                     class="absolute left-[1px] top-[1px] h-[14px] w-[14px] rounded-[999px] bg-white transition-transform"
-                    :class="soundEnabled ? 'translate-x-[16px]' : ''"
-                  />
+                    :class="soundEnabled ? 'translate-x-[16px]' : ''" />
                 </button>
-                <span class="text-[11px] " :class="soundEnabled ? 'text-#4fd1c5': ''">开启（与画面同步）</span>
-                 <n-tooltip trigger="hover">
-                <template #trigger>
-                  <i class="i-mingcute-question-line text-[12px] text-white/48 cursor-pointer"></i>
-                </template>
-                开启后视频将包含与画面内容同步的声音
-              </n-tooltip>
+                <span class="text-[11px] " :class="soundEnabled ? 'text-#4fd1c5' : ''">开启（与画面同步）</span>
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <i class="i-mingcute-question-line text-[12px] text-white/48 cursor-pointer"></i>
+                  </template>
+                  开启后视频将包含与画面内容同步的声音
+                </n-tooltip>
               </div>
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
               <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">样片模式:</div>
               <div class="min-w-0 flex-1 flex items-center gap-[8px]">
-                <span class="text-[11px]  " :class="!storyboardEnabled ? 'text-#4fd1c5': ''">关闭</span>
-                <button
-                  type="button"
+                <span class="text-[11px]  " :class="!storyboardEnabled ? 'text-#4fd1c5' : ''">关闭</span>
+                <button type="button"
                   class="relative h-[18px] w-[34px] rounded-[999px] border border-white/10 bg-[#111214] p-0 transition-colors"
-                  :class="
-                    storyboardEnabled
-                      ? '!border-[rgba(20,199,225,0.75)] !bg-[rgba(20,199,225,0.35)]'
-                      : ''
-                  "
-                  @click="storyboardEnabled = !storyboardEnabled"
-                >
+                  :class="storyboardEnabled
+                    ? '!border-[rgba(20,199,225,0.75)] !bg-[rgba(20,199,225,0.35)]'
+                    : ''
+                    " @click="storyboardEnabled = !storyboardEnabled">
                   <span
                     class="absolute left-[1px] top-[1px] h-[14px] w-[14px] rounded-[999px] bg-white transition-transform"
-                    :class="storyboardEnabled ? 'translate-x-[16px]' : ''"
-                  />
+                    :class="storyboardEnabled ? 'translate-x-[16px]' : ''" />
                 </button>
-                <span class="text-[11px]  " :class="storyboardEnabled ? 'text-#4fd1c5': ''">开启</span>
-                 <n-tooltip trigger="hover">
-                <template #trigger>
-                  <i class="i-mingcute-question-line text-[12px] text-white/48 cursor-pointer"></i>
-                </template>
-                开启样片模式后，需先生成样片预览，确认后再提交正式任务
-              </n-tooltip>
+                <span class="text-[11px]  " :class="storyboardEnabled ? 'text-#4fd1c5' : ''">开启</span>
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <i class="i-mingcute-question-line text-[12px] text-white/48 cursor-pointer"></i>
+                  </template>
+                  开启样片模式后，需先生成样片预览，确认后再提交正式任务
+                </n-tooltip>
               </div>
             </div>
 
@@ -201,34 +165,26 @@ const promptLength = computed(() => prompt.value.length)
               <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">随机种子:</div>
               <div class="min-w-0 flex-1">
                 <n-radio-group v-model:value="motionMode" size="small">
-                    <n-radio-button
-                      v-for="option in motionOptions"
-                      :key="option.value"
-                      :value="option.value"
-                      :label="option.label"
-                      class="!border-white/8 !bg-[#151618] !px-[10px] !text-[10px] !text-white/58 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
-                    />
+                  <n-radio-button v-for="option in motionOptions" :key="option.value" :value="option.value"
+                    :label="option.label"
+                    class="!border-white/8 !bg-[#151618] !px-[10px] !text-[10px] !text-white/58 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden" />
                 </n-radio-group>
-                 <n-tooltip trigger="hover">
-                <template #trigger>
-                  <i class="ml-[8px] i-mingcute-question-line text-[12px] text-white/48 cursor-pointer"></i>
-                </template>
-                随机：每次生成不同结果；稳定：尽量复现相同结果；微调/小变/大变/巨变：不同程度的变化
-              </n-tooltip>
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <i class="ml-[8px] i-mingcute-question-line text-[12px] text-white/48 cursor-pointer"></i>
+                  </template>
+                  随机：每次生成不同结果；稳定：尽量复现相同结果；微调/小变/大变/巨变：不同程度的变化
+                </n-tooltip>
               </div>
-              
+
             </div>
 
             <div class="mb-[12px] flex flex-col gap-[10px]">
               <div class=" shrink-0  pt-[2px] text-[11px] text-white/52">画面提示词:</div>
               <div class="min-w-0 flex-1">
-                <n-input
-                  v-model="prompt"
-                  type="textarea"
-                  :autosize="{ minRows: 8, maxRows: 8 }"
+                <n-input v-model="prompt" type="textarea" :autosize="{ minRows: 8, maxRows: 8 }"
                   class="text-[12px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/28"
-                  placeholder="描述你想生成的视频画面，例如：戴着围巾穿着蓝色T恤的男生和柯基小狗，坐在草坪上，3D卡通风格"
-                />
+                  placeholder="描述你想生成的视频画面，例如：戴着围巾穿着蓝色T恤的男生和柯基小狗，坐在草坪上，3D卡通风格" />
               </div>
             </div>
 
@@ -246,22 +202,17 @@ const promptLength = computed(() => prompt.value.length)
               </div>
 
             </div>
-            <n-button
-              type="warning"
-              size="small"
-              class="ml-auto !h-[32px] !rounded-[4px] !px-4 !text-[12px] !font-medium"
-            >
+            <n-button type="warning" size="small"
+              class="ml-auto !h-[32px] !rounded-[4px] !px-4 !text-[12px] !font-medium">
               后台执行
             </n-button>
           </div>
         </section>
 
         <section
-          class="border-b border-white/8 bg-[linear-gradient(180deg,#1f1f20_0%,#1a1a1b_100%)] min-[1200px]:border-b-0 min-[1200px]:border-r"
-        >
+          class="border-b border-white/8 bg-[linear-gradient(180deg,#1f1f20_0%,#1a1a1b_100%)] min-[1200px]:border-b-0 min-[1200px]:border-r">
           <div
-            class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[14px] pb-[13px] pt-[14px] text-[12px] text-white/82"
-          >
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[14px] pb-[13px] pt-[14px] text-[12px] text-white/82">
             首帧 / 尾帧图片
           </div>
 
@@ -269,30 +220,21 @@ const promptLength = computed(() => prompt.value.length)
             <div class="mb-[8px] text-[11px] text-[#f5b445]">首帧图片（开始画面）</div>
 
             <div class="mb-[10px] flex gap-[8px] rounded-[6px] bg-[#121315] p-[4px]">
-              <label class="inline-flex cursor-pointer items-center gap-[6px] px-[8px] py-[5px] text-[11px] text-white/72">
-                <input
-                  v-model="imageSource"
-                  type="radio"
-                  value="local"
-                  class="accent-[#18d2e5]"
-                />
+              <label
+                class="inline-flex cursor-pointer items-center gap-[6px] px-[8px] py-[5px] text-[11px] text-white/72">
+                <input v-model="imageSource" type="radio" value="local" class="accent-[#18d2e5]" />
                 本地上传
               </label>
-              <label class="inline-flex cursor-pointer items-center gap-[6px] px-[8px] py-[5px] text-[11px] text-white/72">
-                <input
-                  v-model="imageSource"
-                  type="radio"
-                  value="cloud"
-                  class="accent-[#18d2e5]"
-                />
+              <label
+                class="inline-flex cursor-pointer items-center gap-[6px] px-[8px] py-[5px] text-[11px] text-white/72">
+                <input v-model="imageSource" type="radio" value="cloud" class="accent-[#18d2e5]" />
                 云盘选择
               </label>
             </div>
 
             <div class="rounded-[4px] border border-white/5 bg-[#1b1c1e] p-[10px]">
               <div
-                class="flex min-h-[126px] flex-col items-center justify-center rounded-[4px] border border-dashed border-white/9 bg-[linear-gradient(180deg,#1d1e20_0%,#1a1b1d_100%)] text-center"
-              >
+                class="flex min-h-[126px] flex-col items-center justify-center rounded-[4px] border border-dashed border-white/9 bg-[linear-gradient(180deg,#1d1e20_0%,#1a1b1d_100%)] text-center">
                 <n-icon :size="38" :component="CloudUpload" class="text-white/62" />
                 <div class="mt-[10px] text-[11px] text-white/58">
                   Drop file here or
@@ -307,30 +249,21 @@ const promptLength = computed(() => prompt.value.length)
             <div class="mb-[8px] text-[11px] text-[#f5b445]">尾帧图片（结束画面）</div>
 
             <div class="mb-[10px] flex gap-[8px] rounded-[6px] bg-[#121315] p-[4px]">
-              <label class="inline-flex cursor-pointer items-center gap-[6px] px-[8px] py-[5px] text-[11px] text-white/72">
-                <input
-                  v-model="tailImageSource"
-                  type="radio"
-                  value="local"
-                  class="accent-[#18d2e5]"
-                />
+              <label
+                class="inline-flex cursor-pointer items-center gap-[6px] px-[8px] py-[5px] text-[11px] text-white/72">
+                <input v-model="tailImageSource" type="radio" value="local" class="accent-[#18d2e5]" />
                 本地上传
               </label>
-              <label class="inline-flex cursor-pointer items-center gap-[6px] px-[8px] py-[5px] text-[11px] text-white/72">
-                <input
-                  v-model="tailImageSource"
-                  type="radio"
-                  value="cloud"
-                  class="accent-[#18d2e5]"
-                />
+              <label
+                class="inline-flex cursor-pointer items-center gap-[6px] px-[8px] py-[5px] text-[11px] text-white/72">
+                <input v-model="tailImageSource" type="radio" value="cloud" class="accent-[#18d2e5]" />
                 云盘选择
               </label>
             </div>
 
             <div class="rounded-[4px] border border-white/5 bg-[#1b1c1e] p-[10px]">
               <div
-                class="flex min-h-[126px] flex-col items-center justify-center rounded-[4px] border border-dashed border-white/9 bg-[linear-gradient(180deg,#1d1e20_0%,#1a1b1d_100%)] text-center"
-              >
+                class="flex min-h-[126px] flex-col items-center justify-center rounded-[4px] border border-dashed border-white/9 bg-[linear-gradient(180deg,#1d1e20_0%,#1a1b1d_100%)] text-center">
                 <n-icon :size="38" :component="CloudUpload" class="text-white/62" />
                 <div class="mt-[10px] text-[11px] text-white/58">
                   Drop file here or
@@ -343,16 +276,13 @@ const promptLength = computed(() => prompt.value.length)
         </section>
 
         <section
-          class="relative flex min-h-[300px] min-w-0 items-center justify-center bg-[radial-gradient(circle_at_50%_45%,rgba(22,62,96,0.18),transparent_18%),#050608] min-[1200px]:min-h-0"
-        >
+          class="relative flex min-h-[300px] min-w-0 items-center justify-center bg-[radial-gradient(circle_at_50%_45%,rgba(22,62,96,0.18),transparent_18%),#050608] min-[1200px]:min-h-0">
           <div class="flex flex-col items-center">
             <div class="relative h-[134px] w-[134px]">
               <div
-                class="absolute left-[16px] top-[18px] h-[82px] w-[82px] rounded-[999px] border-[15px] border-[#081c3a] border-r-transparent border-t-[#0e2c56]"
-              />
+                class="absolute left-[16px] top-[18px] h-[82px] w-[82px] rounded-[999px] border-[15px] border-[#081c3a] border-r-transparent border-t-[#0e2c56]" />
               <div
-                class="absolute left-[42px] top-[43px] h-[44px] w-[44px] rounded-[999px] bg-[#198063] shadow-[0_0_0_4px_rgba(9,27,23,0.4)]"
-              />
+                class="absolute left-[42px] top-[43px] h-[44px] w-[44px] rounded-[999px] bg-[#198063] shadow-[0_0_0_4px_rgba(9,27,23,0.4)]" />
               <div class="absolute left-[91px] top-[27px] h-[26px] w-[26px] rounded-[999px] bg-[#0f8e67]" />
             </div>
             <div class="mt-[6px] text-[18px] tracking-[0.2px] text-white/42">AIKC</div>
