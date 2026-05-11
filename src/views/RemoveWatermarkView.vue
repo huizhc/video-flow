@@ -8,7 +8,7 @@ const uploadSource = ref('local')
 </script>
 
 <template>
-    <div class="text-white flex p-[20px]  min-h-screen bg-[#060709] overflow-hidden rounded-[18px] border border-white/8 bg-[#0b0d10]">
+    <div class="text-white flex p-[20px]  min-h-[500px] h-full bg-[#060709] overflow-hidden rounded-[18px] border border-white/8 bg-[#0b0d10]">
       <div class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[300px_300px_minmax(0,1fr)]">
         <section class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">

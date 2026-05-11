@@ -47,8 +47,8 @@ function goHome() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#060709] p-3 text-white">
-    <div class="overflow-hidden  border border-white/8 bg-[#0b0d10]">
+  <div class="h-full bg-[#060709] p-3 text-white">
+    <div class="overflow-hidden h-full border border-white/8 bg-[#0b0d10]">
 
       <div class="grid min-h-[calc(100vh-64px)] grid-cols-1 gap-x-[3px] sm:grid-cols-[275px_minmax(0,1fr)_265px]">
         <section class="bg-[#232323]">
@@ -106,7 +106,7 @@ function goHome() {
                 <span class="w-[52px] shrink-0">智能包装:</span>
                 <n-select
                   v-model:value="subtitleMode"
-                  size="small"
+                  size="tiny"
                   :options="[{ label: '选择样式', value: 'select' }]"
                   class="w-[92px]"
                 />
@@ -133,7 +133,7 @@ function goHome() {
                 <span class="w-[52px] shrink-0">字体大小:</span>
                 <n-select
                   v-model:value="fontSize"
-                  size="small"
+                  size="tiny"
                   :options="fontSizeOptions"
                   class="w-[150px]"
                 />

@@ -16,9 +16,9 @@ const languageOptions = [
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#060709] p-3 text-white">
-    <div class="overflow-hidden rounded-[18px] border border-white/8 bg-[#0b0d10]">
-      <div class="grid min-h-[calc(100vh-24px)] grid-cols-1 gap-x-[3px] lg:grid-cols-[275px_minmax(0,1fr)]">
+  <div class="h-full bg-[#060709] p-3 text-white">
+    <div class="overflow-hidden h-full flex  border border-white/8 bg-[#0b0d10]">
+      <div class="grid  grid-cols-1 gap-x-[15px] lg:grid-cols-[275px_minmax(0,1fr)]">
         <section class="bg-[#232323]">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
             通用翻译
@@ -34,7 +34,7 @@ const languageOptions = [
 
             <div class="mt-4 space-y-3 text-[11px] text-white/48">
               <div class="flex items-center gap-3">
-                <span class="w-[44px] shrink-0">原文语种：</span>
+                <span class="w-[60px] shrink-0">原文语种：</span>
                 <n-select
                   v-model:value="sourceLanguage"
                   size="small"
@@ -44,7 +44,7 @@ const languageOptions = [
               </div>
 
               <div class="flex items-center gap-3">
-                <span class="w-[44px] shrink-0">目标语种：</span>
+                <span class="w-[60px] shrink-0">目标语种：</span>
                 <n-select
                   v-model:value="targetLanguage"
                   size="small"
@@ -72,12 +72,12 @@ const languageOptions = [
           </div>
         </section>
 
-        <section class="bg-[#232323]">
+        <section class="bg-[#232323] flex flex-col">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
             结果
           </div>
-          <div class="p-3">
-            <div class="min-h-[calc(100vh-96px)] rounded-[2px] border border-white/6 bg-[#101214] p-3 text-[11px] leading-[1.7] text-white/38">
+          <div class="p-3 flex-1">
+            <div class="rounded-[2px] h-full border border-white/6 bg-[#101214] p-3 text-[11px] leading-[1.7] text-white/38">
               <div class="mb-3 text-white/45">结果示例：</div>
 
               <div class="space-y-4">

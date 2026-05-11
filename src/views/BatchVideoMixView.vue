@@ -19,9 +19,9 @@ function createProject() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#060709] p-3 text-white">
-    <div class="overflow-hidden rounded-[18px] border border-white/8 bg-[#0b0d10]">
-      <div class="min-h-[calc(100vh-24px)] bg-[#232323]">
+  <div class="h-full p-3 text-white">
+    <div class="overflow-hidden h-full border border-white/8 ">
+      <div class="bg-[#232323] h-full rd-[4px]">
         <div class="flex items-center px-3 py-3   justify-between gap-4">
           <div class="flex items-center gap-4">
             <div class="text-[13px] font-medium text-white/82">
@@ -34,7 +34,7 @@ function createProject() {
           <div class="flex items-center gap-2">
             <n-select
               v-model:value="sortValue"
-              size="small"
+              size="tiny"
               :options="sortOptions"
               class="w-[148px]"
             />
@@ -46,7 +46,7 @@ function createProject() {
             </button>
             <n-input
               v-model:value="keyword"
-              size="small"
+              size="tiny"
               placeholder="搜索项目"
               class="w-[138px]"
             >
@@ -70,7 +70,7 @@ function createProject() {
           </div>
         </div>
 
-        <div class="h-[calc(100vh-262px)]" />
+        <div class="" />
       </div>
     </div>
   </div>

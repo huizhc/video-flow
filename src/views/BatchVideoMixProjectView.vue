@@ -1,8 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { NButton, NColorPicker, NIcon, NInputNumber, NSelect } from 'naive-ui'
-import { CloudUpload, Currency, Information } from '@vicons/carbon'
+import { NButton, NColorPicker, NIcon, NInputNumber, NSelect, NTabs, NTabPane, NModal, NUpload, NUploadDragger, NRadioGroup, NRadioButton } from 'naive-ui'
+import { CloudUpload, Currency, Information, Close } from '@vicons/carbon'
 
 const router = useRouter()
 const uploadMode = ref('local')
@@ -15,8 +15,12 @@ const subtitleEnd = ref(85)
 const fontSize = ref('middle')
 const textColor = ref('#a9a9a9')
 const bgColor = ref('#6c6c6c')
-const audioMode = ref('none')
-const bgmEnabled = ref(false)
+
+// BGM states
+const showBgmModal = ref(false)
+const bgmUploadMode = ref('local')
+const bgmFileName = ref('')
+const bgmStatus = computed(() => bgmFileName.value || '未上传')
 const bgmVolume = ref(40)
 const videoDirection = ref('portrait')
 const resolution = ref('720p')
@@ -40,10 +44,10 @@ const subtitleModeOptions = [
 </script>
 
 <template>
-  <div class="min-h-screen overflow-x-auto bg-[#060709] p-3 text-white">
-    <div class="min-w-[1680px] rounded-[18px] border border-white/8 bg-[#0b0d10] p-2">
-      <div class="grid min-h-[calc(100vh-24px)] grid-cols-[300px_360px_360px_300px_500px] gap-2">
-        <section class="rounded-[8px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
+  <div class="h-full w-full min-h-[500px] bg-[#060709]  text-white">
+    <div class="h-full overflow-x-scroll flex set-scrollbar">
+      <div class="grid h-full p-3 grid-cols-[300px_360px_360px_300px_500px] gap-x-[15px]">
+        <section class="rounded-[8px] border w-full border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
           <div class="flex items-center justify-between border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-3 py-2">
             <div>
               <div class="text-[12px] text-white/84">基础素材</div>
@@ -59,18 +63,19 @@ const subtitleModeOptions = [
           </div>
 
           <div class="space-y-4 p-3">
-            <div class="flex items-center gap-4 border-b border-white/8 pb-2 text-[11px]">
-              <button
+            <n-tabs
+              v-model:value="baseMaterialTab"
+              type="line"
+              size="small"
+              class="[&_.n-tabs-tab]:!px-0 [&_.n-tabs-tab]:!text-[11px] [&_.n-tabs-tab]:!text-white/64 [&_.n-tabs-tab--active]:!text-[#18d2e5] [&_.n-tabs-bar]:!bg-[#18d2e5] [&_.n-tabs-nav]:!border-b [&_.n-tabs-nav]:!border-white/8"
+            >
+              <n-tab-pane
                 v-for="tab in baseMaterialTabs"
                 :key="tab.value"
-                type="button"
-                class="border-0 bg-transparent p-0"
-                :class="baseMaterialTab === tab.value ? 'text-[#18d2e5]' : 'text-white/64'"
-                @click="baseMaterialTab = tab.value"
-              >
-                {{ tab.label }}
-              </button>
-            </div>
+                :name="tab.value"
+                :tab="tab.label"
+              />
+            </n-tabs>
 
             <div>
               <div class="mb-1 text-[11px] text-white/74">口播音频</div>
@@ -115,7 +120,7 @@ const subtitleModeOptions = [
           </div>
         </section>
 
-        <section class="rounded-[8px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
+        <section class="rounded-[8px] border w-full border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-3 py-2">
             <div class="text-[12px] text-white/84">口播分段</div>
             <div class="mt-[2px] text-[10px] text-white/30">请撰写一屏的文案，强行换行分段，每</div>
@@ -132,7 +137,7 @@ const subtitleModeOptions = [
           </div>
         </section>
 
-        <section class="rounded-[8px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
+        <section class="rounded-[8px] border w-full border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-3 py-2">
             <div class="text-[12px] text-white/84">镜头序列</div>
             <div class="mt-[2px] text-[10px] text-white/30">弹镜选取以下镜头合并拼接，不勾镜头至少要有一个片段</div>
@@ -147,7 +152,7 @@ const subtitleModeOptions = [
         </section>
 
 
-        <section class="rounded-[8px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
+        <section class="rounded-[8px] border w-full border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-3 py-2">
             <div class="text-[12px] text-white/84">其他参数</div>
             <div class="mt-1 text-[10px] text-white/30">对成片字幕效果、音色和初始方向</div>
@@ -156,12 +161,12 @@ const subtitleModeOptions = [
           <div class="flex h-[calc(100%-49px)] flex-col justify-between p-3">
             <div class="space-y-[14px]">
               <div class="flex items-center gap-3">
-                <div class="w-[66px] shrink-0 text-[11px] text-white/48">音性包装:</div>
+                <div class="w-[66px] shrink-0 text-[11px] text-white/48">智能包装:</div>
                 <div class="min-w-0 flex-1">
                   <n-select
                     v-model:value="subtitleMode"
                     :options="subtitleModeOptions"
-                    size="small"
+                    size="tiny"
                     class="[&_.n-base-selection]:!min-h-[30px] [&_.n-base-selection]:!rounded-[4px] [&_.n-base-selection]:!border-white/8 [&_.n-base-selection]:!bg-[#151618] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[30px] [&_.n-base-selection-label]:!text-[11px] [&_.n-base-selection__render-label]:!text-white/82"
                   />
                 </div>
@@ -227,14 +232,14 @@ const subtitleModeOptions = [
                   <n-select
                     v-model:value="fontSize"
                     :options="[{ label: '中', value: 'middle' }]"
-                    size="small"
+                    size="tiny"
                     class="[&_.n-base-selection]:!min-h-[30px] [&_.n-base-selection]:!rounded-[4px] [&_.n-base-selection]:!border-white/8 [&_.n-base-selection]:!bg-[#151618] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[30px] [&_.n-base-selection-label]:!text-[11px] [&_.n-base-selection__render-label]:!text-white/82"
                   />
                 </div>
               </div>
 
               <div class="flex items-center gap-3">
-                <div class="w-[66px] shrink-0 text-[11px] text-white/48">字幕色彩:</div>
+                <div class="w-[66px] shrink-0 text-[11px] text-white/48">字幕底色:</div>
                 <div class="flex items-center gap-2">
                   <n-color-picker
                     v-model:value="textColor"
@@ -288,20 +293,22 @@ const subtitleModeOptions = [
 
 
               <div class="flex items-center gap-3">
-                <div class="w-[66px] shrink-0 text-[11px] text-white/48">音源音乐:</div>
-                <div class="flex items-center gap-2 text-[11px]">
+                <div class="w-[66px] shrink-0 text-[11px] text-white/48">背景音乐:</div>
+                <div class="flex items-center gap-2 text-[12px]">
+                  <span
+                    class="text-white/72"
+                    :class="bgmFileName ? 'text-[#18d2e5]' : 'text-white/34'"
+                  >
+                    {{ bgmStatus }}
+                  </span>
                   <button
                     type="button"
-                    class="border-0 bg-transparent p-0"
-                    :class="audioMode === 'none' ? 'text-white/72' : 'text-white/34'"
-                    @click="audioMode = 'none'"
+                    class="flex h-[30px] items-center justify-center rounded-[4px] border border-white/8 bg-transparent text-[12px] text-white/45 transition-colors hover:text-white/70"
+                    @click="showBgmModal = true"
                   >
-                    未上传
+                    <n-icon :component="CloudUpload" :size="14" />
+                    选择BGM
                   </button>
-                  <label class="flex items-center gap-1 text-white/34">
-                    <input v-model="bgmEnabled" type="checkbox" class="accent-[#18d2e5]" />
-                    勾选BGM
-                  </label>
                 </div>
               </div>
 
@@ -320,45 +327,36 @@ const subtitleModeOptions = [
               </div>
 
               <div class="flex items-center gap-3">
-                <div class="w-[66px] shrink-0 text-[11px] text-white/48">初始方向:</div>
-                <div class="flex items-center gap-2 text-[11px]">
-                  <button
-                    type="button"
-                    class="rounded-[4px] border px-3 py-[5px]"
-                    :class="videoDirection === 'portrait' ? 'border-[#18d2e5] bg-[#18d2e5]/12 text-[#42e7f4]' : 'border-white/8 bg-[#151618] text-white/58'"
-                    @click="videoDirection = 'portrait'"
-                  >
-                    竖屏
-                  </button>
-                  <button
-                    type="button"
-                    class="rounded-[4px] border px-3 py-[5px]"
-                    :class="videoDirection === 'landscape' ? 'border-[#18d2e5] bg-[#18d2e5]/12 text-[#42e7f4]' : 'border-white/8 bg-[#151618] text-white/58'"
-                    @click="videoDirection = 'landscape'"
-                  >
-                    横屏
-                  </button>
-                </div>
+                <div class="w-[66px] shrink-0 text-[11px] text-white/48">视频方向:</div>
+                <n-radio-group v-model:value="videoDirection" size="small" class="custom-radio-group">
+                    <n-radio-button
+                      value="portrait"
+                      label="竖屏"
+                      class="!bg-[#151618] !text-[11px] !text-white/58 [&.n-radio-button--checked]:!border-[#18d2e5] [&.n-radio-button--checked]:!bg-[#18d2e5]/12 [&.n-radio-button--checked]:!text-[#42e7f4] [&_.n-radio-button__state-border]:!hidden"
+                    />
+                    <n-radio-button
+                      value="landscape"
+                      label="横屏"
+                      class="!bg-[#151618] !text-[11px] !text-white/58 [&.n-radio-button--checked]:!border-[#18d2e5] [&.n-radio-button--checked]:!bg-[#18d2e5]/12 [&.n-radio-button--checked]:!text-[#42e7f4] [&_.n-radio-button__state-border]:!hidden"
+                    />
+                </n-radio-group>
               </div>
 
               <div class="flex items-start gap-3">
-                <div class="w-[66px] shrink-0 pt-[4px] text-[11px] text-white/48">初始尺寸:</div>
-                <div class="flex flex-wrap gap-2">
-                  <button
-                    v-for="item in resolutionOptions"
-                    :key="item"
-                    type="button"
-                    class="rounded-[4px] border px-3 py-1 text-[11px]"
-                    :class="resolution === item ? 'border-[#18d2e5] bg-[#18d2e5]/12 text-[#42e7f4]' : 'border-white/8 bg-[#151618] text-white/58'"
-                    @click="resolution = item"
-                  >
-                    {{ item }}
-                  </button>
-                </div>
+                <div class="w-[66px] shrink-0 pt-[4px] text-[11px] text-white/48">视频尺寸:</div>
+                <n-radio-group v-model:value="resolution" size="small" class="custom-radio-group">
+                    <n-radio-button
+                      v-for="item in resolutionOptions"
+                      :key="item"
+                      :value="item"
+                      :label="item"
+                      class="!bg-[#151618] !text-[11px] !text-white/58 [&.n-radio-button--checked]:!border-[#18d2e5] [&.n-radio-button--checked]:!bg-[#18d2e5]/12 [&.n-radio-button--checked]:!text-[#42e7f4] [&_.n-radio-button__state-border]:!hidden"
+                    />
+                </n-radio-group>
               </div>
 
               <div class="flex items-center gap-3">
-                <div class="w-[66px] shrink-0 text-[11px] text-white/48">数量范围:</div>
+                <div class="w-[66px] shrink-0 text-[11px] text-white/48">数量限制:</div>
                 <div class="flex items-center gap-[6px] text-[11px] text-white/36">
                   <span>-</span>
                   <n-input-number
@@ -378,7 +376,7 @@ const subtitleModeOptions = [
           </div>
         </section>
 
-        <section class="rounded-[8px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
+        <section class="rounded-[8px] border w-full border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-3 py-2">
             <div class="text-[12px] text-white/84">预览</div>
             <div class="mt-1 text-[10px] text-white/30">建议保留空镜头的新镜头</div>
@@ -406,9 +404,9 @@ const subtitleModeOptions = [
                   <n-icon :component="Information" :size="12" class="text-white/28" />
                 </div>
                 <n-button
-                  type="primary"
+                  type="warning"
                   size="small"
-                  class="!h-[28px] !rounded-[4px] !border-0 !bg-[#6d4a1a] !px-[12px] !text-[11px] !font-medium !text-[#c8892a]"
+                  class="!h-[28px] !px-3 !rounded-[4px] !text-[12px]"
                 >
                   后台执行
                 </n-button>
@@ -419,4 +417,84 @@ const subtitleModeOptions = [
       </div>
     </div>
   </div>
+
+  <n-modal v-model:show="showBgmModal" :mask-closable="true">
+    <div class="w-[600px] rounded-[8px] border border-white/10 bg-[#161719] p-4 text-white shadow-2xl">
+      <div class="mb-4 flex items-center justify-between">
+        <span class="text-[14px] font-medium">选择背景音乐</span>
+        <button
+          type="button"
+          class="flex h-6 w-6 items-center justify-center rounded-full hover:bg-white/5"
+          @click="showBgmModal = false"
+        >
+          <n-icon :component="Close" :size="18" class="text-white/45" />
+        </button>
+      </div>
+
+      <div class="mb-4 rounded-[6px] bg-[#1a1c1e] p-4">
+        <div class="mb-4 flex gap-6 text-[12px]">
+          <label class="flex cursor-pointer items-center gap-2">
+            <input
+              v-model="bgmUploadMode"
+              type="radio"
+              value="local"
+              class="accent-[#18d2e5]"
+            />
+            <span :class="bgmUploadMode === 'local' ? 'text-[#18d2e5]' : 'text-white/65'">本地上传</span>
+          </label>
+          <label class="flex cursor-pointer items-center gap-2 opacity-50">
+            <input
+              v-model="bgmUploadMode"
+              type="radio"
+              value="cloud"
+              class="accent-[#18d2e5]"
+              disabled
+            />
+            <span :class="bgmUploadMode === 'cloud' ? 'text-[#18d2e5]' : 'text-white/65'">云盘选择</span>
+          </label>
+        </div>
+
+        <n-upload
+          multiple
+          directory-dnd
+          :max="1"
+          accept=".mp3,.wav,.m4a,.aac"
+          @change="(data) => {
+            if (data.fileList.length > 0) {
+              bgmFileName = data.fileList[0].name
+            }
+          }"
+        >
+          <n-upload-dragger
+            class="!border-dashed !border-white/10 !bg-[#17181a] hover:!border-[#18d2e5]/40"
+          >
+            <div class="flex flex-col items-center py-6">
+              <n-icon :component="CloudUpload" :size="48" class="mb-4 text-white/30" />
+              <div class="text-[12px] text-white/65">
+                Drop file here or <span class="text-[#18d2e5]">click to upload</span>
+              </div>
+            </div>
+          </n-upload-dragger>
+        </n-upload>
+
+        <div class="mt-4 text-[11px] text-white/30">
+          支持 mp3/wav/m4a/aac 格式，单个文件50MB以内
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <n-button
+          class="!h-[32px] !rounded-[4px] !bg-[#2a2c2f] !px-6 !text-[12px] !text-white/80 hover:!bg-[#323437]"
+          @click="showBgmModal = false"
+        >
+          关闭
+        </n-button>
+      </div>
+    </div>
+  </n-modal>
 </template>
+<style lang="scss" scoped>
+.set-scrollbar {
+  scrollbar-color: #494949 #2a2a2a; /* 滑块颜色 轨道颜色 */
+}
+</style>

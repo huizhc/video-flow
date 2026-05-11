@@ -34,8 +34,8 @@ const speechStyleOptions = [
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#060709] p-[20px] text-white">
-    <div class="flex min-h-[calc(100vh-40px)] overflow-hidden rounded-[18px] border border-white/8 bg-[#0b0d10]">
+  <div class="h-full bg-[#060709] p-[20px] text-white">
+    <div class="flex h-full overflow-hidden  border border-white/8 bg-[#0b0d10]">
       <div class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[300px_300px_minmax(0,1fr)]">
         <section class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
@@ -72,7 +72,7 @@ const speechStyleOptions = [
                 <span class="w-[48px] shrink-0">目标语种:</span>
                 <n-select
                   v-model:value="targetLanguage"
-                  size="small"
+                  size="tiny"
                   :options="languageOptions"
                   class="flex-1"
                 />
@@ -82,7 +82,7 @@ const speechStyleOptions = [
                 <span class="w-[48px] shrink-0">口播音色:</span>
                 <n-select
                   v-model:value="voiceRole"
-                  size="small"
+                  size="tiny"
                   :options="voiceRoleOptions"
                   class="flex-1"
                 />
@@ -98,7 +98,7 @@ const speechStyleOptions = [
                 <span class="w-[48px] shrink-0">语调风格:</span>
                 <n-select
                   v-model:value="speechStyle"
-                  size="small"
+                  size="tiny"
                   :options="speechStyleOptions"
                   class="flex-1"
                 />
