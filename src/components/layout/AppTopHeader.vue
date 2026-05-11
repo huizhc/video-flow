@@ -111,10 +111,10 @@ function goBack() {
       </button>
     </div>
 
-    <div v-if="!isLoggedIn" class="flex items-center gap-5 text-sm text-gray-400">
+    <div class="flex items-center gap-5 text-sm text-gray-400">
       <button
         type="button"
-        class="top-nav-pill-button top-nav-placeholder-button"
+        class="top-nav-text-button top-nav-placeholder-button"
         @click="goTerms"
       >
         <n-icon :size="16" :component="DocumentTasks" />
@@ -122,65 +122,43 @@ function goBack() {
       </button>
       <button
         type="button"
-        class="top-nav-pill-button top-nav-placeholder-button"
+        class="top-nav-text-button top-nav-placeholder-button"
         @click="goPrivacy"
       >
         <n-icon :size="16" :component="Document" />
         隐私政策
       </button>
-      <n-button type="primary" size="small" @click="onLoginClick">登录</n-button>
-      <n-dropdown trigger="click" :options="langOptions">
-        <n-button quaternary size="small" class="!text-gray-300">
-          <span class="flex items-center gap-1">
-            <n-icon :size="16" :component="Language" />
-            简体中文
-            <n-icon :size="14" :component="ChevronDown" />
-          </span>
-        </n-button>
-      </n-dropdown>
-    </div>
 
-    <div v-else class="flex items-center gap-5 text-sm text-gray-400">
-      <button
-        type="button"
-        class="top-nav-text-button top-nav-placeholder-button"
-        @click="goTerms"
-      >
-        <n-icon :size="16" :component="DocumentTasks" />
-        服务条款
-      </button>
-      <button
-        type="button"
-        class="top-nav-text-button top-nav-placeholder-button"
-        @click="goPrivacy"
-      >
-        <n-icon :size="16" :component="Document" />
-        隐私政策
-      </button>
-      <button
-        type="button"
-        class="top-nav-text-button top-nav-placeholder-button"
-        @click="openSupportQr"
-      >
-        <n-icon :size="16" :component="Headset" />
-        联系客服
-      </button>
-      <button
-        type="button"
-        class="top-nav-text-button top-nav-placeholder-button"
-        @click="goInvite"
-      >
-        <n-icon :size="16" :component="Gift" />
-        邀请有礼
-      </button>
-      <button
-        type="button"
-        class="flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 text-amber-400/90 transition-colors hover:text-amber-300"
-        @click="goRechargeTab"
-      >
-        <n-icon :size="16" :component="Currency" />
-        5000 算力
-      </button>
+      <template v-if="!isLoggedIn">
+        <n-button type="primary" size="small" @click="onLoginClick">登录</n-button>
+      </template>
+      <template v-else>
+        <button
+          type="button"
+          class="top-nav-text-button top-nav-placeholder-button"
+          @click="openSupportQr"
+        >
+          <n-icon :size="16" :component="Headset" />
+          联系客服
+        </button>
+        <button
+          type="button"
+          class="top-nav-text-button top-nav-placeholder-button"
+          @click="goInvite"
+        >
+          <n-icon :size="16" :component="Gift" />
+          邀请有礼
+        </button>
+        <button
+          type="button"
+          class="flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 text-amber-400/90 transition-colors hover:text-amber-300"
+          @click="goRechargeTab"
+        >
+          <n-icon :size="16" :component="Currency" />
+          5000 算力
+        </button>
+      </template>
+
       <n-dropdown trigger="click" :options="langOptions">
         <n-button quaternary size="small" class="!text-gray-300">
           <span class="flex items-center gap-1">
