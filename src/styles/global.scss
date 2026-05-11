@@ -1,3 +1,13 @@
+.btn-close {
+  background: none;      /* 去掉背景 */
+  border: none;          /* 去掉边框 */
+  padding: 0;            /* 去掉内边距 */
+  font: inherit;         /* 继承父元素字体，不再使用浏览器默认粗体 */
+  color: inherit;        /* 继承父元素文字颜色，不再强制使用黑色 */
+  cursor: pointer;       /* 可选：保留手型指针，保持点击感 */
+  outline: none;         /* 可选：去掉点击时的蓝色外圈（但建议保留焦点样式用于可访问性） */
+}
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
