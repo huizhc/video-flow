@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { Currency, Information } from '@vicons/carbon'
-import { NButton, NIcon, NInput, NSelect } from 'naive-ui'
+import { NButton, NIcon, NInput, NSelect, NRadioGroup, NRadioButton, NSpace } from 'naive-ui'
 
 const modelVersion = ref('veo-31-preview')
 const generationMode = ref('text-video')
@@ -51,10 +51,9 @@ const promptLength = computed(() => prompt.value.length)
 </script>
 
 <template>
-  <div class="min-h-screen bg-#000 p-[20px] text-white">
-    <div
-      class="min-h-[calc(100vh-40px)] overflow-hidden rounded-[18px] border border-white/8 bg-[#0a0b0d] shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]">
-      <div class="grid min-h-[calc(100vh-40px)] grid-cols-1 sm:grid-cols-[minmax(0,430px)_minmax(0,1fr)]">
+  <div class="min-h-[500px] h-full bg-#000 p-[20px] text-white">
+    <div class="h-full overflow-hidden border border-white/8  shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]">
+      <div class="grid h-full grid-cols-1 sm:grid-cols-[minmax(0,500px)_minmax(0,1fr)]">
         <section
           class="border-b border-white/8 bg-[linear-gradient(180deg,#1f1f20_0%,#1a1a1b_100%)] min-[1200px]:border-b-0 min-[1200px]:border-r">
           <div
@@ -71,95 +70,81 @@ const promptLength = computed(() => prompt.value.length)
               </div>
             </div>
 
-            <div class="mb-[12px] flex items-start gap-[10px]">
+            <div class="mb-[12px] flex items-center gap-[10px]">
               <div class="w-[58px] shrink-0 pt-[2px] text-[11px] text-white/52">生成方式:</div>
               <div class="min-w-0 flex-1">
-                <div class="flex flex-wrap gap-[6px]">
-                  <button v-for="option in generationModes" :key="option.value" type="button"
-                    class="h-[24px] rounded-[4px] border border-white/8 bg-[#151618] px-[10px] text-[10px] text-white/72 transition-colors"
-                    :class="generationMode === option.value
-                      ? '!border-[#14c7e1] !bg-[#14c7e1] !text-white'
-                      : ''
-                      " @click="generationMode = option.value">
+                <n-radio-group v-model:value="generationMode" size="small" name="generationMode">
+                  <n-radio-button v-for="option in generationModes" :key="option.value" :value="option.value"
+                    class="!bg-[#151618] !text-[10px] !text-white/72 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden [&_.n-radio-button__background]:!hidden [&_.n-radio-button__content]:!px-[10px] [&_.n-radio-button__content]:!h-full [&_.n-radio-button__content]:!flex [&_.n-radio-button__content]:!items-center">
                     {{ option.label }}
-                  </button>
-                </div>
+                  </n-radio-button>
+                </n-radio-group>
               </div>
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
               <div class="w-[58px] shrink-0 pt-[2px] text-[11px] text-white/52">视频时长:</div>
               <div class="min-w-0 flex-1">
-                <div class="flex flex-wrap gap-[6px]">
-                  <button v-for="option in durationOptions" :key="option.value" type="button"
-                    class="h-[24px] min-w-[36px] rounded-[4px] border border-white/8 bg-[#151618] px-[12px] text-[10px] text-white/72 transition-colors"
-                    :class="duration === option.value
-                      ? '!border-[#14c7e1] !bg-[#14c7e1] !text-white'
-                      : ''
-                      " @click="duration = option.value">
+                <n-radio-group v-model:value="duration" name="duration" size="small">
+                  <n-radio-button v-for="option in durationOptions" :key="option.value" :value="option.value"
+                    class=" !bg-[#151618] !text-[10px] !text-white/72 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden [&_.n-radio-button__background]:!hidden [&_.n-radio-button__content]:!px-[12px] [&_.n-radio-button__content]:!h-full [&_.n-radio-button__content]:!flex [&_.n-radio-button__content]:!items-center">
                     {{ option.label }}
-                  </button>
-                </div>
+                  </n-radio-button>
+                </n-radio-group>
               </div>
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
               <div class="w-[58px] shrink-0 pt-[2px] text-[11px] text-white/52">分辨率:</div>
               <div class="min-w-0 flex-1">
-                <div class="flex flex-wrap gap-[6px]">
-                  <button v-for="option in resolutionOptions" :key="option.value" type="button"
-                    class="h-[24px] min-w-[48px] rounded-[4px] border border-white/8 bg-[#151618] px-[10px] text-[10px] text-white/72 transition-colors"
-                    :class="resolution === option.value
-                      ? '!border-[#14c7e1] !bg-[#14c7e1] !text-white'
-                      : ''
-                      " @click="resolution = option.value">
+                <n-radio-group v-model:value="resolution" name="resolution" size="small">
+                  <n-radio-button v-for="option in resolutionOptions" :key="option.value" :value="option.value"
+                    class=" !bg-[#151618] !text-[10px] !text-white/72 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden [&_.n-radio-button__background]:!hidden [&_.n-radio-button__content]:!px-[10px] [&_.n-radio-button__content]:!h-full [&_.n-radio-button__content]:!flex [&_.n-radio-button__content]:!items-center">
                     {{ option.label }}
-                  </button>
-                </div>
+                  </n-radio-button>
+                </n-radio-group>
               </div>
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
               <div class="w-[58px] shrink-0 pt-[2px] text-[11px] text-white/52">宽高比例:</div>
               <div class="min-w-0 flex-1">
-                <div class="flex flex-wrap gap-[6px]">
-                  <button v-for="option in ratioOptions" :key="option.value" type="button"
-                    class="h-[24px] min-w-[48px] rounded-[4px] border border-white/8 bg-[#151618] px-[10px] text-[10px] text-white/72 transition-colors"
-                    :class="aspectRatio === option.value
-                      ? '!border-[#14c7e1] !bg-[#14c7e1] !text-white'
-                      : ''
-                      " @click="aspectRatio = option.value">
+                <n-radio-group v-model:value="aspectRatio" name="aspectRatio" size="small">
+                  <n-radio-button v-for="option in ratioOptions" :key="option.value" :value="option.value"
+                    class=" !bg-[#151618] !text-[10px] !text-white/72 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden [&_.n-radio-button__background]:!hidden [&_.n-radio-button__content]:!px-[10px] [&_.n-radio-button__content]:!h-full [&_.n-radio-button__content]:!flex [&_.n-radio-button__content]:!items-center">
                     {{ option.label }}
-                  </button>
-                </div>
+                  </n-radio-button>
+                </n-radio-group>
               </div>
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
               <div class="w-[58px] shrink-0 pt-[2px] text-[11px] text-white/52">随机种子:</div>
               <div class="min-w-0 flex-1 flex items-center gap-[6px]">
-                <div class="flex flex-wrap gap-[6px]">
-                  <button v-for="option in motionOptions" :key="option.value" type="button"
-                    class="h-[24px] min-w-[36px] rounded-[4px] border border-white/8 bg-[#151618] px-[10px] text-[10px] text-white/72 transition-colors"
-                    :class="motionMode === option.value
-                      ? '!border-[#14c7e1] !bg-[#14c7e1] !text-white'
-                      : ''
-                      " @click="motionMode = option.value">
+                <n-radio-group v-model:value="motionMode" name="motionMode" size="small">
+                  <n-radio-button v-for="option in motionOptions" :key="option.value" :value="option.value"
+                    class=" !bg-[#151618] !text-[10px] !text-white/72 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden [&_.n-radio-button__background]:!hidden [&_.n-radio-button__content]:!px-[10px] [&_.n-radio-button__content]:!h-full [&_.n-radio-button__content]:!flex [&_.n-radio-button__content]:!items-center">
                     {{ option.label }}
-                  </button>
-                </div>
-                <button type="button"
+                  </n-radio-button>
+                </n-radio-group>
+                <!-- <button type="button"
                   class="inline-flex h-[16px] w-[16px] items-center justify-center border-0 bg-transparent text-white/38">
                   <n-icon :size="12" :component="Information" />
-                </button>
+                </button> -->
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <i class="i-mingcute-question-line text-white/48 cursor-pointer"></i>
+                  </template>
+                  随机：每次生成不同结果；稳定：尽量复现相同结果；微调/小变/大变/巨变：不同程度的变化
+                </n-tooltip>
               </div>
             </div>
 
-            <div class="mb-[12px] flex items-start gap-[10px]">
+            <div class="mb-[12px] flex flex-col gap-[10px]">
               <div class="w-[58px] shrink-0 pt-[2px] text-[11px] text-white/52">提示词:</div>
               <div class="min-w-0 flex-1">
                 <n-input v-model:value="prompt" type="textarea" :autosize="{ minRows: 8, maxRows: 8 }"
-                  class="[&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/28"
+                  class="text-[12px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/28"
                   placeholder="描述你想生成的视频画面（支持对白、音效与环境声描述）" />
               </div>
             </div>
@@ -167,13 +152,14 @@ const promptLength = computed(() => prompt.value.length)
             <div class="mt-[12px] flex items-center justify-between gap-[10px]">
               <div class="flex flex-wrap items-center gap-[5px] text-[11px] text-white/48">
                 <span>消耗算力：</span>
-                <n-icon :size="14" :component="Currency" />
+                <n-icon :size="14" class="text-[#ffd24c]" :component="Currency" />
                 <span class="font-semibold text-[#ffd24c]">44800</span>
-                <button type="button"
-                  class="inline-flex h-[16px] w-[16px] items-center justify-center border-0 bg-transparent text-white/38">
-                  <n-icon :size="12" :component="Information" />
-                </button>
-                <span class="ml-[4px] text-white/30">提示词 {{ promptLength }} 字</span>
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <i class="i-mingcute-question-line text-white/48 cursor-pointer"></i>
+                  </template>
+                  根据视频时长计算
+                </n-tooltip>
               </div>
 
               <n-button type="warning" size="small" class="!h-[32px] !rounded-[4px] !px-4 !text-[12px] !font-medium">
