@@ -80,7 +80,8 @@ const menuOptions = computed(() => [
       { label: '个人中心', key: 'profile', icon: menuIcon(User) },
     ],
   },
-].filter((g) => g.key !== 'group-project' || isLoggedIn.value))
+// ].filter((g) => g.key !== 'group-project' || isLoggedIn.value))
+]) // TODO
 
 const menuRouteByKey = {
   'my-tasks': 'my-tasks',
