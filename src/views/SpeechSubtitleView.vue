@@ -54,7 +54,7 @@ function goHome() {
   <div class="h-full bg-[#060709] p-3 text-white">
     <div class="overflow-hidden h-full border border-white/8 bg-[#0b0d10]">
 
-      <div class="grid min-h-[calc(100vh-64px)] grid-cols-1 gap-x-[3px] sm:grid-cols-[480px_minmax(0,1fr)_480px]">
+      <div class="grid min-h-[calc(100vh-64px)] grid-cols-1 gap-x-[15px] sm:grid-cols-[480px_minmax(0,1fr)_480px]">
         <section class="bg-[#232323]">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
             识别语音加字幕

@@ -10,9 +10,9 @@ const scriptLength = computed(() => script.value.length)
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#060709] p-[20px] text-white">
-    <div class="flex min-h-[calc(100vh-40px)] overflow-hidden rounded-[18px] border border-white/8 bg-[#0b0d10]">
-      <div class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[275px_265px_minmax(0,1fr)]">
+  <div class="min-h-[500px] h-full p-[20px] text-white">
+    <div class="flex h-full overflow-hidden border border-white/8 ">
+      <div class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[400px_400px_minmax(0,1fr)]">
         <section class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
             声音样本
@@ -54,7 +54,7 @@ const scriptLength = computed(() => script.value.length)
                 type="textarea"
                 :autosize="{ minRows: 7, maxRows: 7 }"
                 placeholder="例如：大家好，我是小明，今天天气不错，陪单元见证大家。"
-                class="[&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.6] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/24"
+                class="text-[12px] [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.6] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/24"
               />
               <div class="pt-1 text-right text-[10px] text-white/32">输入字数：{{ scriptLength }}</div>
             </div>
@@ -66,7 +66,7 @@ const scriptLength = computed(() => script.value.length)
                 type="textarea"
                 :autosize="{ minRows: 5, maxRows: 5 }"
                 placeholder="例如：请用温柔的语气说话。"
-                class="[&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.6] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/24"
+                class="text-[12px] [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.6] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/24"
               />
             </div>
 
@@ -74,12 +74,13 @@ const scriptLength = computed(() => script.value.length)
               <span class="text-white/48">消耗算力：</span>
               <n-icon :size="14" :component="Currency" />
               <span class="font-medium">400</span>
-              <button
-                type="button"
-                class="ml-0.5 flex h-[14px] w-[14px] items-center justify-center rounded-full text-white/34 transition-colors hover:text-white/58"
-              >
-                <n-icon :size="12" :component="Information" />
-              </button>
+              <!-- <n-tooltip trigger="hover">
+                <template #trigger>
+                   <n-icon size="40">
+                  </n-icon>
+                </template>
+                根据口播字数计算，每50字400算力
+              </n-tooltip> -->
             </div>
 
             <div class="pt-4 flex justify-end">

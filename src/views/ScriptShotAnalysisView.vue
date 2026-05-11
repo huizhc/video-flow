@@ -7,9 +7,9 @@ const uploadSource = ref('local')
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#060709] p-3 text-white">
-    <div class="overflow-hidden rounded-[18px] border border-white/8 bg-[#0b0d10]">
-      <div class="grid min-h-[calc(100vh-24px)] grid-cols-1 gap-x-[3px] lg:grid-cols-[275px_minmax(0,1fr)]">
+  <div class="min-h-[500px] h-full bg-[#060709] p-3 text-white">
+    <div class="overflow-hidden h-full border border-white/8 bg-[#0b0d10]">
+      <div class="grid h-full grid-cols-1 gap-x-[15px] lg:grid-cols-[275px_minmax(0,1fr)]">
         <section class="bg-[#232323]">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
             提取视频文案分析镜头
@@ -35,12 +35,12 @@ const uploadSource = ref('local')
           </div>
         </section>
 
-        <section class="bg-[#232323]">
+        <section class="bg-[#232323] flex flex-col">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
             结果
           </div>
-          <div class="p-3">
-            <div class="min-h-[calc(100vh-96px)] rounded-[2px] border border-white/6 bg-[#101214]" />
+          <div class="p-3 flex-1">
+            <div class="h-full rounded-[2px] border border-white/6 bg-[#101214]" />
           </div>
         </section>
       </div>

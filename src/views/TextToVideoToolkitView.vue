@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from 'vue'
-import { NButton, NIcon, NInput, NRadio, NRadioGroup, NSelect } from 'naive-ui'
+import { NButton, NIcon, NInput, NRadio, NRadioGroup, NSelect, NRadioButton } from 'naive-ui'
 import { CloudUpload, Currency } from '@vicons/carbon'
 
 const imageSource = ref('local')
 const model = ref('runninghub-normal')
 const duration = ref('10s')
 const direction = ref('vertical-720')
-const selectedCharacter = ref(null)
+const selectedCharacters = ref([])
 const prompt = ref(`请输入画面提示词，例如
 镜头1（00:00-00:05）
 [主角动作]：模特微笑侧身与 SIMC（全保镜头）...
@@ -36,12 +36,21 @@ const characters = [
   'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=crop&w=120&q=80',
   'https://images.unsplash.com/photo-1546961329-78bef0414d7c?auto=format&fit=crop&w=120&q=80',
 ]
+
+function toggleCharacter(index) {
+  const i = selectedCharacters.value.indexOf(index)
+  if (i === -1) {
+    selectedCharacters.value.push(index)
+  } else {
+    selectedCharacters.value.splice(i, 1)
+  }
+}
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#060709] p-[20px] text-white">
-    <div class="flex min-h-[calc(100vh-40px)] overflow-hidden rounded-[18px] border border-white/8 bg-[#0b0d10]">
-      <div class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[300px_300px_minmax(0,1fr)]">
+  <div class="min-h-[500px] h-full  p-[20px] text-white">
+    <div class="flex h-full overflow-hidden border border-white/8 ">
+      <div class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[400px_400px_minmax(0,1fr)]">
         <section class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
             参考图片
@@ -75,7 +84,7 @@ const characters = [
           <div class="px-3 py-3 text-[11px] text-white/48">
             <div class="space-y-4">
               <div class="flex items-center gap-3">
-                <span class="w-[52px] shrink-0">选择模型:</span>
+                <span class="w-[62px] shrink-0">选择模型:</span>
                 <n-select
                   v-model:value="model"
                   size="small"
@@ -85,72 +94,65 @@ const characters = [
               </div>
 
               <div class="flex items-center gap-3">
-                <span class="w-[52px] shrink-0">视频时长:</span>
-                <div class="inline-flex overflow-hidden rounded-[2px] border border-white/10 bg-[#16181a]">
-                  <button
-                    type="button"
-                    class="h-[24px] min-w-[40px] border-0 px-3 text-[11px] transition-colors"
-                    :class="duration === '10s' ? 'bg-[#18d2e5] text-white' : 'bg-transparent text-white/56'"
-                    @click="duration = '10s'"
-                  >
-                    10秒
-                  </button>
-                  <button
-                    type="button"
-                    class="h-[24px] min-w-[40px] border-0 px-3 text-[11px] transition-colors"
-                    :class="duration === '15s' ? 'bg-[#18d2e5] text-white' : 'bg-transparent text-white/56'"
-                    @click="duration = '15s'"
-                  >
-                    15秒
-                  </button>
-                </div>
+                <span class="w-[62px] shrink-0">视频时长:</span>
+                <n-radio-group v-model:value="duration" size="small" class="custom-radio-group">
+                  <n-radio-button
+                    value="10s"
+                    label="10秒"
+                    class="!bg-transparent !text-[11px] !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                  />
+                  <n-radio-button
+                    value="15s"
+                    label="15秒"
+                    class="!bg-transparent !text-[11px] !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                  />
+                </n-radio-group>
               </div>
 
               <div class="flex items-center gap-3">
-                <span class="w-[52px] shrink-0">方向尺寸:</span>
-                <div class="flex flex-wrap gap-1.5">
-                  <button
-                    v-for="item in [
-                      { label: '竖屏720P', value: 'vertical-720' },
-                      { label: '竖屏1080P', value: 'vertical-1080' },
-                      { label: '横屏720P', value: 'horizontal-720' },
-                      { label: '横屏1080P', value: 'horizontal-1080' },
-                    ]"
-                    :key="item.value"
-                    type="button"
-                    class="h-[24px] rounded-[2px] border border-white/10 px-2.5 text-[10px] transition-colors"
-                    :class="direction === item.value ? 'bg-[#18d2e5] text-white' : 'bg-[#16181a] text-white/56'"
-                    @click="direction = item.value"
-                  >
-                    {{ item.label }}
-                  </button>
-                </div>
+                <span class="w-[62px] shrink-0">方向尺寸:</span>
+                <n-radio-group v-model:value="direction" size="small" class="custom-radio-group">
+                    <n-radio-button
+                      v-for="item in [
+                        { label: '竖屏720P', value: 'vertical-720' },
+                        { label: '竖屏1080P', value: 'vertical-1080' },
+                        { label: '横屏720P', value: 'horizontal-720' },
+                        { label: '横屏1080P', value: 'horizontal-1080' },
+                      ]"
+                      :key="item.value"
+                      :value="item.value"
+                      :label="item.label"
+                      class="!bg-[#16181a] !text-[10px] !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    />
+                </n-radio-group>
               </div>
 
-              <div class="flex items-start gap-3">
-                <span class="w-[52px] shrink-0 pt-1">角色(可选):</span>
+              <div class="flex items-center gap-3">
+                <span class="w-[62px] shrink-0 pt-1">角色(可选):</span>
                 <div class="flex flex-wrap gap-2">
                   <button
                     v-for="(avatar, index) in characters"
                     :key="avatar"
                     type="button"
-                    class="h-[34px] w-[34px] overflow-hidden rounded-full border transition-colors"
-                    :class="selectedCharacter === index ? 'border-[#18d2e5]' : 'border-white/12'"
-                    @click="selectedCharacter = index"
+                    class="h-[56px] w-[56px] overflow-hidden rounded-full border transition-colors"
+                    :class="selectedCharacters.includes(index) ? 'border-[#18d2e5]' : 'border-white/12'"
+                    @click="toggleCharacter(index)"
                   >
                     <img :src="avatar" alt="" class="h-full w-full object-cover" />
                   </button>
-                  <div class="w-full text-[10px] text-white/34">未选中角色</div>
+                  <div class="w-full text-[10px] text-white/34">
+                    {{ selectedCharacters.length > 0 ? `已选中 ${selectedCharacters.length} 个角色` : '未选中角色' }}
+                  </div>
                 </div>
               </div>
 
-              <div class="flex items-start gap-3">
-                <span class="w-[52px] shrink-0 pt-1">提示词:</span>
+              <div class="flex items-center gap-3">
+                <span class="w-[62px] shrink-0 pt-1">提示词:</span>
                 <n-input
                   v-model:value="prompt"
                   type="textarea"
                   :autosize="{ minRows: 11, maxRows: 11 }"
-                  class="flex-1 [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.55] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/28"
+                  class="text-[12px] flex-1 [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.55] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/28"
                 />
               </div>
             </div>

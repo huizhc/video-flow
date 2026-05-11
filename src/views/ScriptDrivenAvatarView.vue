@@ -12,8 +12,8 @@ const prompt = ref('')
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#060709] p-[20px] text-white">
-    <div class="flex min-h-[calc(100vh-40px)] overflow-hidden rounded-[18px] border border-white/8 bg-[#0b0d10]">
+  <div class="h-full min-h-[500px] bg-[#060709] p-[20px] text-white">
+    <div class="flex h-full overflow-hidden  border border-white/8 ">
       <div class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[300px_300px_minmax(0,1fr)]">
         <section class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
@@ -70,7 +70,7 @@ const prompt = ref('')
           <div class="px-3 py-3 text-[11px] text-white/48">
             <div class="space-y-3">
               <div class="flex items-center gap-3">
-                <span class="w-[56px] shrink-0">视频方向:</span>
+                <span class="w-[66px] shrink-0">视频方向:</span>
                 <div class="inline-flex overflow-hidden rounded-[2px] border border-white/10 bg-[#16181a]">
                   <button
                     type="button"
@@ -92,7 +92,7 @@ const prompt = ref('')
               </div>
 
               <div class="flex items-center gap-3">
-                <span class="w-[56px] shrink-0">视频分辨率:</span>
+                <span class="w-[66px] shrink-0">视频分辨率:</span>
                 <div class="inline-flex overflow-hidden rounded-[2px] border border-white/10 bg-[#16181a]">
                   <button
                     type="button"
@@ -122,7 +122,7 @@ const prompt = ref('')
                   type="textarea"
                   :autosize="{ minRows: 6, maxRows: 6 }"
                   placeholder="例如：大家好，我是小明，今天天气不错，很高兴见到大家。"
-                  class="[&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[12px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/28"
+                  class="text-[12px] [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[12px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/28"
                 />
                 <div class="pt-2 text-right text-[11px] text-white/34">输入字数：0</div>
               </div>
@@ -134,7 +134,7 @@ const prompt = ref('')
                   type="textarea"
                   :autosize="{ minRows: 5, maxRows: 5 }"
                   placeholder="例如：请用温柔的语气说话。"
-                  class="[&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[12px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/28"
+                  class="text-[12px] [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[12px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/28"
                 />
               </div>
             </div>

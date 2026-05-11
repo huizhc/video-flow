@@ -21,8 +21,8 @@ const speechStyleOptions = [
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#060709] p-[20px] text-white">
-    <div class="flex min-h-[calc(100vh-40px)] overflow-hidden rounded-[18px] border border-white/8 bg-[#0b0d10]">
+  <div class="min-h-[500px] h-full p-[20px] text-white">
+    <div class="flex h-full  overflow-hidden border border-white/8 ">
       <div class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[300px_300px_minmax(0,1fr)]">
         <section class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
@@ -35,7 +35,7 @@ const speechStyleOptions = [
               type="textarea"
               :autosize="{ minRows: 12, maxRows: 12 }"
               placeholder="例如：\n今天的天气真好啊，我们出去走走吧。"
-              class="[&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[12px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/28"
+              class="text-[12px] [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[12px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/28"
             />
             <div class="pt-3 text-[11px] text-white/38">输入字数：{{ scriptLength }}</div>
             <div class="pt-2 text-[11px] text-white/32">单人模式：直接输入文案即可</div>
@@ -62,7 +62,7 @@ const speechStyleOptions = [
                 <span class="w-[48px] shrink-0">口播音色:</span>
                 <n-select
                   v-model:value="voiceRole"
-                  size="small"
+                  size="tiny"
                   :options="voiceRoleOptions"
                   class="flex-1"
                 />
@@ -78,7 +78,7 @@ const speechStyleOptions = [
                 <span class="w-[48px] shrink-0">语音风格:</span>
                 <n-select
                   v-model:value="speechStyle"
-                  size="small"
+                  size="tiny"
                   :options="speechStyleOptions"
                   class="flex-1"
                 />
