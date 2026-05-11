@@ -3,8 +3,10 @@ import { ref } from 'vue'
 import {
   NButton,
   NCheckbox,
+  NColorPicker,
   NDropdown,
   NIcon,
+  NInputNumber,
   NRadio,
   NRadioGroup,
   NSelect,
@@ -29,6 +31,8 @@ const subtitleMode = ref('select')
 const xPercent = ref(60)
 const yPercent = ref(75)
 const textStroke = ref(true)
+const textColor = ref('#1a1a1a')
+const strokeColor = ref('#f5d439')
 
 const fontSizeOptions = [
   { label: '小', value: 'small' },
@@ -50,7 +54,7 @@ function goHome() {
   <div class="h-full bg-[#060709] p-3 text-white">
     <div class="overflow-hidden h-full border border-white/8 bg-[#0b0d10]">
 
-      <div class="grid min-h-[calc(100vh-64px)] grid-cols-1 gap-x-[3px] sm:grid-cols-[275px_minmax(0,1fr)_265px]">
+      <div class="grid min-h-[calc(100vh-64px)] grid-cols-1 gap-x-[3px] sm:grid-cols-[480px_minmax(0,1fr)_480px]">
         <section class="bg-[#232323]">
           <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
             识别语音加字幕
@@ -115,17 +119,29 @@ function goHome() {
               <div class="flex items-center gap-3">
                 <span class="w-[52px] shrink-0">字幕位置:</span>
                 <div class="flex items-center gap-2">
-                  <button type="button" class="h-[22px] w-[22px] rounded-[2px] border border-white/10 bg-[#1a1a1a] text-white/70">-</button>
-                  <div class="flex h-[22px] min-w-[54px] items-center justify-center rounded-[2px] border border-white/10 bg-[#1a1a1a] text-white/78">
-                    {{ xPercent }} <span class="ml-1 text-white/45">%</span>
-                  </div>
-                  <button type="button" class="h-[22px] w-[22px] rounded-[2px] border border-white/10 bg-[#1a1a1a] text-white/70">+</button>
-                </div>
-                <div class="flex items-center gap-2">
-                  <div class="flex h-[22px] min-w-[54px] items-center justify-center rounded-[2px] border border-white/10 bg-[#1a1a1a] text-white/78">
-                    {{ yPercent }} <span class="ml-1 text-white/45">%</span>
-                  </div>
-                  <button type="button" class="h-[22px] w-[22px] rounded-[2px] border border-white/10 bg-[#1a1a1a] text-white/70">+</button>
+                  <n-input-number
+                    v-model:value="xPercent"
+                    size="tiny"
+                    :min="0"
+                    :max="100"
+                    class="!w-[120px] text-center"
+                    button-placement="both" 
+                    placeholder="X"
+                  >
+                    <template #suffix>%</template>
+                  </n-input-number>
+                  ~
+                  <n-input-number
+                    v-model:value="yPercent"
+                    size="tiny"
+                    :min="0"
+                    :max="100"
+                    class="!w-[120px] text-center"
+                    button-placement="both" 
+                    placeholder="Y"
+                  >
+                    <template #suffix>%</template>
+                  </n-input-number>
                 </div>
               </div>
 
@@ -141,14 +157,52 @@ function goHome() {
 
               <div class="flex items-center gap-3">
                 <span class="w-[52px] shrink-0">字幕颜色:</span>
-                <label class="flex items-center gap-1.5">
-                  <span class="h-[14px] w-[14px] rounded-[2px] border border-white/14 bg-[#1a1a1a]" />
-                  <span class="text-white/58">文字颜色</span>
-                </label>
-                <label class="flex items-center gap-1.5">
-                  <n-checkbox v-model:checked="textStroke" />
-                  <span class="h-[14px] w-[14px] rounded-[2px] border border-[#f5d439] bg-[#f5d439]" />
-                </label>
+                  <n-color-picker
+                    v-model:value="textColor"
+                    size="small"
+                    :show-alpha="false"
+                    class="!w-[28px] !h-[28px] [&_.n-color-picker-trigger]:!p-0 [&_.n-color-picker-trigger]:!border-white/14"
+                  >
+                   <template #trigger="{ value, onClick, ref: triggerRef }">
+                    <div
+                      :ref="triggerRef"
+                      :style="{
+                        width: '22px',
+                        height: '22px',
+                        borderRadius: '50%',
+                        backgroundColor: value || '#000',
+                        cursor: 'pointer',
+                        border: '2px solid #fff',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+                      }"
+                      @click="onClick"
+                    />
+                  </template>
+                  </n-color-picker>
+                  <span class="text-white/58">文字颜色:</span>
+                  <n-color-picker
+                    v-model:value="strokeColor"
+                    size="small"
+                    :show-alpha="false"
+                    :disabled="!textStroke"
+                    class="ml-[15px] !w-[28px] !h-[28px] [&_.n-color-picker-trigger]:!p-0 [&_.n-color-picker-trigger]:!border-white/14"
+                  >
+                   <template #trigger="{ value, onClick, ref: triggerRef }">
+                    <div
+                      :ref="triggerRef"
+                      :style="{
+                        width: '22px',
+                        height: '22px',
+                        borderRadius: '50%',
+                        backgroundColor: value || '#000',
+                        cursor: 'pointer',
+                        border: '2px solid #fff',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+                      }"
+                      @click="onClick"
+                    />
+                  </template>
+                </n-color-picker>
               </div>
             </div>
 
