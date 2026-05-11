@@ -24,6 +24,12 @@ importers:
         specifier: ^5.0.4
         version: 5.0.6(@vue/compiler-sfc@3.5.34)(pinia@3.0.4(vue@3.5.34))(vue@3.5.34)
     devDependencies:
+      '@iconify/json':
+        specifier: ^2.2.471
+        version: 2.2.471
+      '@unocss/preset-icons':
+        specifier: ^66.6.8
+        version: 66.6.8
       '@vitejs/plugin-vue':
         specifier: ^6.0.6
         version: 6.0.6(vite@8.0.10(esbuild@0.27.7)(jiti@2.7.0)(sass@1.99.0)(tsx@4.21.0)(yaml@2.8.4))(vue@3.5.34)
@@ -368,6 +374,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@iconify/json@2.2.471':
+    resolution: {integrity: sha512-9ZJ4l71MOGVQa/DJxPI5XJ49D5Ax+wOvCCw4ZPcGemP34rtWWFAPsfu2QyQLjEvedbrVmEJcomam3N0SsNgWDA==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -1930,6 +1939,11 @@ snapshots:
 
   '@esbuild/win32-x64@0.27.7':
     optional: true
+
+  '@iconify/json@2.2.471':
+    dependencies:
+      '@iconify/types': 2.0.0
+      pathe: 2.0.3
 
   '@iconify/types@2.0.0': {}
 

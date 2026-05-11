@@ -74,13 +74,12 @@ const scriptLength = computed(() => script.value.length)
               <span class="text-white/48">消耗算力：</span>
               <n-icon :size="14" :component="Currency" />
               <span class="font-medium">400</span>
-              <!-- <n-tooltip trigger="hover">
+              <n-tooltip trigger="hover">
                 <template #trigger>
-                   <n-icon size="40">
-                  </n-icon>
+                  <i class="i-mingcute-question-line text-white/48 cursor-pointer"></i>
                 </template>
                 根据口播字数计算，每50字400算力
-              </n-tooltip> -->
+              </n-tooltip>
             </div>
 
             <div class="pt-4 flex justify-end">
