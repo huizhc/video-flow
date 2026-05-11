@@ -172,22 +172,13 @@ function goNextStep() {
 <template>
   <div class="min-h-screen bg-[#050607] p-[12px] text-white">
     <div class="mx-auto max-w-[1024px]">
-      <n-steps
-        contentPlacement="bottom"
-        :current="currentStep"
-        size="small"
-        class="ml-[150px] mb-[10px] px-[18px] pt-[4px] [&_.n-step-indicator]:!h-[20px] [&_.n-step-indicator]:!w-[20px] [&_.n-step-indicator]:!border [&_.n-step-indicator]:!bg-transparent [&_.n-step-indicator-slot]:!text-[11px] [&_.n-step-indicator-slot]:!font-normal [&_.n-step-splitor]:!top-[9px] [&_.n-step-splitor]:!bg-white/25 [&_.n-step-content]:!mt-[8px] [&_.n-step-content__title]:!text-[12px] [&_.n-step-content__title]:!font-normal [&_.n-step--process_.n-step-indicator]:!border-white/80 [&_.n-step--process_.n-step-indicator-slot]:!text-white [&_.n-step--finish_.n-step-indicator]:!border-white/80 [&_.n-step--finish_.n-step-indicator-slot]:!text-white [&_.n-step--wait_.n-step-indicator]:!border-white/30 [&_.n-step--wait_.n-step-indicator-slot]:!text-white/50 [&_.n-step--process_.n-step-content__title]:!text-white/88 [&_.n-step--finish_.n-step-content__title]:!text-white/88 [&_.n-step--wait_.n-step-content__title]:!text-white/48 [&_.n-step--finish_.n-step-splitor]:!bg-white/65"
-      >
-        <n-step
-          v-for="step in stepItems"
-          :key="step.index"
-          :title="step.label"
-        />
+      <n-steps contentPlacement="bottom" :current="currentStep" size="small"
+        class="ml-[150px] mb-[10px] px-[18px] pt-[4px] [&_.n-step-indicator]:!h-[20px] [&_.n-step-indicator]:!w-[20px] [&_.n-step-indicator]:!border [&_.n-step-indicator]:!bg-transparent [&_.n-step-indicator-slot]:!text-[11px] [&_.n-step-indicator-slot]:!font-normal [&_.n-step-splitor]:!top-[9px] [&_.n-step-splitor]:!bg-white/25 [&_.n-step-content]:!mt-[8px] [&_.n-step-content__title]:!text-[12px] [&_.n-step-content__title]:!font-normal [&_.n-step--process_.n-step-indicator]:!border-white/80 [&_.n-step--process_.n-step-indicator-slot]:!text-white [&_.n-step--finish_.n-step-indicator]:!border-white/80 [&_.n-step--finish_.n-step-indicator-slot]:!text-white [&_.n-step--wait_.n-step-indicator]:!border-white/30 [&_.n-step--wait_.n-step-indicator-slot]:!text-white/50 [&_.n-step--process_.n-step-content__title]:!text-white/88 [&_.n-step--finish_.n-step-content__title]:!text-white/88 [&_.n-step--wait_.n-step-content__title]:!text-white/48 [&_.n-step--finish_.n-step-splitor]:!bg-white/65">
+        <n-step v-for="step in stepItems" :key="step.index" :title="step.label" />
       </n-steps>
 
       <div
-        class="overflow-hidden rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]"
-      >
+        class="overflow-hidden rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
         <template v-if="currentStep === 1">
           <div class="grid min-h-[410px] grid-cols-1 min-[920px]:grid-cols-[320px_minmax(0,1fr)]">
             <section class="border-b border-white/8 p-[14px] min-[920px]:border-b-0 min-[920px]:border-r">
@@ -198,13 +189,8 @@ function goNextStep() {
                   <span class="h-[10px] w-[10px] rounded-[2px] border border-white/65" />
                   <span>视频总量</span>
                 </div>
-                <n-input-number
-                  v-model:value="totalVideos"
-                  :min="1"
-                  size="small"
-                  button-placement="both"
-                  class="w-[104px] [&_input]:!text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#1a1b1d] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-[12px] [&_.n-input-number-input]:!text-white/86 [&_.n-input-number-button]:!w-[28px] [&_.n-input-number-button]:!text-white/48"
-                />
+                <n-input-number v-model:value="totalVideos" :min="1" size="small" button-placement="both"
+                  class="w-[104px] [&_input]:!text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#1a1b1d] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-[12px] [&_.n-input-number-input]:!text-white/86 [&_.n-input-number-button]:!w-[28px] [&_.n-input-number-button]:!text-white/48" />
                 <span class="text-[12px] text-white/58">条</span>
               </div>
 
@@ -213,13 +199,8 @@ function goNextStep() {
                   <span class="h-[10px] w-[10px] rounded-[2px] border border-white/65" />
                   <span>口播数量</span>
                 </div>
-                <n-input-number
-                  v-model:value="scriptCount"
-                  :min="1"
-                  size="small"
-                  button-placement="both"
-                  class="w-[104px] [&_input]:!text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#1a1b1d] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-[12px] [&_.n-input-number-input]:!text-white/86 [&_.n-input-number-button]:!w-[28px] [&_.n-input-number-button]:!text-white/48"
-                />
+                <n-input-number v-model:value="scriptCount" :min="1" size="small" button-placement="both"
+                  class="w-[104px] [&_input]:!text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#1a1b1d] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-[12px] [&_.n-input-number-input]:!text-white/86 [&_.n-input-number-button]:!w-[28px] [&_.n-input-number-button]:!text-white/48" />
                 <span class="text-[12px] text-white/58">条</span>
               </div>
 
@@ -230,15 +211,14 @@ function goNextStep() {
               <div class="mb-[8px] flex items-center gap-[12px] text-[12px] text-white/82">
                 <span>音色选择</span>
                 <div class="flex items-center gap-[8px]">
-                  <button
-                    v-for="option in voiceOptions"
-                    :key="option.value"
-                    type="button"
+                  <button v-for="option in voiceOptions" :key="option.value" type="button"
                     class="inline-flex items-center gap-[6px] border-0 bg-transparent p-0 text-[12px] text-white/82"
                     :class="selectedVoiceLabel !== option.label ? 'text-white/92' : 'text-white/62'"
-                    @click="openVoiceModal"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M256 112V400M400 256H112" stroke="currentColor" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    @click="openVoiceModal">
+                    <svg width="16" height="16" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M256 112V400M400 256H112" stroke="currentColor" stroke-width="32" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                    </svg>
                     {{ selectedVoiceLabel }}
                   </button>
                 </div>
@@ -252,38 +232,24 @@ function goNextStep() {
             <section class="min-w-0 p-[10px]">
               <div class="mb-[8px] flex items-center justify-between">
                 <div class="text-[12px] font-medium text-white/88">文案列表</div>
-                <n-button
-                  type="primary"
-                  size="tiny"
+                <n-button type="primary" size="tiny"
                   class="!h-[26px] !rounded-[4px] !border-0 !bg-[#18d2e5] !px-[12px] !text-[11px] !font-medium"
-                  @click="addScript"
-                >
+                  @click="addScript">
                   生成文案
                 </n-button>
               </div>
 
               <n-scrollbar class="h-[340px] pr-[4px]">
                 <div class="space-y-[10px]">
-                  <div
-                    v-for="(item, index) in scripts"
-                    :key="`script-${index}`"
-                    class="rounded-[4px] border border-white/8 bg-[#1d1d1f] p-[8px]"
-                  >
-                    <n-input
-                      :value="item"
-                      type="textarea"
-                      :autosize="{ minRows: 4, maxRows: 4 }"
+                  <div v-for="(item, index) in scripts" :key="`script-${index}`"
+                    class="rounded-[4px] border border-white/8 bg-[#1d1d1f] p-[8px]">
+                    <n-input :value="item" type="textarea" :autosize="{ minRows: 4, maxRows: 4 }"
                       class="[&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#1b1b1d] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/24"
-                      placeholder="请输入文案内容"
-                      @update:value="updateScript(index, $event)"
-                    />
+                      placeholder="请输入文案内容" @update:value="updateScript(index, $event)" />
                     <div class="mt-[8px] flex items-center justify-between text-[10px]">
                       <span class="text-white/36">字数：{{ textCount(item) }}</span>
-                      <button
-                        type="button"
-                        class="border-0 bg-transparent p-0 text-[#f86f6f]"
-                        @click="removeScript(index)"
-                      >
+                      <button type="button" class="border-0 bg-transparent p-0 text-[#f86f6f]"
+                        @click="removeScript(index)">
                         删除
                       </button>
                     </div>
@@ -303,8 +269,7 @@ function goNextStep() {
               </div>
 
               <div
-                class="flex h-[102px] w-[84px] flex-col items-center justify-center rounded-[2px] border border-dashed border-white/18 bg-[#18191b] text-white/52"
-              >
+                class="flex h-[102px] w-[84px] flex-col items-center justify-center rounded-[2px] border border-dashed border-white/18 bg-[#18191b] text-white/52">
                 <div class="text-[28px] leading-none">+</div>
                 <div class="mt-[6px] text-[10px]">添加主角</div>
               </div>
@@ -318,19 +283,14 @@ function goNextStep() {
 
               <n-scrollbar class="h-[350px] pr-[4px]">
                 <div class="space-y-[12px]">
-                  <div
-                    v-for="section in materialSections"
-                    :key="section.key"
-                    class="rounded-[4px] border border-white/8 bg-[#222325]"
-                  >
+                  <div v-for="section in materialSections" :key="section.key"
+                    class="rounded-[4px] border border-white/8 bg-[#222325]">
                     <div class="px-[10px] pt-[10px] text-[11px] text-white/64">{{ section.title }}</div>
 
                     <div class="px-[10px] py-[8px]">
                       <div class="relative rounded-[4px] border border-white/8 bg-[#111214] px-[10px] py-[10px]">
-                        <button
-                          type="button"
-                          class="absolute right-[10px] top-[10px] border-0 bg-transparent p-0 text-[10px] text-[#18d2e5]"
-                        >
+                        <button type="button"
+                          class="absolute right-[10px] top-[10px] border-0 bg-transparent p-0 text-[10px] text-[#18d2e5]">
                           白复制
                         </button>
                         <div class="pr-[48px] text-[10px] leading-[1.65] text-white/58">
@@ -339,25 +299,15 @@ function goNextStep() {
                       </div>
 
                       <div class="mt-[8px] flex items-start gap-[8px] overflow-x-auto pb-[2px]">
-                        <button
-                          v-for="(image, index) in section.thumbnails"
-                          :key="`${section.key}-${index}`"
+                        <button v-for="(image, index) in section.thumbnails" :key="`${section.key}-${index}`"
                           type="button"
-                          class="group relative h-[92px] w-[80px] shrink-0 overflow-hidden rounded-[2px] border border-white/8 bg-[#17181a]"
-                        >
-                          <img
-                            :src="image"
-                            alt=""
-                            class="h-full w-full object-cover opacity-70"
-                            loading="lazy"
-                            referrerpolicy="no-referrer"
-                          />
+                          class="group relative h-[92px] w-[80px] shrink-0 overflow-hidden rounded-[2px] border border-white/8 bg-[#17181a]">
+                          <img :src="image" alt="" class="h-full w-full object-cover opacity-70" loading="lazy"
+                            referrerpolicy="no-referrer" />
                         </button>
 
-                        <button
-                          type="button"
-                          class="flex h-[92px] w-[80px] shrink-0 flex-col items-center justify-center rounded-[2px] border border-dashed border-white/18 bg-[#18191b] text-white/52"
-                        >
+                        <button type="button"
+                          class="flex h-[92px] w-[80px] shrink-0 flex-col items-center justify-center rounded-[2px] border border-dashed border-white/18 bg-[#18191b] text-white/52">
                           <div class="text-[26px] leading-none">+</div>
                           <div class="mt-[6px] text-[10px]">添加素材</div>
                         </button>
@@ -373,43 +323,31 @@ function goNextStep() {
         <template v-else-if="currentStep === 3">
           <div class="min-h-[410px] p-[10px]">
             <div class="mb-[8px] flex items-center justify-center">
-              <n-pagination
-                v-model:page="stylePage"
-                :page-size="stylePageSize"
-                :item-count="styleCards.length"
-                simple
+              <n-pagination v-model:page="stylePage" :page-size="stylePageSize" :item-count="styleCards.length" simple
                 size="small"
-                class="[&_.n-pagination-item]:!bg-[#202123] [&_.n-pagination-item]:!border-white/10 [&_.n-pagination-item]:!text-white/72 [&_.n-pagination-item-link]:!text-white/72 [&_.n-pagination-prefix]:!text-white/42"
-              />
+                class="[&_.n-pagination-item]:!bg-[#202123] [&_.n-pagination-item]:!border-white/10 [&_.n-pagination-item]:!text-white/72 [&_.n-pagination-item-link]:!text-white/72 [&_.n-pagination-prefix]:!text-white/42" />
             </div>
 
             <n-scrollbar class="h-[352px] pr-[4px]">
               <div class="grid grid-cols-2 gap-[6px] min-[760px]:grid-cols-4 min-[980px]:grid-cols-5">
-                <button
-                  v-for="(item, index) in pagedStyleCards"
-                  :key="item.title + index"
-                  type="button"
+                <button v-for="(item, index) in pagedStyleCards" :key="item.title + index" type="button"
                   class="group relative aspect-[0.76] overflow-hidden rounded-[2px] border bg-[#151618] text-left"
-                  :class="
-                    selectedStyleIndex === index
+                  :class="selectedStyleIndex === index
                       ? 'border-[#18d2e5] shadow-[0_0_0_1px_rgba(24,210,229,0.35)]'
                       : 'border-white/8'
-                  "
-                  @click="selectedStyleIndex = index"
-                >
-                  <img
-                    :src="item.image"
-                    :alt="item.title"
+                    " @click="selectedStyleIndex = index">
+                  <img :src="item.image" :alt="item.title"
                     class="h-full w-full object-cover transition-transform duration-400 group-hover:scale-103"
-                    loading="lazy"
-                    referrerpolicy="no-referrer"
-                  />
-                  <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0.55)_68%,rgba(0,0,0,0.9)_100%)]" />
-                  <div class="absolute left-[8px] top-[8px] rounded-[2px] bg-[#ff6a00] px-[4px] py-[1px] text-[9px] font-semibold text-white">
+                    loading="lazy" referrerpolicy="no-referrer" />
+                  <div
+                    class="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0.55)_68%,rgba(0,0,0,0.9)_100%)]" />
+                  <div
+                    class="absolute left-[8px] top-[8px] rounded-[2px] bg-[#ff6a00] px-[4px] py-[1px] text-[9px] font-semibold text-white">
                     热门
                   </div>
                   <div class="absolute bottom-[10px] left-[8px] right-[8px]">
-                    <div class="line-clamp-2 text-[15px] font-extrabold leading-[1.05] text-[#ffeb66] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
+                    <div
+                      class="line-clamp-2 text-[15px] font-extrabold leading-[1.05] text-[#ffeb66] [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                       {{ item.title }}
                     </div>
                     <div class="mt-[4px] line-clamp-2 text-[11px] leading-[1.2] text-white/90">
@@ -427,31 +365,23 @@ function goNextStep() {
             <span>消耗算力：</span>
             <n-icon :size="14" :component="Currency" class="text-[#ffd24c]" />
             <span class="font-medium text-[#ffd24c]">{{ totalPower }}</span>
-            <button
-              type="button"
-              class="inline-flex h-[16px] w-[16px] items-center justify-center border-0 bg-transparent text-white/38"
-            >
+            <button type="button"
+              class="inline-flex h-[16px] w-[16px] items-center justify-center border-0 bg-transparent text-white/38">
               <n-icon :size="12" :component="Information" />
             </button>
           </div>
 
           <div class="flex items-center gap-[8px]">
-            <n-button
-              v-if="currentStep > 1"
-              size="small"
+            <n-button v-if="currentStep > 1" size="small"
               class="!h-[30px] !rounded-[4px] !border-white/12 !bg-transparent !px-[16px] !text-[12px] !font-medium !text-white/86"
-              @click="goPrevStep"
-            >
+              @click="goPrevStep">
               上一步
             </n-button>
 
-            <n-button
-              :type="currentStep === 3 ? 'success' : 'primary'"
-              size="small"
+            <n-button :type="currentStep === 3 ? 'success' : 'primary'" size="small"
               class="!h-[30px] !rounded-[4px] !border-0 !px-[16px] !text-[12px] !font-medium"
               :class="currentStep === 3 ? '!bg-[#4dd865]' : '!bg-[#18d2e5]'"
-              @click="currentStep === 3 ? null : goNextStep()"
-            >
+              @click="currentStep === 3 ? null : goNextStep()">
               {{ currentStep === 3 ? '开始生成' : '下一步' }}
             </n-button>
           </div>
@@ -459,22 +389,14 @@ function goNextStep() {
       </div>
     </div>
 
-    <n-modal
-      v-model:show="voiceModalVisible"
-      :mask-closable="true"
-      :close-on-esc="true"
-      transform-origin="center"
-    >
+    <n-modal v-model:show="voiceModalVisible" :mask-closable="true" :close-on-esc="true" transform-origin="center">
       <div
-        class="mx-auto mt-[80px] w-[min(620px,calc(100vw-40px))] rounded-[8px] bg-[#07080a] px-[20px] pb-[18px] pt-[18px] text-white shadow-[0_18px_60px_rgba(0,0,0,0.5)]"
-      >
+        class="mx-auto mt-[80px] w-[min(620px,calc(100vw-40px))] rounded-[8px] bg-[#07080a] px-[20px] pb-[18px] pt-[18px] text-white shadow-[0_18px_60px_rgba(0,0,0,0.5)]">
         <div class="mb-[18px] flex items-start justify-between">
           <div class="text-[15px] font-semibold tracking-[0.1px] text-white/96">选择音色</div>
-          <button
-            type="button"
+          <button type="button"
             class="inline-flex h-[18px] w-[18px] items-center justify-center border-0 bg-transparent p-0 text-[18px] leading-none text-white/55"
-            @click="closeVoiceModal"
-          >
+            @click="closeVoiceModal">
             ×
           </button>
         </div>
@@ -482,46 +404,30 @@ function goNextStep() {
         <div class="space-y-[14px]">
           <div class="flex items-center gap-[12px]">
             <div class="w-[74px] text-[13px] font-medium text-white/72">口播音色：</div>
-            <n-select
-              v-model:value="selectedVoiceTone"
-              :options="voiceToneOptions"
-              size="medium"
-              class="max-w-[430px] flex-1 [&_.n-base-selection]:!h-[40px] [&_.n-base-selection]:!rounded-[6px] [&_.n-base-selection]:!border-white/25 [&_.n-base-selection]:!bg-[#101113] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[40px] [&_.n-base-selection-label]:!text-[13px] [&_.n-base-selection__render-label]:!text-white/86"
-            />
-            <button
-              type="button"
-              class="ml-[2px] inline-flex h-[34px] w-[34px] items-center justify-center rounded-full border border-white/65 bg-transparent text-white/78"
-            >
+            <n-select v-model:value="selectedVoiceTone" :options="voiceToneOptions" size="medium"
+              class="max-w-[430px] flex-1 [&_.n-base-selection]:!h-[40px] [&_.n-base-selection]:!rounded-[6px] [&_.n-base-selection]:!border-white/25 [&_.n-base-selection]:!bg-[#101113] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[40px] [&_.n-base-selection-label]:!text-[13px] [&_.n-base-selection__render-label]:!text-white/86" />
+            <button type="button"
+              class="ml-[2px] inline-flex h-[34px] w-[34px] items-center justify-center rounded-full border border-white/65 bg-transparent text-white/78">
               <n-icon :size="16" :component="PlayFilledAlt" />
             </button>
           </div>
 
           <div class="flex items-center gap-[12px]">
             <div class="w-[74px] text-[13px] font-medium text-white/72">语调风格：</div>
-            <n-select
-              v-model:value="selectedVoiceStyle"
-              :options="voiceStyleOptions"
-              size="medium"
-              class="max-w-[430px] flex-1 [&_.n-base-selection]:!h-[40px] [&_.n-base-selection]:!rounded-[6px] [&_.n-base-selection]:!border-white/25 [&_.n-base-selection]:!bg-[#101113] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[40px] [&_.n-base-selection-label]:!text-[13px] [&_.n-base-selection__render-label]:!text-white/86"
-            />
+            <n-select v-model:value="selectedVoiceStyle" :options="voiceStyleOptions" size="medium"
+              class="max-w-[430px] flex-1 [&_.n-base-selection]:!h-[40px] [&_.n-base-selection]:!rounded-[6px] [&_.n-base-selection]:!border-white/25 [&_.n-base-selection]:!bg-[#101113] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[40px] [&_.n-base-selection-label]:!text-[13px] [&_.n-base-selection__render-label]:!text-white/86" />
           </div>
         </div>
 
         <div class="mt-[24px] flex justify-end gap-[12px]">
-          <n-button
-            ghost
-            size="medium"
+          <n-button ghost size="medium"
             class="!h-[38px] !w-[76px] !rounded-[6px] !border-white/30 !bg-transparent !text-[13px] !font-semibold !text-white/86"
-            @click="closeVoiceModal"
-          >
+            @click="closeVoiceModal">
             取消
           </n-button>
-          <n-button
-            type="primary"
-            size="medium"
+          <n-button type="primary" size="medium"
             class="!h-[38px] !w-[76px] !rounded-[6px] !border-0 !bg-[#18d2e5] !text-[13px] !font-semibold"
-            @click="confirmVoiceModal"
-          >
+            @click="confirmVoiceModal">
             确定
           </n-button>
         </div>
