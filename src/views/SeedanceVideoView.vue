@@ -1,12 +1,12 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { CloudUpload, Currency, Information } from '@vicons/carbon'
-import { NButton, NIcon, NInput, NInputNumber } from 'naive-ui'
+import { NButton, NCheckbox, NIcon, NInput, NInputNumber, NRadioButton, NRadioGroup } from 'naive-ui'
 
 const imageSource = ref('local')
 const tailImageSource = ref('local')
 const generationQuality = ref('seedance-15-pro-start-end')
-const durationMode = ref('unspecified')
+const isDurationUnspecified = ref(true)
 const durationSeconds = ref(5)
 const resolution = ref('720p')
 const aspectRatio = ref('16:9')
@@ -19,10 +19,6 @@ const prompt = ref(
 
 const qualityOptions = [
   { label: '1.5 Pro - 图生视频-首尾帧', value: 'seedance-15-pro-start-end' },
-]
-
-const durationModes = [
-  { label: '不指定', value: 'unspecified' },
 ]
 
 const resolutionOptions = [
@@ -54,13 +50,13 @@ const promptLength = computed(() => prompt.value.length)
 
 <template>
   <div
-    class="min-h-screen bg-[radial-gradient(circle_at_right,rgba(20,86,118,0.18),transparent_28%),linear-gradient(180deg,#050607_0%,#090a0d_100%)] p-[20px] text-white"
+    class="min-h-[500px] h-full p-[20px] text-white"
   >
     <div
-      class="min-h-[calc(100vh-40px)] overflow-hidden rounded-[18px] border border-white/8 bg-[#0a0b0d] shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]"
+      class="h-full overflow-hidden  border border-white/8  shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]"
     >
       <div
-        class="grid min-h-[calc(100vh-40px)] grid-cols-1 gap-x-[15px] sm:grid-cols-[minmax(0,340px)_minmax(0,260px)_minmax(0,1fr)]"
+        class="grid h-full grid-cols-1 gap-x-[15px] sm:grid-cols-[550px_400px_minmax(0,1fr)]"
       >
         <section
           class="border-b border-white/8 bg-[linear-gradient(180deg,#1f1f20_0%,#1a1a1b_100%)] min-[1200px]:border-b-0 min-[1200px]:border-r"
@@ -71,9 +67,9 @@ const promptLength = computed(() => prompt.value.length)
             视频参数
           </div>
 
-          <div class="p-[14px]">
+          <div class="flex flex-col p-[14px] [&>div>div:first-child]:w-[80px] ">
             <div class="mb-[12px] flex items-center gap-[10px]">
-              <div class="w-[52px] shrink-0 pt-[2px] text-[11px] text-white/52">模型版本:</div>
+              <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">模型版本:</div>
               <div class="min-w-0 flex-1">
                 <select
                   v-model="generationQuality"
@@ -91,89 +87,62 @@ const promptLength = computed(() => prompt.value.length)
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
-              <div class="w-[52px] shrink-0 pt-[2px] text-[11px] text-white/52">视频时长:</div>
+              <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">视频时长:</div>
               <div class="min-w-0 flex-1">
-                <div class="flex flex-wrap items-center gap-[6px]">
-                  <label
-                    v-for="option in durationModes"
-                    :key="option.value"
-                    class="inline-flex items-center gap-[6px] text-[11px] text-white/72"
-                  >
-                    <input
-                      v-model="durationMode"
-                      type="radio"
-                      :value="option.value"
-                      class="h-[12px] w-[12px] accent-[#18d2e5]"
+                <div class="flex items-center gap-[10px]">
+                  <div class="flex items-center gap-[6px]">
+                    <n-checkbox v-model:checked="isDurationUnspecified" size="small">
+                      <span class="text-[11px] text-white/72">不指定</span>
+                    </n-checkbox>
+                  </div>
+
+                  <template v-if="!isDurationUnspecified">
+                    <n-input-number
+                      v-model:value="durationSeconds"
+                      min="1"
+                      max="15"
+                      class="w-[120px] [&_.n-input-wrapper]:!h-[30px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__input-el]:!text-center [&_.n-input__input-el]:!text-[11px] [&_.n-input__input-el]:!text-white/82"
                     />
-                    <span>{{ option.label }}</span>
-                  </label>
-
-                  <n-input-number
-                    v-model="durationSeconds"
-                    min="1"
-                    max="15"
-                    class="w-[120px] [&_.n-input-wrapper]:!h-[30px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__input-el]:!text-center [&_.n-input__input-el]:!text-[11px] [&_.n-input__input-el]:!text-white/82"
-                  />
-
-                  <!-- <button
-                    type="button"
-                    class="inline-flex h-[16px] w-[14px] items-center justify-center border-0 bg-transparent text-white/26"
-                  >
-                    <span class="text-[10px] leading-none">x</span>
-                  </button> -->
-
-                  <span class="text-[10px] text-white/34">（4~12，Seedance 2.0 最长 15 秒）</span>
+                    <span class="text-[10px] text-white/34">秒（4~12，Seedance 2.0 最长 15 秒）</span>
+                  </template>
                 </div>
               </div>
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
-              <div class="w-[52px] shrink-0 pt-[2px] text-[11px] text-white/52">分辨率:</div>
+              <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">分辨率:</div>
               <div class="min-w-0 flex-1">
-                <div class="flex flex-wrap gap-[6px]">
-                  <button
-                    v-for="option in resolutionOptions"
-                    :key="option.value"
-                    type="button"
-                    class="h-[24px] min-w-[44px] rounded-[4px] border border-white/8 bg-[#151618] px-[10px] text-[10px] text-white/58 transition-colors"
-                    :class="
-                      resolution === option.value
-                        ? '!border-[#14c7e1] !bg-[#14c7e1] !text-white'
-                        : ''
-                    "
-                    @click="resolution = option.value"
-                  >
-                    {{ option.label }}
-                  </button>
-                </div>
+                <n-radio-group v-model:value="resolution" size="small">
+                    <n-radio-button
+                      v-for="option in resolutionOptions"
+                      :key="option.value"
+                      :value="option.value"
+                      :label="option.label"
+                      class="!border-white/8 !bg-[#151618] !px-[10px] !text-[10px] !text-white/58 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    />
+                </n-radio-group>
               </div>
             </div>
 
             <div class="mb-[12px] flex items-start gap-[10px]">
-              <div class="w-[52px] shrink-0 pt-[2px] text-[11px] text-white/52">宽高比例:</div>
+              <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">宽高比例:</div>
               <div class="min-w-0 flex-1">
-                <div class="flex flex-wrap gap-[6px]">
-                  <button
-                    v-for="option in ratioOptions"
-                    :key="option.value"
-                    type="button"
-                    class="h-[24px] min-w-[44px] rounded-[4px] border border-white/8 bg-[#151618] px-[10px] text-[10px] text-white/58 transition-colors"
-                    :class="
-                      aspectRatio === option.value
-                        ? '!border-[#14c7e1] !bg-[#14c7e1] !text-white'
-                        : ''
-                    "
-                    @click="aspectRatio = option.value"
-                  >
-                    {{ option.label }}
-                  </button>
-                </div>
+                <n-radio-group v-model:value="aspectRatio" size="small">
+                    <n-radio-button
+                      v-for="option in ratioOptions"
+                      :key="option.value"
+                      :value="option.value"
+                      :label="option.label"
+                      class="!border-white/8 !bg-[#151618] !px-[10px] !text-[10px] !text-white/58 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    />
+                </n-radio-group>
               </div>
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
-              <div class="w-[52px] shrink-0 pt-[2px] text-[11px] text-white/52">生成声音:</div>
+              <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">生成声音:</div>
               <div class="min-w-0 flex-1 flex items-center gap-[8px]">
+                <span class="text-[11px] " :class="!soundEnabled ? 'text-#4fd1c5': ''">关闭</span>
                 <button
                   type="button"
                   class="relative h-[18px] w-[34px] rounded-[999px] border border-white/10 bg-[#111214] p-0 transition-colors"
@@ -189,20 +158,20 @@ const promptLength = computed(() => prompt.value.length)
                     :class="soundEnabled ? 'translate-x-[16px]' : ''"
                   />
                 </button>
-                <span class="text-[11px] text-white/86">{{ soundEnabled ? '开启' : '关闭' }}</span>
-                <span class="text-[11px] text-white/40">开启（与画面同步）</span>
-                <button
-                  type="button"
-                  class="inline-flex h-[16px] w-[16px] items-center justify-center border-0 bg-transparent text-white/38"
-                >
-                  <n-icon :size="12" :component="Information" />
-                </button>
+                <span class="text-[11px] " :class="soundEnabled ? 'text-#4fd1c5': ''">开启（与画面同步）</span>
+                 <n-tooltip trigger="hover">
+                <template #trigger>
+                  <i class="i-mingcute-question-line text-[12px] text-white/48 cursor-pointer"></i>
+                </template>
+                开启后视频将包含与画面内容同步的声音
+              </n-tooltip>
               </div>
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
-              <div class="w-[52px] shrink-0 pt-[2px] text-[11px] text-white/52">样片模式:</div>
+              <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">样片模式:</div>
               <div class="min-w-0 flex-1 flex items-center gap-[8px]">
+                <span class="text-[11px]  " :class="!storyboardEnabled ? 'text-#4fd1c5': ''">关闭</span>
                 <button
                   type="button"
                   class="relative h-[18px] w-[34px] rounded-[999px] border border-white/10 bg-[#111214] p-0 transition-colors"
@@ -218,67 +187,72 @@ const promptLength = computed(() => prompt.value.length)
                     :class="storyboardEnabled ? 'translate-x-[16px]' : ''"
                   />
                 </button>
-                <span class="text-[11px] text-white/86">{{ storyboardEnabled ? '开启' : '关闭' }}</span>
-                <button
-                  type="button"
-                  class="inline-flex h-[16px] w-[16px] items-center justify-center border-0 bg-transparent text-white/38"
-                >
-                  <n-icon :size="12" :component="Information" />
-                </button>
+                <span class="text-[11px]  " :class="storyboardEnabled ? 'text-#4fd1c5': ''">开启</span>
+                 <n-tooltip trigger="hover">
+                <template #trigger>
+                  <i class="i-mingcute-question-line text-[12px] text-white/48 cursor-pointer"></i>
+                </template>
+                开启样片模式后，需先生成样片预览，确认后再提交正式任务
+              </n-tooltip>
               </div>
             </div>
 
             <div class="mb-[12px] flex items-start gap-[10px]">
-              <div class="w-[52px] shrink-0 pt-[2px] text-[11px] text-white/52">随机种子:</div>
+              <div class=" shrink-0 pt-[2px] text-[11px] text-white/52">随机种子:</div>
               <div class="min-w-0 flex-1">
-                <div class="flex flex-wrap gap-[6px]">
-                  <button
-                    v-for="option in motionOptions"
-                    :key="option.value"
-                    type="button"
-                    class="h-[24px] min-w-[44px] rounded-[4px] border border-white/8 bg-[#151618] px-[10px] text-[10px] text-white/58 transition-colors"
-                    :class="
-                      motionMode === option.value
-                        ? '!border-[#14c7e1] !bg-[#14c7e1] !text-white'
-                        : ''
-                    "
-                    @click="motionMode = option.value"
-                  >
-                    {{ option.label }}
-                  </button>
-                </div>
+                <n-radio-group v-model:value="motionMode" size="small">
+                    <n-radio-button
+                      v-for="option in motionOptions"
+                      :key="option.value"
+                      :value="option.value"
+                      :label="option.label"
+                      class="!border-white/8 !bg-[#151618] !px-[10px] !text-[10px] !text-white/58 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    />
+                </n-radio-group>
+                 <n-tooltip trigger="hover">
+                <template #trigger>
+                  <i class="ml-[8px] i-mingcute-question-line text-[12px] text-white/48 cursor-pointer"></i>
+                </template>
+                随机：每次生成不同结果；稳定：尽量复现相同结果；微调/小变/大变/巨变：不同程度的变化
+              </n-tooltip>
               </div>
+              
             </div>
 
-            <div class="mb-[12px] flex items-start gap-[10px]">
-              <div class="w-[52px] shrink-0 pt-[2px] text-[11px] text-white/52">画面提示词:</div>
+            <div class="mb-[12px] flex flex-col gap-[10px]">
+              <div class=" shrink-0  pt-[2px] text-[11px] text-white/52">画面提示词:</div>
               <div class="min-w-0 flex-1">
                 <n-input
                   v-model="prompt"
                   type="textarea"
                   :autosize="{ minRows: 8, maxRows: 8 }"
-                  class="[&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/28"
+                  class="text-[12px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/28"
                   placeholder="描述你想生成的视频画面，例如：戴着围巾穿着蓝色T恤的男生和柯基小狗，坐在草坪上，3D卡通风格"
                 />
               </div>
             </div>
 
-            <div class="mt-[14px] flex items-center justify-between gap-[10px]">
-              <div class="flex flex-wrap items-center gap-[5px] text-[11px] text-white/48">
+            <div class="mt-[14px] flex whitespace-nowrap items-center justify-between gap-[10px]">
+              <div class="flex  items-center gap-[5px] text-[11px] text-white/48">
                 <span>消耗算力：</span>
-                <n-icon :size="14" :component="Currency" />
+                <n-icon class="text-[#ffd24c]" :size="14" :component="Currency" />
                 <span class="font-semibold text-[#ffd24c]">10000</span>
-                <span class="ml-[4px] text-white/30">提示词 {{ promptLength }} 字</span>
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <i class="ml-[8px] i-mingcute-question-line text-[12px] text-white/48 cursor-pointer"></i>
+                  </template>
+                  根据视频时长计算
+                </n-tooltip>
               </div>
 
-              <n-button
-                type="warning"
-                size="small"
-                class="!h-[32px] !rounded-[4px] !px-4 !text-[12px] !font-medium"
-              >
-                后台执行
-              </n-button>
             </div>
+            <n-button
+              type="warning"
+              size="small"
+              class="ml-auto !h-[32px] !rounded-[4px] !px-4 !text-[12px] !font-medium"
+            >
+              后台执行
+            </n-button>
           </div>
         </section>
 
