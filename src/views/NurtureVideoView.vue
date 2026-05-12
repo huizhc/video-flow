@@ -1,18 +1,15 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { NButton, NCheckbox, NIcon, NModal, NUpload, NUploadDragger } from 'naive-ui'
-import { CloudUpload, Currency, Information, Close, PlayFilled } from '@vicons/carbon'
+import { NButton, NCheckbox, NIcon, NModal, NScrollbar, NTooltip } from 'naive-ui'
+import { CloudUpload, Currency, Close, PlayFilled } from '@vicons/carbon'
+import { showUploadModal } from '@/utils/modal'
 
 const selectedVideo = ref(2)
 const selectedAvatars = ref([0])
 
 // Modal states
-const showVideoModal = ref(false)
-const showAvatarModal = ref(false)
 const showPreviewModal = ref(false)
 const previewVideoUrl = ref('')
-const videoUploadMode = ref('local')
-const avatarUploadMode = ref('local')
 
 const videoItems = [
   { label: '上传', type: 'upload' },
@@ -51,7 +48,12 @@ const selectedAvatarCount = computed(() => selectedAvatars.value.length)
 
 function handleVideoClick(item) {
   if (item.type === 'upload') {
-    showVideoModal.value = true
+    showUploadModal({
+      title: '上传视频模板',
+      accept: '.mp4,.avi,.mkv',
+      max: 5,
+      description: '支持 mp4/avi/mkv，可多选上传，单文件 5G 以内'
+    })
     return
   }
   // Open preview modal
@@ -65,7 +67,12 @@ function handleVideoSelect(index) {
 
 function handleAvatarClick(index, type) {
   if (type === 'upload') {
-    showAvatarModal.value = true
+    showUploadModal({
+      title: '上传人像照片',
+      accept: '.jpg,.png,.jpeg',
+      max: 10,
+      description: '支持 jpg/png，可多选上传，单文件 50MB 以内'
+    })
     return
   }
   if (selectedAvatars.value.includes(index)) {
@@ -79,273 +86,117 @@ function handleAvatarClick(index, type) {
 <template>
   <div class="min-h-[500px] h-full bg-[#060709] p-[20px] text-white">
     <div class=" w-full flex gap-x-[15px]  h-full overflow-hidden  border border-white/8 bg-[#0b0d10]">
-        <div class="flex-1 overflow-hidden border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
-          <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
-            视频模板（已选：1个）
-          </div>
-          <n-scrollbar class="pb-[40px]">
-            <div class="grid grid-cols-3 gap-2 p-3 md:grid-cols-4 sm:grid-cols-6">
-              <button
-                v-for="(item, index) in videoItems"
-                :key="item.label + index"
-                type="button"
-                class="group relative aspect-[3/4.25] overflow-hidden rounded-[4px] border bg-[#131416] text-left transition-colors"
-                :class="selectedVideo === index ? 'border-[#38cfe0] shadow-[0_0_0_1px_rgba(56,207,224,0.35)]' : 'border-white/6'"
-                @click="handleVideoClick(item)"
-              >
-                <div class="absolute left-2 top-2 z-10" v-if="item.type !== 'upload'" @click.stop="handleVideoSelect(index)">
-                  <n-checkbox :checked="selectedVideo === index" />
-                </div>
-                <template v-if="item.type === 'upload'">
-                  <div class="flex h-full flex-col items-center justify-center bg-black text-center">
-                    <n-icon :size="28" :component="CloudUpload" class="text-white/55" />
-                    <div class="mt-3 text-[11px] text-white/28">上传</div>
-                  </div>
-                </template>
-                <template v-else>
-                  <img
-                    :src="item.image"
-                    :alt="item.label"
-                    class="h-full w-full object-cover opacity-60 transition-transform duration-500 group-hover:scale-104"
-                    loading="lazy"
-                    referrerpolicy="no-referrer"
-                  />
-                  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.36)_100%)]" />
-                  <!-- Play Icon on Hover -->
-                  <div class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-black/20">
-                    <n-icon :size="32" :component="PlayFilled" class="text-white/90 drop-shadow-md" />
-                  </div>
-                  <div class="absolute bottom-2 left-2 text-[10px] text-white/76">{{ item.label }}</div>
-                </template>
-              </button>
-            </div>
-          </n-scrollbar>
+      <div class="flex-1 overflow-hidden border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
+        <div
+          class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+          视频模板（已选：1个）
         </div>
-
-        <section class="grid  min-h-0 w-[500px] grid-rows-[auto_1fr_120px] grid-cols-1 bg-[#232323]">
-          <div class="border-b h-full border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
-            人像及其他参数设置（已选：{{ selectedAvatarCount }}个）
-          </div>
-          <n-scrollbar class="h-full">
-            <div class="grid grid-cols-4 gap-2 p-3">
-              <button
-                v-for="(item, index) in avatarItems"
-                :key="item.label + index"
-                type="button"
-                class="group relative aspect-[1/1.15] overflow-hidden rounded-[4px] border bg-[#131416] text-left transition-colors"
-                :class="selectedAvatars.includes(index) ? 'border-[#38cfe0] shadow-[0_0_0_1px_rgba(56,207,224,0.35)]' : 'border-white/6'"
-                @click="handleAvatarClick(index, item.type)"
-              >
-                <div class="absolute left-2 top-2 z-10" v-if="item.type !== 'upload'">
-                  <n-checkbox :checked="selectedAvatars.includes(index)" />
+        <n-scrollbar class="pb-[40px]">
+          <div class="grid grid-cols-3 gap-2 p-3 md:grid-cols-4 sm:grid-cols-6">
+            <button v-for="(item, index) in videoItems" :key="item.label + index" type="button"
+              class="group relative aspect-[3/4.25] overflow-hidden rounded-[4px] border bg-[#131416] text-left transition-colors"
+              :class="selectedVideo === index ? 'border-[#38cfe0] shadow-[0_0_0_1px_rgba(56,207,224,0.35)]' : 'border-white/6'"
+              @click="handleVideoClick(item)">
+              <div class="absolute left-2 top-2 z-10" v-if="item.type !== 'upload'"
+                @click.stop="handleVideoSelect(index)">
+                <n-checkbox :checked="selectedVideo === index" />
+              </div>
+              <template v-if="item.type === 'upload'">
+                <div class="flex h-full flex-col items-center justify-center bg-black text-center">
+                  <n-icon :size="28" :component="CloudUpload" class="text-white/55" />
+                  <div class="mt-3 text-[11px] text-white/28">上传</div>
                 </div>
-                <template v-if="item.type === 'upload'">
-                  <div class="flex h-full flex-col items-center justify-center bg-black text-center">
-                    <n-icon :size="24" :component="CloudUpload" class="text-white/55" />
-                    <div class="mt-2 text-[10px] text-white/28">上传</div>
-                  </div>
-                </template>
-                <template v-else>
-                  <img
-                    :src="item.image"
-                    :alt="item.label"
-                    class="h-full w-full object-cover opacity-64 transition-transform duration-500 group-hover:scale-104"
-                    loading="lazy"
-                    referrerpolicy="no-referrer"
-                  />
-                  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.14)_0%,rgba(0,0,0,0.38)_100%)]" />
-                  <div class="absolute bottom-2 left-2 text-[10px] text-white/76">{{ item.label }}</div>
-                </template>
-              </button>
-            </div>
-          </n-scrollbar>
-
-          <div class="mt-auto h-full border-t border-white/8 px-3 py-4 text-[11px] text-white/48">
-            <div class="text-[12px] font-medium text-[#f4b13d]">
-              总数量：{{ selectedAvatarCount }}
-              <span class="text-white/42">（模板数量 x 人像数量）</span>
-            </div>
-
-            <div class="mt-3 flex items-center gap-1.5 text-amber-400/95">
-              <span class="text-white/48">消耗算力：</span>
-              <n-icon :size="14" :component="Currency" />
-              <span class="font-medium">50</span>
-               <n-tooltip trigger="hover">
-                <template #trigger>
-                  <i class="i-mingcute-question-line text-white/48 cursor-pointer"></i>
-                </template>
-                根据生成视时长计算，每秒50算力
-              </n-tooltip>
-            </div>
-
-            <div class="pt-4 flex justify-end">
-              <n-button
-                type="warning"
-                size="small"
-                class="!h-[28px] !px-3 !rounded-[4px] !text-[12px]"
-              >
-                后台执行
-              </n-button>
-            </div>
+              </template>
+              <template v-else>
+                <img :src="item.image" :alt="item.label"
+                  class="h-full w-full object-cover opacity-60 transition-transform duration-500 group-hover:scale-104"
+                  loading="lazy" referrerpolicy="no-referrer" />
+                <div
+                  class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.36)_100%)]" />
+                <!-- Play Icon on Hover -->
+                <div
+                  class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-black/20">
+                  <n-icon :size="32" :component="PlayFilled" class="text-white/90 drop-shadow-md" />
+                </div>
+                <div class="absolute bottom-2 left-2 text-[10px] text-white/76">{{ item.label }}</div>
+              </template>
+            </button>
           </div>
-        </section>
+        </n-scrollbar>
+      </div>
+
+      <section class="grid  min-h-0 w-[500px] grid-rows-[auto_1fr_120px] grid-cols-1 bg-[#232323]">
+        <div
+          class="border-b h-full border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+          人像及其他参数设置（已选：{{ selectedAvatarCount }}个）
+        </div>
+        <n-scrollbar class="h-full">
+          <div class="grid grid-cols-4 gap-2 p-3">
+            <button v-for="(item, index) in avatarItems" :key="item.label + index" type="button"
+              class="group relative aspect-[1/1.15] overflow-hidden rounded-[4px] border bg-[#131416] text-left transition-colors"
+              :class="selectedAvatars.includes(index) ? 'border-[#38cfe0] shadow-[0_0_0_1px_rgba(56,207,224,0.35)]' : 'border-white/6'"
+              @click="handleAvatarClick(index, item.type)">
+              <div class="absolute left-2 top-2 z-10" v-if="item.type !== 'upload'">
+                <n-checkbox :checked="selectedAvatars.includes(index)" />
+              </div>
+              <template v-if="item.type === 'upload'">
+                <div class="flex h-full flex-col items-center justify-center bg-black text-center">
+                  <n-icon :size="24" :component="CloudUpload" class="text-white/55" />
+                  <div class="mt-2 text-[10px] text-white/28">上传</div>
+                </div>
+              </template>
+              <template v-else>
+                <img :src="item.image" :alt="item.label"
+                  class="h-full w-full object-cover opacity-64 transition-transform duration-500 group-hover:scale-104"
+                  loading="lazy" referrerpolicy="no-referrer" />
+                <div
+                  class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.14)_0%,rgba(0,0,0,0.38)_100%)]" />
+                <div class="absolute bottom-2 left-2 text-[10px] text-white/76">{{ item.label }}</div>
+              </template>
+            </button>
+          </div>
+        </n-scrollbar>
+
+        <div class="mt-auto h-full border-t border-white/8 px-3 py-4 text-[11px] text-white/48">
+          <div class="text-[12px] font-medium text-[#f4b13d]">
+            总数量：{{ selectedAvatarCount }}
+            <span class="text-white/42">（模板数量 x 人像数量）</span>
+          </div>
+
+          <div class="mt-3 flex items-center gap-1.5 text-amber-400/95">
+            <span class="text-white/48">消耗算力：</span>
+            <n-icon :size="14" :component="Currency" />
+            <span class="font-medium">50</span>
+            <n-tooltip trigger="hover">
+              <template #trigger>
+                <i class="i-mingcute-question-line text-white/48 cursor-pointer"></i>
+              </template>
+              根据生成视时长计算，每秒50算力
+            </n-tooltip>
+          </div>
+
+          <div class="pt-4 flex justify-end">
+            <n-button type="warning" size="small" class="!h-[28px] !px-3 !rounded-[4px] !text-[12px]">
+              后台执行
+            </n-button>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
-
-  <!-- 上传视频模板弹窗 -->
-  <n-modal v-model:show="showVideoModal" :mask-closable="true">
-    <div class="w-[600px] rounded-[8px] border border-white/10 bg-[#161719] p-4 text-white shadow-2xl">
-      <div class="mb-4 flex items-center justify-between">
-        <span class="text-[14px] font-medium">上传视频模板</span>
-        <button
-          type="button"
-          class="flex h-6 w-6 items-center justify-center rounded-full btn-close"
-          @click="showVideoModal = false"
-        >
-          <n-icon :size="18" :component="Close" class="text-white/45" />
-        </button>
-      </div>
-
-      <div class="mb-4 rounded-[6px] bg-[#1a1c1e] p-4">
-        <div class="mb-4 flex gap-6 text-[12px]">
-          <label class="flex cursor-pointer items-center gap-2">
-            <input
-              v-model="videoUploadMode"
-              type="radio"
-              value="local"
-              class="accent-[#18d2e5]"
-            />
-            <span :class="videoUploadMode === 'local' ? 'text-[#18d2e5]' : 'text-white/65'">本地上传</span>
-          </label>
-          <label class="flex cursor-pointer items-center gap-2 opacity-50">
-            <input
-              v-model="videoUploadMode"
-              type="radio"
-              value="cloud"
-              class="accent-[#18d2e5]"
-              disabled
-            />
-            <span :class="videoUploadMode === 'cloud' ? 'text-[#18d2e5]' : 'text-white/65'">云盘选择</span>
-          </label>
-        </div>
-
-        <n-upload multiple directory-dnd :max="5" accept=".mp4,.avi,.mkv">
-          <n-upload-dragger
-            class="!border-dashed !border-white/10 !bg-[#17181a] hover:!border-[#18d2e5]/40"
-          >
-            <div class="flex flex-col items-center py-8">
-              <n-icon :size="48" :component="CloudUpload" class="mb-4 text-white/30" />
-              <div class="text-[12px] text-white/65">
-                Drop file here or <span class="text-[#18d2e5]">click to upload</span>
-              </div>
-            </div>
-          </n-upload-dragger>
-        </n-upload>
-
-        <div class="mt-4 text-[11px] text-white/30">
-          支持 mp4/avi/mkv，可多选上传，单文件 5G 以内
-        </div>
-      </div>
-
-      <div class="flex justify-end">
-        <n-button
-          class="!h-[32px] !rounded-[4px] !bg-[#2a2c2f] !px-6 !text-[12px] !text-white/80 hover:!bg-[#323437]"
-          @click="showVideoModal = false"
-        >
-          关闭
-        </n-button>
-      </div>
-    </div>
-  </n-modal>
-
-  <!-- 上传人像照片弹窗 -->
-  <n-modal v-model:show="showAvatarModal" :mask-closable="true">
-    <div class="w-[600px] rounded-[8px] border border-white/10 bg-[#161719] p-4 text-white shadow-2xl">
-      <div class="mb-4 flex items-center justify-between">
-        <span class="text-[14px] font-medium">上传人像照片</span>
-        <button
-          type="button"
-          class="flex h-6 w-6 btn-close items-center justify-center rounded-full "
-          @click="showAvatarModal = false"
-        >
-          <n-icon :size="18" :component="Close" class="text-white/45" />
-        </button>
-      </div>
-
-      <div class="mb-4 rounded-[6px] bg-[#1a1c1e] p-4">
-        <div class="mb-4 flex gap-6 text-[12px]">
-          <label class="flex cursor-pointer items-center gap-2">
-            <input
-              v-model="avatarUploadMode"
-              type="radio"
-              value="local"
-              class="accent-[#18d2e5]"
-            />
-            <span :class="avatarUploadMode === 'local' ? 'text-[#18d2e5]' : 'text-white/65'">本地上传</span>
-          </label>
-          <label class="flex cursor-pointer items-center gap-2 opacity-50">
-            <input
-              v-model="avatarUploadMode"
-              type="radio"
-              value="cloud"
-              class="accent-[#18d2e5]"
-              disabled
-            />
-            <span :class="avatarUploadMode === 'cloud' ? 'text-[#18d2e5]' : 'text-white/65'">云盘选择</span>
-          </label>
-        </div>
-
-        <n-upload multiple directory-dnd :max="10" accept=".jpg,.png,.jpeg">
-          <n-upload-dragger
-            class="!border-dashed !border-white/10 !bg-[#17181a] hover:!border-[#18d2e5]/40"
-          >
-            <div class="flex flex-col items-center py-8">
-              <n-icon :size="48" :component="CloudUpload" class="mb-4 text-white/30" />
-              <div class="text-[12px] text-white/65">
-                Drop file here or <span class="text-[#18d2e5]">click to upload</span>
-              </div>
-            </div>
-          </n-upload-dragger>
-        </n-upload>
-
-        <div class="mt-4 text-[11px] text-white/30">
-          支持 jpg/png，可多选上传，单文件 50MB 以内
-        </div>
-      </div>
-
-      <div class="flex justify-end">
-        <n-button
-          class="!h-[32px] !rounded-[4px] !bg-[#2a2c2f] !px-6 !text-[12px] !text-white/80 hover:!bg-[#323437]"
-          @click="showAvatarModal = false"
-        >
-          关闭
-        </n-button>
-      </div>
-    </div>
-  </n-modal>
 
   <!-- 视频预览弹窗 -->
   <n-modal v-model:show="showPreviewModal" :mask-closable="true">
     <div class="relative w-[400px] overflow-hidden rounded-[8px] border border-white/10 bg-black shadow-2xl">
-      <button
-        type="button"
+      <button type="button"
         class="absolute right-3 top-3 z-50 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-sm  btn-close"
-        @click="showPreviewModal = false"
-      >
+        @click="showPreviewModal = false">
         <n-icon :size="20" :component="Close" />
       </button>
-      
+
       <div class="aspect-[9/16] w-full bg-black">
-        <video
-          v-if="showPreviewModal"
-          :src="previewVideoUrl"
-          class="h-full w-full object-contain"
-          autoplay
-          muted
-          playsinline
-          controls
-          loop
-        />
+        <video v-if="showPreviewModal" :src="previewVideoUrl" class="h-full w-full object-contain" autoplay muted
+          playsinline controls loop />
       </div>
     </div>
   </n-modal>
