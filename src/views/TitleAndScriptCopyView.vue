@@ -58,13 +58,11 @@ function startGenerate() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#000] p-[18px] text-white">
-    <div
-      class="mx-auto min-h-[calc(100vh-36px)] max-w-[1280px] overflow-hidden rounded-[16px] border border-white/8 bg-[#0a0b0d]">
-      <div
-        class="grid min-h-[calc(100vh-36px)] grid-cols-1 gap-[8px] p-[8px] min-[1080px]:grid-cols-[334px_minmax(0,1fr)]">
+  <div class="min-h-[500px] h-full bg-[#000] p-[18px] text-white">
+    <div class="mx-auto h-full  overflow-hidden rounded-[16px] border border-white/8 ">
+      <div class="flex h-full gap-[8px] p-[8px] ">
         <section
-          class="overflow-hidden rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
+          class="overflow-hidden w-[400px] rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
           <div
             class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[14px] py-[12px] text-[12px] text-white/84">
             生成标题及口播文案
@@ -74,14 +72,14 @@ function startGenerate() {
             <div class="mb-[8px]">
               <n-input v-model:value="productName" type="textarea" :autosize="{ minRows: 3, maxRows: 3 }"
                 placeholder="请输入产品名称，例如：护发素"
-                class="[&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22" />
+                class="[&_.n-input-wrapper]:!rounded-[2px] text-[12px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22" />
               <div class="mt-[6px] text-[10px] text-white/28">例如：护发素</div>
             </div>
 
             <div class="mb-[12px]">
               <n-input v-model:value="productSellingPoint" type="textarea" :autosize="{ minRows: 3, maxRows: 3 }"
                 placeholder="请输入产品卖点，例如：深层滋养，修复受损发质"
-                class="[&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22" />
+                class="text-[12px] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22" />
               <div class="mt-[6px] text-[10px] text-white/28">例如：深层滋养，修复受损发质</div>
             </div>
 
@@ -106,7 +104,7 @@ function startGenerate() {
               <div class="min-w-0 flex-1">
                 <n-input v-model:value="targetAudience" type="textarea" :autosize="{ minRows: 2, maxRows: 2 }"
                   placeholder="例如：学生党，宝妈，健身爱好者，职场白领"
-                  class="[&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[6px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22" />
+                  class="text-[12px] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[6px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22" />
               </div>
             </div>
 
@@ -115,13 +113,16 @@ function startGenerate() {
                 <span>消耗算力：</span>
                 <n-icon :component="Currency" :size="13" class="text-[#ffd24c]" />
                 <span class="text-[#ffd24c]">150</span>
-                <button type="button" class="border-0 bg-transparent p-0 text-white/30">
-                  <n-icon :component="Information" :size="12" />
-                </button>
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <i class="i-mingcute-question-line text-white/48 cursor-pointer"></i>
+                  </template>
+                  每次消耗150算力
+                </n-tooltip>
               </div>
 
               <n-button type="primary" size="small"
-                class="!h-[30px] !rounded-[4px] !border-0 !bg-[#18d2e5] !px-[16px] !text-[12px] !font-medium"
+                class="!h-[30px] !rounded-[4px] text-#fff! !border-0 !bg-[#18d2e5] !px-[16px] !text-[12px] !font-medium"
                 @click="startGenerate">
                 开始执行
               </n-button>
@@ -130,14 +131,14 @@ function startGenerate() {
         </section>
 
         <section
-          class="overflow-hidden rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
+          class="overflow-hidden flex-1 flex flex-col rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]">
           <div
             class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[14px] py-[12px] text-[12px] text-white/84">
             结果
           </div>
 
-          <div class="p-[8px]">
-            <div class="min-h-[calc(100vh-80px)] rounded-[2px] border border-white/8 bg-[#101113] px-[12px] py-[10px]">
+          <div class="p-[8px] flex-1 flex">
+            <div class=" rounded-[2px] border border-white/8 bg-[#101113] px-[12px] py-[10px]">
               <div class="mb-[10px] text-[11px] text-white/36">结果示例：</div>
 
               <div class="space-y-[8px] text-[11px] leading-[1.65]">
