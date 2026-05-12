@@ -39,10 +39,8 @@ function selectConversation(id) {
   activeConversationId.value = id
 }
 
-function deleteConversation() {
-  if (!activeConversation.value) return
-
-  const remaining = conversations.value.filter((item) => item.id !== activeConversation.value.id)
+function deleteConversationById(id) {
+  const remaining = conversations.value.filter((item) => item.id !== id)
   conversations.value = remaining.length
     ? remaining
     : [
@@ -56,9 +54,14 @@ function deleteConversation() {
   if (!remaining.length) {
     activeConversationId.value = nextConversationId.value
     nextConversationId.value += 1
-  } else {
+  } else if (activeConversationId.value === id) {
     activeConversationId.value = conversations.value[0].id
   }
+}
+
+function deleteConversation() {
+  if (!activeConversation.value) return
+  deleteConversationById(activeConversationId.value)
 }
 
 function exportConversation() {
@@ -101,50 +104,61 @@ function sendMessage() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#000] p-[14px] text-white">
+  <div class="min-h-[500px] h-full bg-[#000] p-[14px] text-white">
     <div
-      class="mx-auto grid min-h-[calc(100vh-28px)] max-w-[1280px] grid-cols-1 gap-[6px] rounded-[10px] border border-white/8 bg-[#0a0b0d] p-[6px] min-[980px]:grid-cols-[182px_minmax(0,1fr)]">
+      class="mx-auto grid grid-cols-1 gap-[16px] h-full rounded-[10px] border border-white/8  p-[6px] min-[980px]:grid-cols-[300px_minmax(0,1fr)]">
       <aside
         class="overflow-hidden rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#242425_0%,#1d1e20_100%)]">
         <div
-          class="flex items-center justify-between border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[10px] py-[8px]">
-          <span class="text-[12px] text-white/88">会话列表</span>
+          class="flex items-center justify-between border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[12px] py-[10px]">
+          <span class="text-[12px] font-medium text-white/88">会话列表</span>
           <n-button type="primary" size="tiny"
-            class="!h-[22px] !rounded-[4px] !border-0 !bg-[#18d2e5] !px-[10px] !text-[11px] !font-medium"
+            class=" text-white !rounded-[6px] !border-0 !bg-[#18d2e5] !px-[12px] !text-[12px] !font-medium"
             @click="createConversation">
             <template #icon>
-              <n-icon :component="Add" :size="12" />
+              <n-icon :component="Add" :size="14" />
             </template>
-            新增会话
+            新建会话
           </n-button>
         </div>
 
-        <n-scrollbar class="h-[calc(100vh-80px)] min-h-[540px]">
-          <div class="p-[8px]">
+        <n-scrollbar class="h-[calc(100vh-140px)]">
+          <div class="p-[12px]">
             <button v-for="item in conversations" :key="item.id" type="button"
-              class="mb-[6px] w-full rounded-[4px] border border-transparent px-[10px] py-[10px] text-left text-[12px] text-white/74 transition"
-              :class="item.id === activeConversationId ? 'bg-white/8 text-white border-white/10' : 'bg-transparent hover:bg-white/4'"
+              class="group relative mb-[12px] w-full rounded-[8px] border border-white/8 bg-[#1a1b1d] p-[14px] text-left transition-all"
+              :class="item.id === activeConversationId ? '!border-[#18d2e5] bg-[#222428]' : 'border-transparent hover:bg-white/4'"
               @click="selectConversation(item.id)">
-              <div class="truncate">{{ item.title }}</div>
+
+              <div class="flex items-start justify-between">
+                <div class="truncate text-[14px] font-bold text-white/92">{{ item.title }}</div>
+                <n-icon :component="TrashCan" :size="14" class="text-red-500/60 hover:text-red-500 transition-colors"
+                  @click.stop="deleteConversationById(item.id)" />
+              </div>
+
+              <div class="mt-[6px] truncate text-[12px] text-white/45">
+                {{ item.messages.length > 0 ? item.messages[item.messages.length - 1].content : '暂无消息' }}
+              </div>
+
+              <div class="mt-[6px] text-[11px] text-white/25">刚刚</div>
             </button>
           </div>
         </n-scrollbar>
       </aside>
 
       <section
-        class="overflow-hidden rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#252526_0%,#1e1f21_100%)]">
+        class="overflow-hidden flex flex-col rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#252526_0%,#1e1f21_100%)]">
         <div
           class="flex items-center justify-between border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[12px] py-[8px]">
           <div class="text-[12px] text-white/88">{{ activeConversation?.title || '新会话' }}</div>
           <div class="flex items-center gap-[8px]">
             <button type="button"
-              class="inline-flex items-center gap-[4px] border-0 bg-transparent p-0 text-[11px] text-white/46 transition hover:text-white/72"
+              class="inline-flex h-[26px] items-center justify-center rounded-[4px] border border-white/8 bg-transparent text-[12px] text-white/45 transition-colors hover:text-white/70"
               @click="deleteConversation">
               <n-icon :component="TrashCan" :size="12" />
-              清理会话
+              清空会话
             </button>
             <button type="button"
-              class="inline-flex items-center gap-[4px] border-0 bg-transparent p-0 text-[11px] text-white/46 transition hover:text-white/72"
+              class="inline-flex h-[26px] items-center justify-center rounded-[4px] border border-white/8 bg-transparent text-[12px] text-white/45 transition-colors hover:text-white/70"
               @click="exportConversation">
               <n-icon :component="Download" :size="12" />
               导出会话
@@ -152,7 +166,7 @@ function sendMessage() {
           </div>
         </div>
 
-        <div class="flex min-h-[calc(100vh-42px)] flex-col">
+        <div class="flex flex-1 flex-col">
           <n-scrollbar class="min-h-[360px] flex-1 px-[12px] py-[12px]">
             <div v-if="activeConversation && activeConversation.messages.length" class="space-y-[12px] pb-[6px]">
               <div v-for="(message, index) in activeConversation.messages" :key="`${message.role}-${index}`"
@@ -174,23 +188,26 @@ function sendMessage() {
           <div class="border-t border-white/8 px-[12px] py-[10px]">
             <n-input v-model:value="draft" type="textarea" :autosize="{ minRows: 3, maxRows: 3 }"
               placeholder="请输入您的问题..."
-              class="[&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#1c1d20] [&_.n-input-wrapper]:!px-[8px] [&_.n-input-wrapper]:!py-[6px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!text-white/84 [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/24" />
+              class="text-[12px] border border-[1px] border-solid border-#ffffff10 [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#1c1d20] [&_.n-input-wrapper]:!px-[8px] [&_.n-input-wrapper]:!py-[6px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!text-white/84 [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/24" />
 
-            <div class="mt-[6px] flex items-center justify-between gap-[10px]">
+            <div class="mt-[6px] flex flex-col gap-[10px]">
               <div class="text-[10px] text-white/34">输入字数: {{ draftCount }}</div>
 
               <div class="flex items-center gap-[12px]">
-                <div class="flex items-center gap-[4px] text-[11px] text-white/46">
+                <div class="ml-auto flex items-center gap-[4px] text-[11px] text-white/46">
                   <span>消耗算力：</span>
                   <n-icon :component="Currency" :size="13" class="text-[#ffd24c]" />
                   <span class="text-[#ffd24c]">{{ totalPower }}</span>
-                  <button type="button" class="border-0 bg-transparent p-0 text-white/30">
-                    <n-icon :component="Information" :size="12" />
-                  </button>
+                  <n-tooltip trigger="hover">
+                    <template #trigger>
+                      <i class="i-mingcute-question-line text-white/48 cursor-pointer"></i>
+                    </template>
+                    根据输入文字数量计算，每500个字100算力
+                  </n-tooltip>
                 </div>
 
                 <n-button type="primary" size="small"
-                  class="!h-[28px] !rounded-[4px] !border-0 !bg-[#3a73aa] !px-[12px] !text-[11px] !font-medium"
+                  class="!h-[28px] text-#fff! shadow-none! rounded-[4px] !bg-[#3a73aa] !px-[12px] !text-[11px] !font-medium"
                   @click="sendMessage">
                   <template #icon>
                     <n-icon :component="SendAltFilled" :size="12" />
