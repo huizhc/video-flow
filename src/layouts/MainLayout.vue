@@ -41,7 +41,7 @@ watch(
     if (typeof k === 'string') activeKey.value = k
     else activeKey.value = null
   },
-  { immediate: true },
+  { immediate: true }
 )
 
 function menuIcon(IconComp) {
@@ -80,7 +80,7 @@ const menuOptions = computed(() => [
       { label: '个人中心', key: 'profile', icon: menuIcon(User) },
     ],
   },
-// ].filter((g) => g.key !== 'group-project' || isLoggedIn.value))
+  // ].filter((g) => g.key !== 'group-project' || isLoggedIn.value))
 ]) // TODO
 
 const menuRouteByKey = {
@@ -106,7 +106,11 @@ function onMenuUpdate(key) {
   <n-layout class="h-screen bg-[#121212]">
     <app-top-header logo-route-name="tools-all" />
 
-    <n-layout has-sider class="bg-[#121212]" style="height: calc(100vh - 3.5rem)">
+    <n-layout
+      has-sider
+      class="bg-[#121212]"
+      style="height: calc(100vh - 3.5rem)"
+    >
       <n-layout-sider
         v-model:collapsed="collapsed"
         bordered
@@ -134,7 +138,9 @@ function onMenuUpdate(key) {
         >
           © 2026 AIKC
         </div>
-        <div class="p-3 border-t border-[#ffffff0f] shrink-0 flex justify-center">
+        <div
+          class="p-3 border-t border-[#ffffff0f] shrink-0 flex justify-center"
+        >
           <n-button circle quaternary @click="collapsed = !collapsed">
             <n-icon :size="20" :component="Menu" />
           </n-button>

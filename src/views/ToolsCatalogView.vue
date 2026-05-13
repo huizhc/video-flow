@@ -27,16 +27,16 @@ function openToolDetail(tool) {
     '07': 'tool-batch-video-mix',
     '08': 'tool-script-shot-analysis',
     '09': 'tool-text-to-speech',
-    '11': 'tool-audio-driven-avatar',
-    '12': 'tool-script-driven-avatar',
-    '15': 'tool-text-to-video-toolkit',
-    '16': 'tool-voice-clone-audio',
-    '17': 'tool-nurture-video',
-    '18': 'tool-seedance-video',
-    '19': 'tool-veo31-video',
-    '62': 'tool-quick-split-video',
-    '81': 'tool-video-script-writer',
-    '90': 'tool-title-and-script-copy',
+    11: 'tool-audio-driven-avatar',
+    12: 'tool-script-driven-avatar',
+    15: 'tool-text-to-video-toolkit',
+    16: 'tool-voice-clone-audio',
+    17: 'tool-nurture-video',
+    18: 'tool-seedance-video',
+    19: 'tool-veo31-video',
+    62: 'tool-quick-split-video',
+    81: 'tool-video-script-writer',
+    90: 'tool-title-and-script-copy',
   }
   const detailRouteName = detailRouteNameById[tool.id]
   if (!detailRouteName) return
@@ -51,9 +51,7 @@ function openToolDetail(tool) {
       <h1 class="text-xl font-semibold text-white m-0 tracking-tight">
         {{ pageTitle }}
       </h1>
-      <p class="text-sm text-gray-500 mt-1 m-0">
-        共 {{ list.length }} 个工具
-      </p>
+      <p class="text-sm text-gray-500 mt-1 m-0">共 {{ list.length }} 个工具</p>
     </div>
 
     <n-empty
@@ -70,7 +68,29 @@ function openToolDetail(tool) {
         v-for="tool in list"
         :key="tool.id + tool.title"
         class="group !bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl overflow-hidden transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
-        :class="['02', '03', '04', '06', '07', '08', '09', '11', '12', '15', '16', '17', '18', '19', '62', '81', '90'].includes(tool.id) ? 'cursor-pointer' : 'cursor-default'"
+        :class="
+          [
+            '02',
+            '03',
+            '04',
+            '06',
+            '07',
+            '08',
+            '09',
+            '11',
+            '12',
+            '15',
+            '16',
+            '17',
+            '18',
+            '19',
+            '62',
+            '81',
+            '90',
+          ].includes(tool.id)
+            ? 'cursor-pointer'
+            : 'cursor-default'
+        "
         :bordered="false"
         size="small"
         :content-style="{ padding: '0' }"
@@ -86,16 +106,22 @@ function openToolDetail(tool) {
             loading="lazy"
             referrerpolicy="no-referrer"
           />
-          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/22 via-transparent to-white/6" />
+          <div
+            class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/22 via-transparent to-white/6"
+          />
         </div>
         <div class="p-3.5">
           <div class="flex items-start justify-between gap-2 mb-2">
             <span class="text-[15px] font-medium text-white leading-snug">
-              <span class="text-gray-400 font-normal tabular-nums">{{ tool.id }}</span>
+              <span class="text-gray-400 font-normal tabular-nums">{{
+                tool.id
+              }}</span>
               {{ ' ' }}
               {{ tool.title }}
             </span>
-            <span class="flex items-center gap-1 text-amber-400/95 shrink-0 text-sm font-medium tabular-nums">
+            <span
+              class="flex items-center gap-1 text-amber-400/95 shrink-0 text-sm font-medium tabular-nums"
+            >
               <n-icon :size="16" :component="Currency" />
               {{ tool.cost }}
             </span>

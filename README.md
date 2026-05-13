@@ -36,3 +36,20 @@ pnpm dev
 ```sh
 pnpm build
 ```
+
+# 代码规范
+
+## 推荐的vscode配置
+
+```
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
+```

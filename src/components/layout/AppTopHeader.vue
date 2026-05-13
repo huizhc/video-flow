@@ -102,7 +102,9 @@ function goBack() {
         <span
           class="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-[#14b8a6] via-[#0ea5e9] to-[#8b5cf6] shadow-lg shadow-teal-900/30"
         />
-        <span class="text-sm font-semibold tracking-tight text-white">AIKC</span>
+        <span class="text-sm font-semibold tracking-tight text-white"
+          >AIKC</span
+        >
         <span
           class="rounded bg-gradient-to-r from-[#0d9488] to-[#0ea5e9] px-1.5 py-0.5 text-[10px] font-semibold text-white"
         >
@@ -130,7 +132,9 @@ function goBack() {
       </button>
 
       <template v-if="!isLoggedIn">
-        <n-button type="primary" size="small" @click="onLoginClick">登录</n-button>
+        <n-button type="primary" size="small" @click="onLoginClick"
+          >登录</n-button
+        >
       </template>
       <template v-else>
         <button

@@ -26,9 +26,13 @@ async function onSubmit() {
   if (!canSubmit.value || loading.value) return
   loading.value = true
   try {
-    const ok = auth.login({ account: form.account.trim(), password: form.password })
+    const ok = auth.login({
+      account: form.account.trim(),
+      password: form.password,
+    })
     if (!ok) return
-    const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/'
+    const redirect =
+      typeof route.query.redirect === 'string' ? route.query.redirect : '/'
     router.replace(redirect)
   } finally {
     loading.value = false
@@ -38,12 +42,14 @@ async function onSubmit() {
 function noop() {}
 
 function goRegister() {
-  const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/'
+  const redirect =
+    typeof route.query.redirect === 'string' ? route.query.redirect : '/'
   router.push({ name: 'register', query: { redirect } })
 }
 
 function goForgotPassword() {
-  const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/'
+  const redirect =
+    typeof route.query.redirect === 'string' ? route.query.redirect : '/'
   router.push({ name: 'forgot-password', query: { redirect } })
 }
 </script>
@@ -65,20 +71,35 @@ function goForgotPassword() {
         <div class="auth-hero-glow" />
         <div class="auth-hero-content">
           <div class="auth-hero-title">AIKC工具箱</div>
-          <div class="auth-hero-desc">
-            手机利器，以一敌百，单枪匹马搞跨境
-          </div>
+          <div class="auth-hero-desc">手机利器，以一敌百，单枪匹马搞跨境</div>
           <button type="button" class="auth-hero-more">了解更多</button>
         </div>
 
-        <svg
-          class="auth-hero-arc"
-          viewBox="0 0 520 520"
-          fill="none"
-        >
-          <circle cx="260" cy="260" r="220" stroke="#14b8a6" stroke-width="1" opacity="0.55" />
-          <circle cx="260" cy="260" r="260" stroke="#0ea5e9" stroke-width="1" opacity="0.35" />
-          <circle cx="260" cy="260" r="300" stroke="#ef4444" stroke-width="1" opacity="0.25" />
+        <svg class="auth-hero-arc" viewBox="0 0 520 520" fill="none">
+          <circle
+            cx="260"
+            cy="260"
+            r="220"
+            stroke="#14b8a6"
+            stroke-width="1"
+            opacity="0.55"
+          />
+          <circle
+            cx="260"
+            cy="260"
+            r="260"
+            stroke="#0ea5e9"
+            stroke-width="1"
+            opacity="0.35"
+          />
+          <circle
+            cx="260"
+            cy="260"
+            r="300"
+            stroke="#ef4444"
+            stroke-width="1"
+            opacity="0.25"
+          />
         </svg>
       </section>
 
@@ -90,7 +111,12 @@ function goForgotPassword() {
           </div>
 
           <div class="auth-form-wrap">
-            <n-form :model="form" size="large" label-placement="left" :show-label="false">
+            <n-form
+              :model="form"
+              size="large"
+              label-placement="left"
+              :show-label="false"
+            >
               <n-form-item path="account">
                 <n-input
                   v-model:value="form.account"
@@ -123,7 +149,11 @@ function goForgotPassword() {
               </n-button>
 
               <div class="auth-links">
-                <button type="button" class="auth-link" @click="goForgotPassword">
+                <button
+                  type="button"
+                  class="auth-link"
+                  @click="goForgotPassword"
+                >
                   忘记密码？
                 </button>
                 <button
@@ -136,7 +166,8 @@ function goForgotPassword() {
               </div>
 
               <div class="auth-agreement">
-                用户服务协议 <span class="mx-2 opacity-60">|</span> 隐私与 Cookie 政策
+                用户服务协议 <span class="mx-2 opacity-60">|</span> 隐私与
+                Cookie 政策
               </div>
             </n-form>
           </div>

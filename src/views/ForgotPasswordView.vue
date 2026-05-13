@@ -33,7 +33,8 @@ const langOptions = [
 function noop() {}
 
 function goLogin() {
-  const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/'
+  const redirect =
+    typeof route.query.redirect === 'string' ? route.query.redirect : '/'
   router.push({ name: 'login', query: { redirect } })
 }
 
@@ -65,20 +66,35 @@ async function onSubmit() {
         <div class="auth-hero-glow" />
         <div class="auth-hero-content">
           <div class="auth-hero-title">AIKC工具箱</div>
-          <div class="auth-hero-desc">
-            手机利器，以一敌百，单枪匹马搞跨境
-          </div>
+          <div class="auth-hero-desc">手机利器，以一敌百，单枪匹马搞跨境</div>
           <button type="button" class="auth-hero-more">了解更多</button>
         </div>
 
-        <svg
-          class="auth-hero-arc"
-          viewBox="0 0 520 520"
-          fill="none"
-        >
-          <circle cx="260" cy="260" r="220" stroke="#14b8a6" stroke-width="1" opacity="0.55" />
-          <circle cx="260" cy="260" r="260" stroke="#0ea5e9" stroke-width="1" opacity="0.35" />
-          <circle cx="260" cy="260" r="300" stroke="#ef4444" stroke-width="1" opacity="0.25" />
+        <svg class="auth-hero-arc" viewBox="0 0 520 520" fill="none">
+          <circle
+            cx="260"
+            cy="260"
+            r="220"
+            stroke="#14b8a6"
+            stroke-width="1"
+            opacity="0.55"
+          />
+          <circle
+            cx="260"
+            cy="260"
+            r="260"
+            stroke="#0ea5e9"
+            stroke-width="1"
+            opacity="0.35"
+          />
+          <circle
+            cx="260"
+            cy="260"
+            r="300"
+            stroke="#ef4444"
+            stroke-width="1"
+            opacity="0.25"
+          />
         </svg>
       </section>
 
@@ -90,7 +106,12 @@ async function onSubmit() {
           </div>
 
           <div class="auth-form-wrap">
-            <n-form :model="form" size="large" label-placement="left" :show-label="false">
+            <n-form
+              :model="form"
+              size="large"
+              label-placement="left"
+              :show-label="false"
+            >
               <n-form-item path="phone">
                 <n-input
                   v-model:value="form.phone"

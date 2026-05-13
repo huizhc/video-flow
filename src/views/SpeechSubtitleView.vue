@@ -53,10 +53,13 @@ function goHome() {
 <template>
   <div class="h-full bg-[#060709] p-3 text-white">
     <div class="overflow-hidden h-full border border-white/8 bg-[#0b0d10]">
-
-      <div class="grid min-h-[calc(100vh-64px)] grid-cols-1 gap-x-[15px] sm:grid-cols-[480px_minmax(0,1fr)_480px]">
+      <div
+        class="grid min-h-[calc(100vh-64px)] grid-cols-1 gap-x-[15px] sm:grid-cols-[480px_minmax(0,1fr)_480px]"
+      >
         <section class="bg-[#232323]">
-          <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+          <div
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          >
             识别语音加字幕
           </div>
           <div class="px-3 py-3">
@@ -67,21 +70,33 @@ function goHome() {
               </div>
             </n-radio-group>
 
-            <div class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2">
-              <div class="flex min-h-[228px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center">
-                <n-icon :size="34" :component="CloudUpload" class="text-white/70" />
+            <div
+              class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2"
+            >
+              <div
+                class="flex min-h-[228px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center"
+              >
+                <n-icon
+                  :size="34"
+                  :component="CloudUpload"
+                  class="text-white/70"
+                />
                 <div class="mt-3 text-[11px] text-white/55">
                   Drop file here or
                   <span class="text-[#16d4e4]">click to upload</span>
                 </div>
               </div>
-              <div class="pt-3 text-[11px] text-white/38">mp4/wav 文件，5G以内</div>
+              <div class="pt-3 text-[11px] text-white/38">
+                mp4/wav 文件，5G以内
+              </div>
             </div>
           </div>
         </section>
 
         <section class="bg-[#232323]">
-          <div class="flex items-center justify-between border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-[12px] py-[6px] shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+          <div
+            class="flex items-center justify-between border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-[12px] py-[6px] shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          >
             <span class="text-[12px] font-medium text-white/75">字幕校正</span>
             <n-button
               type="primary"
@@ -92,7 +107,9 @@ function goHome() {
             </n-button>
           </div>
 
-          <div class="flex h-[calc(100%-33px)] items-center justify-center text-center text-[11px] text-white/34">
+          <div
+            class="flex h-[calc(100%-33px)] items-center justify-center text-center text-[11px] text-white/34"
+          >
             <div>
               <div>暂无字幕内容</div>
               <div class="mt-2">上传视频后点「解析音频」按钮获取</div>
@@ -101,7 +118,9 @@ function goHome() {
         </section>
 
         <section class="bg-[#232323]">
-          <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+          <div
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          >
             参数设置（需符合视频尺寸，二选一）
           </div>
           <div class="px-3 py-3 text-[11px] text-white/48">
@@ -125,7 +144,7 @@ function goHome() {
                     :min="0"
                     :max="100"
                     class="!w-[120px] text-center"
-                    button-placement="both" 
+                    button-placement="both"
                     placeholder="X"
                   >
                     <template #suffix>%</template>
@@ -137,7 +156,7 @@ function goHome() {
                     :min="0"
                     :max="100"
                     class="!w-[120px] text-center"
-                    button-placement="both" 
+                    button-placement="both"
                     placeholder="Y"
                   >
                     <template #suffix>%</template>
@@ -157,13 +176,13 @@ function goHome() {
 
               <div class="flex items-center gap-3">
                 <span class="w-[52px] shrink-0">字幕颜色:</span>
-                  <n-color-picker
-                    v-model:value="textColor"
-                    size="small"
-                    :show-alpha="false"
-                    class="!w-[28px] !h-[28px] [&_.n-color-picker-trigger]:!p-0 [&_.n-color-picker-trigger]:!border-white/14"
-                  >
-                   <template #trigger="{ value, onClick, ref: triggerRef }">
+                <n-color-picker
+                  v-model:value="textColor"
+                  size="small"
+                  :show-alpha="false"
+                  class="!w-[28px] !h-[28px] [&_.n-color-picker-trigger]:!p-0 [&_.n-color-picker-trigger]:!border-white/14"
+                >
+                  <template #trigger="{ value, onClick, ref: triggerRef }">
                     <div
                       :ref="triggerRef"
                       :style="{
@@ -178,16 +197,16 @@ function goHome() {
                       @click="onClick"
                     />
                   </template>
-                  </n-color-picker>
-                  <span class="text-white/58">文字颜色:</span>
-                  <n-color-picker
-                    v-model:value="strokeColor"
-                    size="small"
-                    :show-alpha="false"
-                    :disabled="!textStroke"
-                    class="ml-[15px] !w-[28px] !h-[28px] [&_.n-color-picker-trigger]:!p-0 [&_.n-color-picker-trigger]:!border-white/14"
-                  >
-                   <template #trigger="{ value, onClick, ref: triggerRef }">
+                </n-color-picker>
+                <span class="text-white/58">文字颜色:</span>
+                <n-color-picker
+                  v-model:value="strokeColor"
+                  size="small"
+                  :show-alpha="false"
+                  :disabled="!textStroke"
+                  class="ml-[15px] !w-[28px] !h-[28px] [&_.n-color-picker-trigger]:!p-0 [&_.n-color-picker-trigger]:!border-white/14"
+                >
+                  <template #trigger="{ value, onClick, ref: triggerRef }">
                     <div
                       :ref="triggerRef"
                       :style="{

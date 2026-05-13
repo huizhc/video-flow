@@ -6,16 +6,16 @@ import { CloudUpload } from '@vicons/carbon'
 const props = defineProps({
   hasFile: {
     type: Boolean,
-    default: false
+    default: false,
   },
   accept: {
     type: String,
-    default: 'video/mp4,video/quicktime'
+    default: 'video/mp4,video/quicktime',
   },
   description: {
     type: String,
-    default: 'mp4/mov 文件，建议1G以内'
-  }
+    default: 'mp4/mov 文件，建议1G以内',
+  },
 })
 
 const emit = defineEmits(['file-change'])
@@ -42,9 +42,9 @@ const onFileChange = (e) => {
 </script>
 
 <template>
-  <div class="flex-1 flex flex-col min-h-0 w-full ">
+  <div class="flex-1 flex flex-col min-h-0 w-full">
     <template v-if="!hasFile">
-      <div class="flex-1 flex  justify-center">
+      <div class="flex-1 flex justify-center">
         <div class="w-full max-w-[400px]">
           <n-radio-group v-model:value="uploadSource" size="small" class="mb-4">
             <div class="flex items-center gap-5 text-sm">
@@ -53,18 +53,32 @@ const onFileChange = (e) => {
             </div>
           </n-radio-group>
 
-          <div class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2" @click="triggerUpload">
+          <div
+            class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2"
+            @click="triggerUpload"
+          >
             <div
-              class="flex min-h-[228px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center cursor-pointer hover:border-[#16d4e4]/50 transition-colors">
-              <n-icon :size="34" :component="CloudUpload" class="text-white/70" />
+              class="flex min-h-[228px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center cursor-pointer hover:border-[#16d4e4]/50 transition-colors"
+            >
+              <n-icon
+                :size="34"
+                :component="CloudUpload"
+                class="text-white/70"
+              />
               <div class="mt-3 text-sm text-white/55">
                 Drop file here or
                 <span class="text-[#16d4e4]">click to upload</span>
               </div>
             </div>
-            <div class="pt-3 text-xs text-white/38 ">{{ description }}</div>
+            <div class="pt-3 text-xs text-white/38">{{ description }}</div>
           </div>
-          <input type="file" ref="fileInputRef" class="hidden" :accept="accept" @change="onFileChange" />
+          <input
+            type="file"
+            ref="fileInputRef"
+            class="hidden"
+            :accept="accept"
+            @change="onFileChange"
+          />
         </div>
       </div>
     </template>

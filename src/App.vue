@@ -1,5 +1,13 @@
 <script setup>
-import { NCard, NConfigProvider, NModal, NMessageProvider, darkTheme, dateZhCN, zhCN } from 'naive-ui'
+import {
+  NCard,
+  NConfigProvider,
+  NModal,
+  NMessageProvider,
+  darkTheme,
+  dateZhCN,
+  zhCN,
+} from 'naive-ui'
 import { useSupportStore } from '@/stores/support'
 
 const supportStore = useSupportStore()
@@ -22,15 +30,29 @@ const themeOverrides = {
 </script>
 
 <template>
-  <n-config-provider :theme="darkTheme" :theme-overrides="themeOverrides" :locale="zhCN" :date-locale="dateZhCN">
+  <n-config-provider
+    :theme="darkTheme"
+    :theme-overrides="themeOverrides"
+    :locale="zhCN"
+    :date-locale="dateZhCN"
+  >
     <n-message-provider>
       <router-view />
     </n-message-provider>
-    <n-modal v-model:show="supportStore.qrVisible" preset="card" class="max-w-[360px]" :mask-closable="true"
-      :bordered="false">
+    <n-modal
+      v-model:show="supportStore.qrVisible"
+      preset="card"
+      class="max-w-[360px]"
+      :mask-closable="true"
+      :bordered="false"
+    >
       <div class="flex flex-col items-center text-center">
-        <img :src="supportStore.qrCodeSrc" alt="联系客服二维码" class="h-[220px] w-[220px] rounded-lg bg-white p-2"
-          referrerpolicy="no-referrer" />
+        <img
+          :src="supportStore.qrCodeSrc"
+          alt="联系客服二维码"
+          class="h-[220px] w-[220px] rounded-lg bg-white p-2"
+          referrerpolicy="no-referrer"
+        />
         <p class="mt-4 mb-0 text-sm text-white/70">请使用微信扫码联系客服</p>
       </div>
     </n-modal>

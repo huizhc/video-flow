@@ -35,10 +35,16 @@ const speechStyleOptions = [
 
 <template>
   <div class="h-full bg-[#060709] p-[20px] text-white">
-    <div class="flex h-full overflow-hidden  border border-white/8 bg-[#0b0d10]">
-      <div class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[300px_300px_minmax(0,1fr)]">
-        <section class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
-          <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+    <div class="flex h-full overflow-hidden border border-white/8 bg-[#0b0d10]">
+      <div
+        class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[300px_300px_minmax(0,1fr)]"
+      >
+        <section
+          class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
+        >
+          <div
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          >
             视频翻译换语音
           </div>
           <div class="px-3 py-3">
@@ -49,21 +55,35 @@ const speechStyleOptions = [
               </div>
             </n-radio-group>
 
-            <div class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2">
-              <div class="flex min-h-[228px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center">
-                <n-icon :size="34" :component="CloudUpload" class="text-white/70" />
+            <div
+              class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2"
+            >
+              <div
+                class="flex min-h-[228px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center"
+              >
+                <n-icon
+                  :size="34"
+                  :component="CloudUpload"
+                  class="text-white/70"
+                />
                 <div class="mt-3 text-[11px] text-white/55">
                   Drop file here or
                   <span class="text-[#16d4e4]">click to upload</span>
                 </div>
               </div>
-              <div class="pt-3 text-[11px] text-white/38">mp4/wmv 文件，建议1G内</div>
+              <div class="pt-3 text-[11px] text-white/38">
+                mp4/wmv 文件，建议1G内
+              </div>
             </div>
           </div>
         </section>
 
-        <section class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
-          <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+        <section
+          class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
+        >
+          <div
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          >
             参数设置
           </div>
           <div class="px-3 py-3 text-[11px] text-white/48">
@@ -107,7 +127,9 @@ const speechStyleOptions = [
               <div class="flex items-center gap-3">
                 <span class="w-[48px] shrink-0">匹配画面:</span>
                 <n-checkbox v-model:checked="enableVoiceMatch">
-                  <span class="text-[11px] text-white/52">语音匹配配置画面</span>
+                  <span class="text-[11px] text-white/52"
+                    >语音匹配配置画面</span
+                  >
                 </n-checkbox>
               </div>
             </div>
@@ -134,9 +156,15 @@ const speechStyleOptions = [
           <div class="flex flex-1 items-center justify-center">
             <div class="flex flex-col items-center">
               <div class="relative h-[120px] w-[120px]">
-                <div class="absolute left-[16px] top-[18px] h-[72px] w-[72px] rounded-full border-[12px] border-[#0b2347] border-r-transparent border-t-[#12315f]" />
-                <div class="absolute left-[36px] top-[38px] h-[42px] w-[42px] rounded-full bg-[#1f6f5d]" />
-                <div class="absolute left-[82px] top-[26px] h-[22px] w-[22px] rounded-full bg-[#26735c]" />
+                <div
+                  class="absolute left-[16px] top-[18px] h-[72px] w-[72px] rounded-full border-[12px] border-[#0b2347] border-r-transparent border-t-[#12315f]"
+                />
+                <div
+                  class="absolute left-[36px] top-[38px] h-[42px] w-[42px] rounded-full bg-[#1f6f5d]"
+                />
+                <div
+                  class="absolute left-[82px] top-[26px] h-[22px] w-[22px] rounded-full bg-[#26735c]"
+                />
               </div>
               <div class="-mt-1 text-[12px] text-white/34">AIKC</div>
             </div>

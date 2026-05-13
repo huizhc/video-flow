@@ -20,9 +20,9 @@ function createProject() {
 
 <template>
   <div class="h-full p-3 text-white">
-    <div class="overflow-hidden h-full border border-white/8 ">
+    <div class="overflow-hidden h-full border border-white/8">
       <div class="bg-[#232323] h-full rd-[4px]">
-        <div class="flex items-center px-3 py-3   justify-between gap-4">
+        <div class="flex items-center px-3 py-3 justify-between gap-4">
           <div class="flex items-center gap-4">
             <div class="text-[13px] font-medium text-white/82">
               项目列表
@@ -58,7 +58,9 @@ function createProject() {
         </div>
 
         <div class="p-4">
-          <div class="h-[184px] w-[132px] rounded-[4px] bg-[#17181b] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)]">
+          <div
+            class="h-[184px] w-[132px] rounded-[4px] bg-[#17181b] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)]"
+          >
             <button
               type="button"
               class="flex h-full w-full flex-col items-center justify-center gap-3 rounded-[4px] border-0 bg-transparent text-white/28 transition-colors hover:text-white/50"

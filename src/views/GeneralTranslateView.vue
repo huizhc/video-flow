@@ -5,7 +5,9 @@ import { Currency } from '@vicons/carbon'
 
 const sourceLanguage = ref('zh')
 const targetLanguage = ref('en')
-const content = ref(`请输入要翻译的内容，例如：你有干枯受损的头发吗？别担心！深层滋养修护能从发根开始呵护你的头发，只需几次使用就能带来顺滑闪亮的秀发。产品中有促销和优惠信息，内容具有强烈促销卖点，因此需要保留语气，并确保多语言表达自然流畅、立意接近原文。`)
+const content = ref(
+  `请输入要翻译的内容，例如：你有干枯受损的头发吗？别担心！深层滋养修护能从发根开始呵护你的头发，只需几次使用就能带来顺滑闪亮的秀发。产品中有促销和优惠信息，内容具有强烈促销卖点，因此需要保留语气，并确保多语言表达自然流畅、立意接近原文。`
+)
 
 const languageOptions = [
   { label: '中文', value: 'zh' },
@@ -17,10 +19,14 @@ const languageOptions = [
 
 <template>
   <div class="h-full bg-[#060709] p-3 text-white">
-    <div class="overflow-hidden h-full flex  border border-white/8 bg-[#0b0d10]">
-      <div class="grid  grid-cols-1 gap-x-[15px] lg:grid-cols-[275px_minmax(0,1fr)]">
+    <div class="overflow-hidden h-full flex border border-white/8 bg-[#0b0d10]">
+      <div
+        class="grid grid-cols-1 gap-x-[15px] lg:grid-cols-[275px_minmax(0,1fr)]"
+      >
         <section class="bg-[#232323]">
-          <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+          <div
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          >
             通用翻译
           </div>
           <div class="px-3 py-3">
@@ -54,7 +60,9 @@ const languageOptions = [
               </div>
             </div>
 
-            <div class="mt-4 flex items-center gap-1.5 text-[11px] text-amber-400/95">
+            <div
+              class="mt-4 flex items-center gap-1.5 text-[11px] text-amber-400/95"
+            >
               <span class="text-white/48">消耗算力：</span>
               <n-icon :size="14" :component="Currency" />
               <span class="font-medium">100</span>
@@ -73,32 +81,49 @@ const languageOptions = [
         </section>
 
         <section class="bg-[#232323] flex flex-col">
-          <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+          <div
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          >
             结果
           </div>
           <div class="p-3 flex-1">
-            <div class="rounded-[2px] h-full border border-white/6 bg-[#101214] p-3 text-[11px] leading-[1.7] text-white/38">
+            <div
+              class="rounded-[2px] h-full border border-white/6 bg-[#101214] p-3 text-[11px] leading-[1.7] text-white/38"
+            >
               <div class="mb-3 text-white/45">结果示例：</div>
 
               <div class="space-y-4">
                 <div>
                   <div class="mb-1 text-white/6">英文</div>
                   <div>
-                    Do you have dry, damaged hair? Don't worry! Deep nourishing repair for damaged hair will help nourish your hair from the roots, delivering smooth and shiny locks in just a few uses. The product features a deep moisturizing formula that repairs damage and restores hair's strength and natural shine. Try it now and feel the difference!
+                    Do you have dry, damaged hair? Don't worry! Deep nourishing
+                    repair for damaged hair will help nourish your hair from the
+                    roots, delivering smooth and shiny locks in just a few uses.
+                    The product features a deep moisturizing formula that
+                    repairs damage and restores hair's strength and natural
+                    shine. Try it now and feel the difference!
                   </div>
                 </div>
 
                 <div>
                   <div class="mb-1 text-white/6">越南文</div>
                   <div>
-                    Tóc bạn khô xơ? Đừng lo! Dầu gội siêu DƯỠNG sẽ phục hồi hư tổn từ gốc, chỉ vài lần là có mái tóc mượt óng ánh ngay! Công thức ưu đãi đặc biệt giúp tóc chắc khỏe và bóng tự nhiên. MUA NGAY KẺO HẾT, trải nghiệm khác biệt liền!
+                    Tóc bạn khô xơ? Đừng lo! Dầu gội siêu DƯỠNG sẽ phục hồi hư
+                    tổn từ gốc, chỉ vài lần là có mái tóc mượt óng ánh ngay!
+                    Công thức ưu đãi đặc biệt giúp tóc chắc khỏe và bóng tự
+                    nhiên. MUA NGAY KẺO HẾT, trải nghiệm khác biệt liền!
                   </div>
                 </div>
 
                 <div>
                   <div class="mb-1 text-white/6">泰文</div>
                   <div>
-                    คุณมีผมแห้งเสียใช่ไหม ไม่ต้องกังวล! การบำรุงล้ำลึกเพื่อซ่อมแซมผมเสียจะช่วยฟื้นฟูเส้นผมจากราก ทำให้ผมนุ่มลื่นและเงางามได้ในเวลาไม่นาน ผลิตภัณฑ์นี้มีสูตรให้ความชุ่มชื้นลึก ซ่อมแซมความเสียหาย และทำให้ผมแข็งแรงเป็นธรรมชาติ ลองแล้วจะรู้ถึงความแตกต่างทันที!
+                    คุณมีผมแห้งเสียใช่ไหม ไม่ต้องกังวล!
+                    การบำรุงล้ำลึกเพื่อซ่อมแซมผมเสียจะช่วยฟื้นฟูเส้นผมจากราก
+                    ทำให้ผมนุ่มลื่นและเงางามได้ในเวลาไม่นาน
+                    ผลิตภัณฑ์นี้มีสูตรให้ความชุ่มชื้นลึก ซ่อมแซมความเสียหาย
+                    และทำให้ผมแข็งแรงเป็นธรรมชาติ
+                    ลองแล้วจะรู้ถึงความแตกต่างทันที!
                   </div>
                 </div>
               </div>

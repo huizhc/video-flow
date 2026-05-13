@@ -72,30 +72,28 @@ function handleRefresh() {}
       <n-button type="primary" size="medium" @click="handleSearch">
         搜索
       </n-button>
-      <n-button size="medium" secondary @click="handleReset">
-        重置
-      </n-button>
+      <n-button size="medium" secondary @click="handleReset"> 重置 </n-button>
       <n-button size="medium" secondary @click="handleRefresh">
         <span class="flex items-center gap-1">
           <n-icon :size="16" :component="Renew" />
           刷新
         </span>
       </n-button>
-      <div class="w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-2 justify-end">
+      <div
+        class="w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-2 justify-end"
+      >
         <n-checkbox v-model:checked="selectAll">
           <span class="text-gray-300 text-sm">全选</span>
         </n-checkbox>
-        <n-button type="error" size="medium">
-          批量删除
-        </n-button>
-        <n-button type="primary" size="medium">
-          批量下载
-        </n-button>
+        <n-button type="error" size="medium"> 批量删除 </n-button>
+        <n-button type="primary" size="medium"> 批量下载 </n-button>
       </div>
     </div>
 
     <div class="flex-1 flex flex-col min-h-0 min-h-[420px]">
-      <div class="flex-1 flex items-center justify-center rounded-xl border border-[#ffffff0f] bg-[#101014]/80">
+      <div
+        class="flex-1 flex items-center justify-center rounded-xl border border-[#ffffff0f] bg-[#101014]/80"
+      >
         <n-empty description="暂无任务数据">
           <template #icon>
             <n-icon :size="72" :depth="3" :component="View" />
@@ -114,7 +112,9 @@ function handleRefresh() {}
           size="medium"
         >
           <template #prefix="{ itemCount }">
-            <span class="text-gray-400 text-sm mr-4 tabular-nums">Total {{ itemCount }}</span>
+            <span class="text-gray-400 text-sm mr-4 tabular-nums"
+              >Total {{ itemCount }}</span
+            >
           </template>
         </n-pagination>
       </div>

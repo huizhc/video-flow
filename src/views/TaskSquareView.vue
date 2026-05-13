@@ -27,7 +27,8 @@ const taskItems = [
     note: '侧重于省钱攻略与成分党视觉',
     publishTime: '2026-05-09 13:13',
     productCode: '7967803053100785666',
-    image: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=500&q=80',
+    image:
+      'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=500&q=80',
     videoScript: `json
 {
   "image_generation_model": "NanoBananaPro",
@@ -55,7 +56,8 @@ const taskItems = [
     note: '千视党上的“潜在发丝危机”视角',
     publishTime: '2026-05-09 13:13',
     productCode: '7967803053100785666',
-    image: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=500&q=80',
+    image:
+      'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=500&q=80',
     videoScript: `json
 {
   "image_generation_model": "NanoBananaPro",
@@ -83,7 +85,8 @@ const taskItems = [
     note: '侧重于浴室真实焕新体验',
     publishTime: '2026-05-09 13:13',
     productCode: '7967803053100785666',
-    image: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=500&q=80',
+    image:
+      'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=500&q=80',
     videoScript: `json
 {
   "image_generation_model": "NanoBananaPro",
@@ -111,7 +114,8 @@ const taskItems = [
     note: '重点通过RM200账单与...',
     publishTime: '2026-05-09 13:13',
     productCode: '7967803053100785667',
-    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=500&q=80',
+    image:
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=500&q=80',
     videoScript: `json
 {
   "image_generation_model": "NanoBananaPro",
@@ -139,7 +143,8 @@ const taskItems = [
     note: '针对担心化学成分伤发...',
     publishTime: '2026-05-09 13:13',
     productCode: '7967803053100785667',
-    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=500&q=80',
+    image:
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=500&q=80',
     videoScript: `json
 {
   "image_generation_model": "NanoBananaPro",
@@ -167,7 +172,8 @@ const taskItems = [
     note: '针对大马职场高压、通...',
     publishTime: '2026-05-09 13:13',
     productCode: '7967803053100785667',
-    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=500&q=80',
+    image:
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=500&q=80',
     videoScript: `json
 {
   "image_generation_model": "NanoBananaPro",
@@ -186,7 +192,9 @@ const taskItems = [
 ]
 
 const filteredTaskItems = computed(() => taskItems)
-const selectedTask = computed(() => taskItems.find((item) => item.id === selectedTaskId.value) ?? null)
+const selectedTask = computed(
+  () => taskItems.find((item) => item.id === selectedTaskId.value) ?? null
+)
 
 function handleQuery() {
   // 接入列表接口时在此触发请求
@@ -214,9 +222,7 @@ function closeTaskDetail() {
 <template>
   <div class="p-4 min-h-full flex flex-col">
     <div class="flex items-baseline justify-between gap-4 mb-4">
-      <h1 class="text-xl font-semibold text-white m-0">
-        任务广场
-      </h1>
+      <h1 class="text-xl font-semibold text-white m-0">任务广场</h1>
       <span class="text-sm text-gray-500 shrink-0">共 0 条任务</span>
     </div>
 
@@ -288,7 +294,9 @@ function closeTaskDetail() {
       </div>
     </div>
 
-    <div class="flex-1 min-h-[320px] rounded-xl border border-[#2a2a2a] bg-[#161616] p-3">
+    <div
+      class="flex-1 min-h-[320px] rounded-xl border border-[#2a2a2a] bg-[#161616] p-3"
+    >
       <div class="grid grid-cols-1 gap-3 xl:grid-cols-3 2xl:grid-cols-3">
         <article
           v-for="item in filteredTaskItems"
@@ -296,11 +304,15 @@ function closeTaskDetail() {
           class="cursor-pointer overflow-hidden rounded-[10px] border border-[#2a2a2a] bg-[#141414] shadow-[0_0_0_1px_rgba(255,255,255,0.02)] transition hover:border-white/12 hover:bg-[#171717]"
           @click="openTaskDetail(item)"
         >
-          <div class="flex items-center justify-between border-b border-white/6 px-3 py-2">
+          <div
+            class="flex items-center justify-between border-b border-white/6 px-3 py-2"
+          >
             <h3 class="m-0 truncate pr-3 text-[15px] font-semibold text-white">
               {{ item.title }}
             </h3>
-            <span class="shrink-0 rounded-[4px] bg-[#5f4314] px-2 py-[2px] text-[10px] leading-none text-[#ffb84d]">
+            <span
+              class="shrink-0 rounded-[4px] bg-[#5f4314] px-2 py-[2px] text-[10px] leading-none text-[#ffb84d]"
+            >
               {{ item.region }}
             </span>
           </div>
@@ -333,7 +345,9 @@ function closeTaskDetail() {
               </div>
               <div class="flex">
                 <span class="w-[40px] shrink-0 text-white/38">卖点:</span>
-                <span class="truncate text-white/84">{{ item.sellingPoint }}</span>
+                <span class="truncate text-white/84">{{
+                  item.sellingPoint
+                }}</span>
               </div>
               <div class="flex">
                 <span class="w-[40px] shrink-0 text-white/38">备注:</span>
@@ -342,7 +356,9 @@ function closeTaskDetail() {
             </div>
           </div>
 
-          <div class="border-t border-white/6 px-3 py-2 text-[11px] text-white/34">
+          <div
+            class="border-t border-white/6 px-3 py-2 text-[11px] text-white/34"
+          >
             发布时间： {{ item.publishTime }}
           </div>
         </article>
@@ -356,8 +372,13 @@ function closeTaskDetail() {
       :mask-closable="true"
       class="w-[760px] max-w-[92vw] !rounded-[8px] !bg-[#0f1012] !shadow-[0_20px_80px_rgba(0,0,0,0.55)] [&_.n-card-header]:!hidden [&_.n-card__content]:!p-0"
     >
-      <div v-if="selectedTask" class="rounded-[8px] border border-white/8 bg-[#101113]">
-        <div class="flex items-center justify-between border-b border-white/8 px-[14px] py-[10px]">
+      <div
+        v-if="selectedTask"
+        class="rounded-[8px] border border-white/8 bg-[#101113]"
+      >
+        <div
+          class="flex items-center justify-between border-b border-white/8 px-[14px] py-[10px]"
+        >
           <div class="text-[18px] font-semibold text-white">任务详情</div>
           <button
             type="button"
@@ -368,20 +389,48 @@ function closeTaskDetail() {
           </button>
         </div>
 
-        <div class="px-[14px] py-[12px] text-[13px] leading-[1.75] text-white/72">
+        <div
+          class="px-[14px] py-[12px] text-[13px] leading-[1.75] text-white/72"
+        >
           <div class="grid grid-cols-2 gap-x-[34px] gap-y-[2px]">
-            <div><span class="text-white/42">产品：</span>{{ selectedTask.title }}</div>
-            <div><span class="text-white/42">区域：</span>{{ selectedTask.region }}</div>
-            <div><span class="text-white/42">品类：</span>{{ selectedTask.category }}</div>
-            <div><span class="text-white/42">人群：</span>{{ selectedTask.audience }}</div>
-            <div><span class="text-white/42">时长：</span>{{ selectedTask.duration }}</div>
-            <div><span class="text-white/42">模型：</span>{{ selectedTask.model }}</div>
-            <div><span class="text-white/42">发布人：</span>{{ selectedTask.productCode }}</div>
-            <div><span class="text-white/42">发布时间：</span>{{ selectedTask.publishTime }}</div>
+            <div>
+              <span class="text-white/42">产品：</span>{{ selectedTask.title }}
+            </div>
+            <div>
+              <span class="text-white/42">区域：</span>{{ selectedTask.region }}
+            </div>
+            <div>
+              <span class="text-white/42">品类：</span
+              >{{ selectedTask.category }}
+            </div>
+            <div>
+              <span class="text-white/42">人群：</span
+              >{{ selectedTask.audience }}
+            </div>
+            <div>
+              <span class="text-white/42">时长：</span
+              >{{ selectedTask.duration }}
+            </div>
+            <div>
+              <span class="text-white/42">模型：</span>{{ selectedTask.model }}
+            </div>
+            <div>
+              <span class="text-white/42">发布人：</span
+              >{{ selectedTask.productCode }}
+            </div>
+            <div>
+              <span class="text-white/42">发布时间：</span
+              >{{ selectedTask.publishTime }}
+            </div>
           </div>
 
-          <div class="mt-[6px]"><span class="text-white/42">卖点：</span>{{ selectedTask.sellingPoint }}</div>
-          <div class="mt-[2px]"><span class="text-white/42">备注：</span>{{ selectedTask.note }}</div>
+          <div class="mt-[6px]">
+            <span class="text-white/42">卖点：</span
+            >{{ selectedTask.sellingPoint }}
+          </div>
+          <div class="mt-[2px]">
+            <span class="text-white/42">备注：</span>{{ selectedTask.note }}
+          </div>
 
           <div class="mt-[6px] flex items-start gap-[8px]">
             <span class="pt-[2px] text-white/42">图片:</span>
@@ -394,8 +443,12 @@ function closeTaskDetail() {
             />
           </div>
 
-          <div class="mt-[10px] overflow-hidden rounded-[6px] border border-white/8 bg-[#1a1b1e]">
-            <div class="flex items-center justify-between border-b border-white/6 px-[10px] py-[8px]">
+          <div
+            class="mt-[10px] overflow-hidden rounded-[6px] border border-white/8 bg-[#1a1b1e]"
+          >
+            <div
+              class="flex items-center justify-between border-b border-white/6 px-[10px] py-[8px]"
+            >
               <div class="text-[12px] text-white/42">视频脚本:</div>
               <button
                 type="button"
@@ -405,7 +458,10 @@ function closeTaskDetail() {
               </button>
             </div>
             <div class="max-h-[220px] overflow-auto px-[10px] py-[10px]">
-              <pre class="m-0 whitespace-pre-wrap break-words text-[13px] leading-[1.8] text-white/76">{{ selectedTask.videoScript }}</pre>
+              <pre
+                class="m-0 whitespace-pre-wrap break-words text-[13px] leading-[1.8] text-white/76"
+                >{{ selectedTask.videoScript }}</pre
+              >
             </div>
           </div>
         </div>

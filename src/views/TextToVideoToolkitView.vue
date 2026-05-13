@@ -1,6 +1,14 @@
 <script setup>
 import { ref } from 'vue'
-import { NButton, NIcon, NInput, NRadio, NRadioGroup, NSelect, NRadioButton } from 'naive-ui'
+import {
+  NButton,
+  NIcon,
+  NInput,
+  NRadio,
+  NRadioGroup,
+  NSelect,
+  NRadioButton,
+} from 'naive-ui'
 import { CloudUpload, Currency } from '@vicons/carbon'
 
 const imageSource = ref('local')
@@ -48,15 +56,23 @@ function toggleCharacter(index) {
 </script>
 
 <template>
-  <div class="min-h-[500px] h-full  p-[20px] text-white">
-    <div class="flex h-full overflow-hidden border border-white/8 ">
-      <div class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[400px_400px_minmax(0,1fr)]">
-        <section class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
-          <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+  <div class="min-h-[500px] h-full p-[20px] text-white">
+    <div class="flex h-full overflow-hidden border border-white/8">
+      <div
+        class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[400px_400px_minmax(0,1fr)]"
+      >
+        <section
+          class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
+        >
+          <div
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          >
             参考图片
           </div>
           <div class="px-3 py-3">
-            <div class="mb-2 text-[10px] text-[#f4b13d]">特别注意：不允许上传包含人物的照片，否则有可能被封号！！！</div>
+            <div class="mb-2 text-[10px] text-[#f4b13d]">
+              特别注意：不允许上传包含人物的照片，否则有可能被封号！！！
+            </div>
             <n-radio-group v-model:value="imageSource" size="small">
               <div class="flex items-center gap-5 text-[12px]">
                 <n-radio value="local">本地上传</n-radio>
@@ -64,21 +80,35 @@ function toggleCharacter(index) {
               </div>
             </n-radio-group>
 
-            <div class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2">
-              <div class="flex min-h-[128px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center">
-                <n-icon :size="34" :component="CloudUpload" class="text-white/70" />
+            <div
+              class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2"
+            >
+              <div
+                class="flex min-h-[128px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center"
+              >
+                <n-icon
+                  :size="34"
+                  :component="CloudUpload"
+                  class="text-white/70"
+                />
                 <div class="mt-3 text-[11px] text-white/55">
                   Drop file here or
                   <span class="text-[#16d4e4]">click to upload</span>
                 </div>
               </div>
-              <div class="pt-3 text-[11px] text-white/38">JPG、PNG、JPEG、WEBP文件，30Mb以内</div>
+              <div class="pt-3 text-[11px] text-white/38">
+                JPG、PNG、JPEG、WEBP文件，30Mb以内
+              </div>
             </div>
           </div>
         </section>
 
-        <section class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
-          <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+        <section
+          class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
+        >
+          <div
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          >
             视频设置
           </div>
           <div class="px-3 py-3 text-[11px] text-white/48">
@@ -95,7 +125,11 @@ function toggleCharacter(index) {
 
               <div class="flex items-center gap-3">
                 <span class="w-[62px] shrink-0">视频时长:</span>
-                <n-radio-group v-model:value="duration" size="small" class="custom-radio-group">
+                <n-radio-group
+                  v-model:value="duration"
+                  size="small"
+                  class="custom-radio-group"
+                >
                   <n-radio-button
                     value="10s"
                     label="10秒"
@@ -111,19 +145,23 @@ function toggleCharacter(index) {
 
               <div class="flex items-center gap-3">
                 <span class="w-[62px] shrink-0">方向尺寸:</span>
-                <n-radio-group v-model:value="direction" size="small" class="custom-radio-group">
-                    <n-radio-button
-                      v-for="item in [
-                        { label: '竖屏720P', value: 'vertical-720' },
-                        { label: '竖屏1080P', value: 'vertical-1080' },
-                        { label: '横屏720P', value: 'horizontal-720' },
-                        { label: '横屏1080P', value: 'horizontal-1080' },
-                      ]"
-                      :key="item.value"
-                      :value="item.value"
-                      :label="item.label"
-                      class="!bg-[#16181a] !text-[10px] !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
-                    />
+                <n-radio-group
+                  v-model:value="direction"
+                  size="small"
+                  class="custom-radio-group"
+                >
+                  <n-radio-button
+                    v-for="item in [
+                      { label: '竖屏720P', value: 'vertical-720' },
+                      { label: '竖屏1080P', value: 'vertical-1080' },
+                      { label: '横屏720P', value: 'horizontal-720' },
+                      { label: '横屏1080P', value: 'horizontal-1080' },
+                    ]"
+                    :key="item.value"
+                    :value="item.value"
+                    :label="item.label"
+                    class="!bg-[#16181a] !text-[10px] !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                  />
                 </n-radio-group>
               </div>
 
@@ -135,13 +173,25 @@ function toggleCharacter(index) {
                     :key="avatar"
                     type="button"
                     class="h-[56px] w-[56px] overflow-hidden rounded-full border transition-colors"
-                    :class="selectedCharacters.includes(index) ? 'border-[#18d2e5]' : 'border-white/12'"
+                    :class="
+                      selectedCharacters.includes(index)
+                        ? 'border-[#18d2e5]'
+                        : 'border-white/12'
+                    "
                     @click="toggleCharacter(index)"
                   >
-                    <img :src="avatar" alt="" class="h-full w-full object-cover" />
+                    <img
+                      :src="avatar"
+                      alt=""
+                      class="h-full w-full object-cover"
+                    />
                   </button>
                   <div class="w-full text-[10px] text-white/34">
-                    {{ selectedCharacters.length > 0 ? `已选中 ${selectedCharacters.length} 个角色` : '未选中角色' }}
+                    {{
+                      selectedCharacters.length > 0
+                        ? `已选中 ${selectedCharacters.length} 个角色`
+                        : '未选中角色'
+                    }}
                   </div>
                 </div>
               </div>
@@ -179,9 +229,15 @@ function toggleCharacter(index) {
           <div class="flex flex-1 items-center justify-center">
             <div class="flex flex-col items-center">
               <div class="relative h-[120px] w-[120px]">
-                <div class="absolute left-[16px] top-[18px] h-[72px] w-[72px] rounded-full border-[12px] border-[#0b2347] border-r-transparent border-t-[#12315f]" />
-                <div class="absolute left-[36px] top-[38px] h-[42px] w-[42px] rounded-full bg-[#1f6f5d]" />
-                <div class="absolute left-[82px] top-[26px] h-[22px] w-[22px] rounded-full bg-[#26735c]" />
+                <div
+                  class="absolute left-[16px] top-[18px] h-[72px] w-[72px] rounded-full border-[12px] border-[#0b2347] border-r-transparent border-t-[#12315f]"
+                />
+                <div
+                  class="absolute left-[36px] top-[38px] h-[42px] w-[42px] rounded-full bg-[#1f6f5d]"
+                />
+                <div
+                  class="absolute left-[82px] top-[26px] h-[22px] w-[22px] rounded-full bg-[#26735c]"
+                />
               </div>
               <div class="-mt-1 text-[12px] text-white/34">AIKC</div>
             </div>

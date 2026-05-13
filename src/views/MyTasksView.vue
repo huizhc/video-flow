@@ -71,7 +71,9 @@ const stats = [
 
 <template>
   <div class="min-h-full bg-[#171717] px-[10px] pt-[10px] pb-4 sm:pb-0">
-    <div class="grid grid-cols-1 gap-[10px] sm:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5">
+    <div
+      class="grid grid-cols-1 gap-[10px] sm:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5"
+    >
       <div
         v-for="s in stats"
         :key="s.key"
@@ -84,15 +86,27 @@ const stats = [
           <n-icon :size="18" :class="s.iconClass" :component="s.icon" />
         </div>
         <div class="min-w-0">
-          <div class="text-[24px] leading-[1.1] font-semibold text-white/95">{{ s.count }}</div>
-          <div class="mt-[2px] text-[14px] leading-[1.2] font-semibold text-white/45">{{ s.label }}</div>
+          <div class="text-[24px] leading-[1.1] font-semibold text-white/95">
+            {{ s.count }}
+          </div>
+          <div
+            class="mt-[2px] text-[14px] leading-[1.2] font-semibold text-white/45"
+          >
+            {{ s.label }}
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="mt-[18px] flex flex-col items-stretch justify-between gap-3 rounded-t-[8px] border border-b-0 border-white/5 bg-[linear-gradient(180deg,rgba(21,21,21,0.98)_0%,rgba(18,18,18,0.98)_100%)] px-4 py-[10px] lg:flex-row lg:items-center">
-      <div class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between lg:justify-start lg:gap-3">
-        <span class="whitespace-nowrap text-[14px] text-white/50">状态筛选:</span>
+    <div
+      class="mt-[18px] flex flex-col items-stretch justify-between gap-3 rounded-t-[8px] border border-b-0 border-white/5 bg-[linear-gradient(180deg,rgba(21,21,21,0.98)_0%,rgba(18,18,18,0.98)_100%)] px-4 py-[10px] lg:flex-row lg:items-center"
+    >
+      <div
+        class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between lg:justify-start lg:gap-3"
+      >
+        <span class="whitespace-nowrap text-[14px] text-white/50"
+          >状态筛选:</span
+        >
         <n-select
           v-model:value="statusFilter"
           :options="statusOptions"
@@ -101,8 +115,12 @@ const stats = [
           :consistent-menu-width="false"
         />
       </div>
-      <div class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between lg:justify-start lg:gap-3">
-        <span class="whitespace-nowrap text-[14px] text-white/50">排序方式:</span>
+      <div
+        class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between lg:justify-start lg:gap-3"
+      >
+        <span class="whitespace-nowrap text-[14px] text-white/50"
+          >排序方式:</span
+        >
         <n-select
           v-model:value="sortBy"
           :options="sortOptions"
@@ -113,7 +131,9 @@ const stats = [
       </div>
     </div>
 
-    <div class="flex min-h-[calc(100vh-210px)] items-center justify-center rounded-b-[8px] border border-t-0 border-white/5 bg-[linear-gradient(90deg,rgba(25,25,25,0.98)_0%,rgba(29,29,29,0.96)_52%,rgba(24,24,24,0.98)_100%)]">
+    <div
+      class="flex min-h-[calc(100vh-210px)] items-center justify-center rounded-b-[8px] border border-t-0 border-white/5 bg-[linear-gradient(90deg,rgba(25,25,25,0.98)_0%,rgba(29,29,29,0.96)_52%,rgba(24,24,24,0.98)_100%)]"
+    >
       <n-empty
         description="暂无任务数据"
         class="[&_.n-empty__description]:text-[14px] [&_.n-empty__description]:font-semibold [&_.n-empty__description]:text-white/40"

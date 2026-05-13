@@ -39,45 +39,49 @@ const folderTreeData = [
       </p>
     </div>
 
-   
-
     <div
       class="grid grid-cols-[300px_1fr] gap-x-[70px] min-h-[calc(100vh-18rem)] overflow-hidden rounded-xl border border-[#2a2a2a] bg-[#151515] xl:flex-row"
     >
       <aside
-        class="w-full shrink-0 border-b border-[#2a2a2a] bg-[#141414] p-4  xl:border-b-0 xl:border-r"
+        class="w-full shrink-0 border-b border-[#2a2a2a] bg-[#141414] p-4 xl:border-b-0 xl:border-r"
       >
-       <div class="mb-4 rounded-xl border border-[#2a2a2a] bg-[#161616] px-4 py-3">
-      <n-progress
-        type="line"
-        :percentage="usagePercent"
-        :height="6"
-        :border-radius="3"
-        :show-indicator="false"
-        color="#00b5ad"
-        rail-color="rgba(255,255,255,0.08)"
-      />
-      <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
-        <span class="text-gray-400">
-          可用空间:
-          <strong class="text-white font-medium tabular-nums">{{ usedGb.toFixed(2) }}GB</strong>
-          /
-          <strong class="text-white font-medium tabular-nums">{{ totalGb.toFixed(2) }}GB</strong>
-        </span>
-        <button
-          type="button"
-          class="text-[#00b5ad] hover:text-[#5eead4] text-sm bg-transparent border-0 cursor-pointer p-0 font-medium"
+        <div
+          class="mb-4 rounded-xl border border-[#2a2a2a] bg-[#161616] px-4 py-3"
         >
-          扩容
-        </button>
-        <button
-          type="button"
-          class="text-[#00b5ad] hover:text-[#5eead4] text-sm bg-transparent border-0 cursor-pointer p-0 font-medium"
-        >
-          续签
-        </button>
-      </div>
-    </div>
+          <n-progress
+            type="line"
+            :percentage="usagePercent"
+            :height="6"
+            :border-radius="3"
+            :show-indicator="false"
+            color="#00b5ad"
+            rail-color="rgba(255,255,255,0.08)"
+          />
+          <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+            <span class="text-gray-400">
+              可用空间:
+              <strong class="text-white font-medium tabular-nums"
+                >{{ usedGb.toFixed(2) }}GB</strong
+              >
+              /
+              <strong class="text-white font-medium tabular-nums"
+                >{{ totalGb.toFixed(2) }}GB</strong
+              >
+            </span>
+            <button
+              type="button"
+              class="text-[#00b5ad] hover:text-[#5eead4] text-sm bg-transparent border-0 cursor-pointer p-0 font-medium"
+            >
+              扩容
+            </button>
+            <button
+              type="button"
+              class="text-[#00b5ad] hover:text-[#5eead4] text-sm bg-transparent border-0 cursor-pointer p-0 font-medium"
+            >
+              续签
+            </button>
+          </div>
+        </div>
         <n-tree
           v-model:selected-keys="selectedFolderKeys"
           block-line
@@ -90,9 +94,13 @@ const folderTreeData = [
 
       <div class="w-full bg-[#1a1a1a]">
         <div class="border-b border-[#2a2a2a] bg-[#161616] p-4">
-          <div class="flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between">
+          <div
+            class="flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between"
+          >
             <div>
-              <div class="mb-3 text-sm font-medium text-white">当前文件夹内容</div>
+              <div class="mb-3 text-sm font-medium text-white">
+                当前文件夹内容
+              </div>
               <div
                 class="inline-flex w-full flex-wrap rounded-lg border border-[#333333] bg-[#252525] p-0.5 gap-0.5 sm:w-auto"
               >
@@ -125,10 +133,18 @@ const folderTreeData = [
                 >
                   批量删除
                 </n-button>
-                <n-button size="small" secondary class="!bg-[#2d2d2d] !text-white border-[#3a3a3a]">
+                <n-button
+                  size="small"
+                  secondary
+                  class="!bg-[#2d2d2d] !text-white border-[#3a3a3a]"
+                >
                   批量下载
                 </n-button>
-                <n-button size="small" secondary class="!bg-[#2d2d2d] !text-white border-[#3a3a3a]">
+                <n-button
+                  size="small"
+                  secondary
+                  class="!bg-[#2d2d2d] !text-white border-[#3a3a3a]"
+                >
                   批量修改文件夹
                 </n-button>
               </div>

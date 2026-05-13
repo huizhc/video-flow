@@ -1,6 +1,13 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { NButton, NCheckbox, NIcon, NModal, NScrollbar, NTooltip } from 'naive-ui'
+import {
+  NButton,
+  NCheckbox,
+  NIcon,
+  NModal,
+  NScrollbar,
+  NTooltip,
+} from 'naive-ui'
 import { CloudUpload, Currency, Close, PlayFilled } from '@vicons/carbon'
 import { showUploadModal } from '@/utils/modal'
 
@@ -13,35 +20,150 @@ const previewVideoUrl = ref('')
 
 const videoItems = [
   { label: '上传', type: 'upload' },
-  { label: '模版一', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
-  { label: '模版二', image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/movie.mp4' },
-  { label: '模版三', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
-  { label: '模版四', image: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/movie.mp4' },
-  { label: '模版五', image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
-  { label: '模版六', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/movie.mp4' },
-  { label: '模版七', image: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
-  { label: '模版八', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/movie.mp4' },
-  { label: '模版九', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
-  { label: '模版十', image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/movie.mp4' },
-  { label: '模版十一', image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
-  { label: '模版十二', image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/movie.mp4' },
-  { label: '模版十三', image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
-  { label: '模版十四', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/movie.mp4' },
-  { label: '模版十五', image: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=400&q=80', video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
+  {
+    label: '模版一',
+    image:
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+  {
+    label: '模版二',
+    image:
+      'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/movie.mp4',
+  },
+  {
+    label: '模版三',
+    image:
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+  {
+    label: '模版四',
+    image:
+      'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/movie.mp4',
+  },
+  {
+    label: '模版五',
+    image:
+      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+  {
+    label: '模版六',
+    image:
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/movie.mp4',
+  },
+  {
+    label: '模版七',
+    image:
+      'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+  {
+    label: '模版八',
+    image:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/movie.mp4',
+  },
+  {
+    label: '模版九',
+    image:
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+  {
+    label: '模版十',
+    image:
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/movie.mp4',
+  },
+  {
+    label: '模版十一',
+    image:
+      'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+  {
+    label: '模版十二',
+    image:
+      'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/movie.mp4',
+  },
+  {
+    label: '模版十三',
+    image:
+      'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+  {
+    label: '模版十四',
+    image:
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/movie.mp4',
+  },
+  {
+    label: '模版十五',
+    image:
+      'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=400&q=80',
+    video: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
 ]
 
 const avatarItems = [
   { label: '上传', type: 'upload' },
-  { label: '人物一', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&q=80' },
-  { label: '人物二', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&q=80' },
-  { label: '人物三', image: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=240&q=80' },
-  { label: '人物四', image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=240&q=80' },
-  { label: '人物五', image: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=240&q=80' },
-  { label: '人物六', image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=240&q=80' },
-  { label: '人物七', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=240&q=80' },
-  { label: '人物八', image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=240&q=80' },
-  { label: '人物九', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=240&q=80' },
-  { label: '人物十', image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=240&q=80' },
+  {
+    label: '人物一',
+    image:
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&q=80',
+  },
+  {
+    label: '人物二',
+    image:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&q=80',
+  },
+  {
+    label: '人物三',
+    image:
+      'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=240&q=80',
+  },
+  {
+    label: '人物四',
+    image:
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=240&q=80',
+  },
+  {
+    label: '人物五',
+    image:
+      'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=240&q=80',
+  },
+  {
+    label: '人物六',
+    image:
+      'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=240&q=80',
+  },
+  {
+    label: '人物七',
+    image:
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=240&q=80',
+  },
+  {
+    label: '人物八',
+    image:
+      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=240&q=80',
+  },
+  {
+    label: '人物九',
+    image:
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=240&q=80',
+  },
+  {
+    label: '人物十',
+    image:
+      'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=240&q=80',
+  },
 ]
 
 const selectedAvatarCount = computed(() => selectedAvatars.value.length)
@@ -52,7 +174,7 @@ function handleVideoClick(item) {
       title: '上传视频模板',
       accept: '.mp4,.avi,.mkv',
       max: 5,
-      description: '支持 mp4/avi/mkv，可多选上传，单文件 5G 以内'
+      description: '支持 mp4/avi/mkv，可多选上传，单文件 5G 以内',
     })
     return
   }
@@ -71,12 +193,14 @@ function handleAvatarClick(index, type) {
       title: '上传人像照片',
       accept: '.jpg,.png,.jpeg',
       max: 10,
-      description: '支持 jpg/png，可多选上传，单文件 50MB 以内'
+      description: '支持 jpg/png，可多选上传，单文件 50MB 以内',
     })
     return
   }
   if (selectedAvatars.value.includes(index)) {
-    selectedAvatars.value = selectedAvatars.value.filter((item) => item !== index)
+    selectedAvatars.value = selectedAvatars.value.filter(
+      (item) => item !== index
+    )
     return
   }
   selectedAvatars.value = [...selectedAvatars.value, index]
@@ -85,79 +209,142 @@ function handleAvatarClick(index, type) {
 
 <template>
   <div class="min-h-[500px] h-full bg-[#060709] p-[20px] text-white">
-    <div class=" w-full flex gap-x-[15px]  h-full overflow-hidden  border border-white/8 bg-[#0b0d10]">
-      <div class="flex-1 overflow-hidden border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
+    <div
+      class="w-full flex gap-x-[15px] h-full overflow-hidden border border-white/8 bg-[#0b0d10]"
+    >
+      <div
+        class="flex-1 overflow-hidden border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
+      >
         <div
-          class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+          class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+        >
           视频模板（已选：1个）
         </div>
         <n-scrollbar class="pb-[40px]">
           <div class="grid grid-cols-3 gap-2 p-3 md:grid-cols-4 sm:grid-cols-6">
-            <button v-for="(item, index) in videoItems" :key="item.label + index" type="button"
+            <button
+              v-for="(item, index) in videoItems"
+              :key="item.label + index"
+              type="button"
               class="group relative aspect-[3/4.25] overflow-hidden rounded-[4px] border bg-[#131416] text-left transition-colors"
-              :class="selectedVideo === index ? 'border-[#38cfe0] shadow-[0_0_0_1px_rgba(56,207,224,0.35)]' : 'border-white/6'"
-              @click="handleVideoClick(item)">
-              <div class="absolute left-2 top-2 z-10" v-if="item.type !== 'upload'"
-                @click.stop="handleVideoSelect(index)">
+              :class="
+                selectedVideo === index
+                  ? 'border-[#38cfe0] shadow-[0_0_0_1px_rgba(56,207,224,0.35)]'
+                  : 'border-white/6'
+              "
+              @click="handleVideoClick(item)"
+            >
+              <div
+                class="absolute left-2 top-2 z-10"
+                v-if="item.type !== 'upload'"
+                @click.stop="handleVideoSelect(index)"
+              >
                 <n-checkbox :checked="selectedVideo === index" />
               </div>
               <template v-if="item.type === 'upload'">
-                <div class="flex h-full flex-col items-center justify-center bg-black text-center">
-                  <n-icon :size="28" :component="CloudUpload" class="text-white/55" />
+                <div
+                  class="flex h-full flex-col items-center justify-center bg-black text-center"
+                >
+                  <n-icon
+                    :size="28"
+                    :component="CloudUpload"
+                    class="text-white/55"
+                  />
                   <div class="mt-3 text-[11px] text-white/28">上传</div>
                 </div>
               </template>
               <template v-else>
-                <img :src="item.image" :alt="item.label"
+                <img
+                  :src="item.image"
+                  :alt="item.label"
                   class="h-full w-full object-cover opacity-60 transition-transform duration-500 group-hover:scale-104"
-                  loading="lazy" referrerpolicy="no-referrer" />
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                />
                 <div
-                  class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.36)_100%)]" />
+                  class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.36)_100%)]"
+                />
                 <!-- Play Icon on Hover -->
                 <div
-                  class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-black/20">
-                  <n-icon :size="32" :component="PlayFilled" class="text-white/90 drop-shadow-md" />
+                  class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-black/20"
+                >
+                  <n-icon
+                    :size="32"
+                    :component="PlayFilled"
+                    class="text-white/90 drop-shadow-md"
+                  />
                 </div>
-                <div class="absolute bottom-2 left-2 text-[10px] text-white/76">{{ item.label }}</div>
+                <div class="absolute bottom-2 left-2 text-[10px] text-white/76">
+                  {{ item.label }}
+                </div>
               </template>
             </button>
           </div>
         </n-scrollbar>
       </div>
 
-      <section class="grid  min-h-0 w-[500px] grid-rows-[auto_1fr_120px] grid-cols-1 bg-[#232323]">
+      <section
+        class="grid min-h-0 w-[500px] grid-rows-[auto_1fr_120px] grid-cols-1 bg-[#232323]"
+      >
         <div
-          class="border-b h-full border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+          class="border-b h-full border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+        >
           人像及其他参数设置（已选：{{ selectedAvatarCount }}个）
         </div>
         <n-scrollbar class="h-full">
           <div class="grid grid-cols-4 gap-2 p-3">
-            <button v-for="(item, index) in avatarItems" :key="item.label + index" type="button"
+            <button
+              v-for="(item, index) in avatarItems"
+              :key="item.label + index"
+              type="button"
               class="group relative aspect-[1/1.15] overflow-hidden rounded-[4px] border bg-[#131416] text-left transition-colors"
-              :class="selectedAvatars.includes(index) ? 'border-[#38cfe0] shadow-[0_0_0_1px_rgba(56,207,224,0.35)]' : 'border-white/6'"
-              @click="handleAvatarClick(index, item.type)">
-              <div class="absolute left-2 top-2 z-10" v-if="item.type !== 'upload'">
+              :class="
+                selectedAvatars.includes(index)
+                  ? 'border-[#38cfe0] shadow-[0_0_0_1px_rgba(56,207,224,0.35)]'
+                  : 'border-white/6'
+              "
+              @click="handleAvatarClick(index, item.type)"
+            >
+              <div
+                class="absolute left-2 top-2 z-10"
+                v-if="item.type !== 'upload'"
+              >
                 <n-checkbox :checked="selectedAvatars.includes(index)" />
               </div>
               <template v-if="item.type === 'upload'">
-                <div class="flex h-full flex-col items-center justify-center bg-black text-center">
-                  <n-icon :size="24" :component="CloudUpload" class="text-white/55" />
+                <div
+                  class="flex h-full flex-col items-center justify-center bg-black text-center"
+                >
+                  <n-icon
+                    :size="24"
+                    :component="CloudUpload"
+                    class="text-white/55"
+                  />
                   <div class="mt-2 text-[10px] text-white/28">上传</div>
                 </div>
               </template>
               <template v-else>
-                <img :src="item.image" :alt="item.label"
+                <img
+                  :src="item.image"
+                  :alt="item.label"
                   class="h-full w-full object-cover opacity-64 transition-transform duration-500 group-hover:scale-104"
-                  loading="lazy" referrerpolicy="no-referrer" />
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                />
                 <div
-                  class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.14)_0%,rgba(0,0,0,0.38)_100%)]" />
-                <div class="absolute bottom-2 left-2 text-[10px] text-white/76">{{ item.label }}</div>
+                  class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.14)_0%,rgba(0,0,0,0.38)_100%)]"
+                />
+                <div class="absolute bottom-2 left-2 text-[10px] text-white/76">
+                  {{ item.label }}
+                </div>
               </template>
             </button>
           </div>
         </n-scrollbar>
 
-        <div class="mt-auto h-full border-t border-white/8 px-3 py-4 text-[11px] text-white/48">
+        <div
+          class="mt-auto h-full border-t border-white/8 px-3 py-4 text-[11px] text-white/48"
+        >
           <div class="text-[12px] font-medium text-[#f4b13d]">
             总数量：{{ selectedAvatarCount }}
             <span class="text-white/42">（模板数量 x 人像数量）</span>
@@ -169,14 +356,20 @@ function handleAvatarClick(index, type) {
             <span class="font-medium">50</span>
             <n-tooltip trigger="hover">
               <template #trigger>
-                <i class="i-mingcute-question-line text-white/48 cursor-pointer"></i>
+                <i
+                  class="i-mingcute-question-line text-white/48 cursor-pointer"
+                ></i>
               </template>
               根据生成视时长计算，每秒50算力
             </n-tooltip>
           </div>
 
           <div class="pt-4 flex justify-end">
-            <n-button type="warning" size="small" class="!h-[28px] !px-3 !rounded-[4px] !text-[12px]">
+            <n-button
+              type="warning"
+              size="small"
+              class="!h-[28px] !px-3 !rounded-[4px] !text-[12px]"
+            >
               后台执行
             </n-button>
           </div>
@@ -187,16 +380,28 @@ function handleAvatarClick(index, type) {
 
   <!-- 视频预览弹窗 -->
   <n-modal v-model:show="showPreviewModal" :mask-closable="true">
-    <div class="relative w-[400px] overflow-hidden rounded-[8px] border border-white/10 bg-black shadow-2xl">
-      <button type="button"
-        class="absolute right-3 top-3 z-50 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-sm  btn-close"
-        @click="showPreviewModal = false">
+    <div
+      class="relative w-[400px] overflow-hidden rounded-[8px] border border-white/10 bg-black shadow-2xl"
+    >
+      <button
+        type="button"
+        class="absolute right-3 top-3 z-50 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-sm btn-close"
+        @click="showPreviewModal = false"
+      >
         <n-icon :size="20" :component="Close" />
       </button>
 
       <div class="aspect-[9/16] w-full bg-black">
-        <video v-if="showPreviewModal" :src="previewVideoUrl" class="h-full w-full object-contain" autoplay muted
-          playsinline controls loop />
+        <video
+          v-if="showPreviewModal"
+          :src="previewVideoUrl"
+          class="h-full w-full object-contain"
+          autoplay
+          muted
+          playsinline
+          controls
+          loop
+        />
       </div>
     </div>
   </n-modal>

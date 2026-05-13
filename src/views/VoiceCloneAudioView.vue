@@ -11,10 +11,16 @@ const scriptLength = computed(() => script.value.length)
 
 <template>
   <div class="min-h-[500px] h-full p-[20px] text-white">
-    <div class="flex h-full overflow-hidden border border-white/8 ">
-      <div class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[400px_400px_minmax(0,1fr)]">
-        <section class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
-          <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+    <div class="flex h-full overflow-hidden border border-white/8">
+      <div
+        class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[400px_400px_minmax(0,1fr)]"
+      >
+        <section
+          class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
+        >
+          <div
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          >
             声音样本
           </div>
           <div class="px-3 py-3">
@@ -25,21 +31,35 @@ const scriptLength = computed(() => script.value.length)
               </div>
             </n-radio-group>
 
-            <div class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2">
-              <div class="flex min-h-[102px] flex-col items-center justify-center rounded-[2px] border border-dashed border-white/6 bg-[#202020] text-center">
-                <n-icon :size="32" :component="CloudUpload" class="text-white/70" />
+            <div
+              class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2"
+            >
+              <div
+                class="flex min-h-[102px] flex-col items-center justify-center rounded-[2px] border border-dashed border-white/6 bg-[#202020] text-center"
+              >
+                <n-icon
+                  :size="32"
+                  :component="CloudUpload"
+                  class="text-white/70"
+                />
                 <div class="mt-3 text-[11px] text-white/55">
                   Drop file here or
                   <span class="text-[#16d4e4]">click to upload</span>
                 </div>
               </div>
-              <div class="pt-3 text-[11px] text-white/38">mp3/wav/flac 文件，30Mb以内</div>
+              <div class="pt-3 text-[11px] text-white/38">
+                mp3/wav/flac 文件，30Mb以内
+              </div>
             </div>
           </div>
         </section>
 
-        <section class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r">
-          <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+        <section
+          class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
+        >
+          <div
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          >
             口播内容
           </div>
           <div class="px-3 py-3 text-[11px] text-white/48">
@@ -56,11 +76,15 @@ const scriptLength = computed(() => script.value.length)
                 placeholder="例如：大家好，我是小明，今天天气不错，陪单元见证大家。"
                 class="text-[12px] [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.6] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/24"
               />
-              <div class="pt-1 text-right text-[10px] text-white/32">输入字数：{{ scriptLength }}</div>
+              <div class="pt-1 text-right text-[10px] text-white/32">
+                输入字数：{{ scriptLength }}
+              </div>
             </div>
 
             <div class="pt-3">
-              <div class="pb-1.5 text-[11px] text-white/48">(可选) 语气提示词</div>
+              <div class="pb-1.5 text-[11px] text-white/48">
+                (可选) 语气提示词
+              </div>
               <n-input
                 v-model:value="speechTone"
                 type="textarea"
@@ -76,7 +100,9 @@ const scriptLength = computed(() => script.value.length)
               <span class="font-medium">400</span>
               <n-tooltip trigger="hover">
                 <template #trigger>
-                  <i class="i-mingcute-question-line text-white/48 cursor-pointer"></i>
+                  <i
+                    class="i-mingcute-question-line text-white/48 cursor-pointer"
+                  ></i>
                 </template>
                 根据口播字数计算，每50字400算力
               </n-tooltip>
@@ -98,9 +124,15 @@ const scriptLength = computed(() => script.value.length)
           <div class="flex flex-1 items-center justify-center">
             <div class="flex flex-col items-center">
               <div class="relative h-[120px] w-[120px]">
-                <div class="absolute left-[16px] top-[18px] h-[72px] w-[72px] rounded-full border-[12px] border-[#0b2347] border-r-transparent border-t-[#12315f]" />
-                <div class="absolute left-[36px] top-[38px] h-[42px] w-[42px] rounded-full bg-[#1f6f5d]" />
-                <div class="absolute left-[82px] top-[26px] h-[22px] w-[22px] rounded-full bg-[#26735c]" />
+                <div
+                  class="absolute left-[16px] top-[18px] h-[72px] w-[72px] rounded-full border-[12px] border-[#0b2347] border-r-transparent border-t-[#12315f]"
+                />
+                <div
+                  class="absolute left-[36px] top-[38px] h-[42px] w-[42px] rounded-full bg-[#1f6f5d]"
+                />
+                <div
+                  class="absolute left-[82px] top-[26px] h-[22px] w-[22px] rounded-full bg-[#26735c]"
+                />
               </div>
               <div class="-mt-1 text-[12px] text-white/34">AIKC</div>
             </div>

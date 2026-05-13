@@ -111,9 +111,10 @@ const validTabs = new Set(['flow', 'password', 'account', 'recharge'])
 watch(
   () => route.query.tab,
   (tab) => {
-    activeTab.value = typeof tab === 'string' && validTabs.has(tab) ? tab : 'flow'
+    activeTab.value =
+      typeof tab === 'string' && validTabs.has(tab) ? tab : 'flow'
   },
-  { immediate: true },
+  { immediate: true }
 )
 
 function handleSearchFlow() {}
@@ -146,9 +147,7 @@ function openSupportQr() {
 
 <template>
   <div class="min-h-full bg-[#121212] p-4">
-    <div
-      class="flex flex-col xl:flex-row gap-6 mb-6 items-stretch"
-    >
+    <div class="flex flex-col xl:flex-row gap-6 mb-6 items-stretch">
       <div
         class="flex flex-col sm:flex-row gap-5 items-start sm:items-center rounded-2xl bg-[#1a1a1a] border border-[#2a2a2a] p-5 xl:flex-1 min-w-0"
       >
@@ -159,14 +158,17 @@ function openSupportQr() {
           class="shrink-0 ring-2 ring-white/10"
         />
         <div class="flex-1 min-w-0 space-y-3">
-          <div class="text-2xl font-bold text-white tracking-tight">
-            9527
-          </div>
+          <div class="text-2xl font-bold text-white tracking-tight">9527</div>
           <div class="flex items-center gap-1.5 text-white text-sm font-medium">
             <n-icon :size="18" :component="Currency" class="text-amber-400" />
             5000 算力
           </div>
-          <n-button secondary size="small" class="!bg-[#2d2d2d] !text-gray-300" @click="clearCache">
+          <n-button
+            secondary
+            size="small"
+            class="!bg-[#2d2d2d] !text-gray-300"
+            @click="clearCache"
+          >
             <template #icon>
               <n-icon :component="TrashCan" />
             </template>
@@ -175,7 +177,9 @@ function openSupportQr() {
         </div>
       </div>
 
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 xl:flex-[1.4] min-w-0 w-full">
+      <div
+        class="grid grid-cols-2 lg:grid-cols-4 gap-3 xl:flex-[1.4] min-w-0 w-full"
+      >
         <button
           type="button"
           class="rounded-xl p-4 flex flex-col items-center text-center gap-2 min-h-[132px] justify-center cursor-pointer transition-colors w-full"
@@ -186,12 +190,8 @@ function openSupportQr() {
           "
           @click="switchToRechargeTab('200w')"
         >
-          <div class="text-amber-400 text-sm font-semibold">
-            200w +20K
-          </div>
-          <div class="text-white text-lg font-semibold">
-            ¥ 2000
-          </div>
+          <div class="text-amber-400 text-sm font-semibold">200w +20K</div>
+          <div class="text-white text-lg font-semibold">¥ 2000</div>
           <span
             class="text-[11px] px-2 py-0.5 rounded bg-[#3d2e18] text-orange-400 border border-orange-900/40"
           >
@@ -217,9 +217,7 @@ function openSupportQr() {
           <div class="text-amber-400 text-sm font-semibold mt-2">
             500w +100K
           </div>
-          <div class="text-white text-lg font-semibold">
-            ¥ 5000
-          </div>
+          <div class="text-white text-lg font-semibold">¥ 5000</div>
           <span
             class="text-[11px] px-2 py-0.5 rounded bg-[#3d2e18] text-orange-400 border border-orange-900/40"
           >
@@ -237,12 +235,8 @@ function openSupportQr() {
           "
           @click="switchToRechargeTab('980w')"
         >
-          <div class="text-amber-400 text-sm font-semibold">
-            980w +490K
-          </div>
-          <div class="text-white text-lg font-semibold">
-            ¥ 9800
-          </div>
+          <div class="text-amber-400 text-sm font-semibold">980w +490K</div>
+          <div class="text-white text-lg font-semibold">¥ 9800</div>
           <span
             class="text-[11px] px-2 py-0.5 rounded bg-[#3d2e18] text-orange-400 border border-orange-900/40"
           >
@@ -261,20 +255,13 @@ function openSupportQr() {
       </div>
     </div>
 
-    <n-tabs
-      v-model:value="activeTab"
-      type="line"
-      animated
-      class="profile-tabs"
-    >
+    <n-tabs v-model:value="activeTab" type="line" animated class="profile-tabs">
       <n-tab-pane name="flow" tab="账户流水">
-        <div
-          class="rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] p-4 mt-2"
-        >
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-            <h2 class="text-base font-semibold text-white m-0">
-              账户流水
-            </h2>
+        <div class="rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] p-4 mt-2">
+          <div
+            class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4"
+          >
+            <h2 class="text-base font-semibold text-white m-0">账户流水</h2>
             <div class="flex flex-wrap items-center gap-2 justify-end">
               <n-select
                 v-model:value="bizType"
@@ -320,7 +307,9 @@ function openSupportQr() {
               size="medium"
             >
               <template #prefix="{ itemCount }">
-                <span class="text-gray-400 text-sm mr-4 tabular-nums">Total {{ itemCount }}</span>
+                <span class="text-gray-400 text-sm mr-4 tabular-nums"
+                  >Total {{ itemCount }}</span
+                >
               </template>
             </n-pagination>
           </div>
@@ -328,7 +317,9 @@ function openSupportQr() {
       </n-tab-pane>
 
       <n-tab-pane name="password" tab="修改密码">
-        <div class="rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] p-6 mt-2 max-w-md">
+        <div
+          class="rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] p-6 mt-2 max-w-md"
+        >
           <n-form label-placement="top" label-width="auto">
             <n-form-item label="当前密码">
               <n-input
@@ -395,7 +386,11 @@ function openSupportQr() {
                   <n-input v-model:value="accountForm.phone" />
                 </n-form-item>
                 <div class="flex items-center gap-28 pt-1 pl-[64px]">
-                  <n-button color="#ef6b6b" class="text-white" @click="handleLogout">
+                  <n-button
+                    color="#ef6b6b"
+                    class="text-white"
+                    @click="handleLogout"
+                  >
                     退出登录
                   </n-button>
                   <n-button type="primary" class="text-white">
@@ -409,7 +404,9 @@ function openSupportQr() {
       </n-tab-pane>
 
       <n-tab-pane name="recharge" tab="算力充值">
-        <div class="rounded-xl bg-[#1f1f1f] border border-[#2a2a2a] p-3 sm:p-4 mt-2">
+        <div
+          class="rounded-xl bg-[#1f1f1f] border border-[#2a2a2a] p-3 sm:p-4 mt-2"
+        >
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
             <button
               v-for="plan in rechargePlans"
@@ -423,7 +420,9 @@ function openSupportQr() {
               "
               @click="selectedRecharge = plan.key"
             >
-              <div class="flex items-center gap-1.5 text-[18px] font-bold text-amber-300">
+              <div
+                class="flex items-center gap-1.5 text-[18px] font-bold text-amber-300"
+              >
                 <span>{{ plan.power }}</span>
                 <span
                   class="rounded-full border border-amber-500/25 bg-[#4b3918] px-1.5 py-[1px] text-[10px] leading-none text-amber-300"
@@ -431,7 +430,11 @@ function openSupportQr() {
                   {{ plan.bonus }}
                 </span>
               </div>
-              <div class="mt-2 text-[15px] leading-none font-bold text-amber-300">¥ {{ plan.price }}</div>
+              <div
+                class="mt-2 text-[15px] leading-none font-bold text-amber-300"
+              >
+                ¥ {{ plan.price }}
+              </div>
               <div class="mt-3 flex items-center gap-2">
                 <span
                   v-if="plan.popular"
@@ -452,10 +455,18 @@ function openSupportQr() {
               class="cursor-pointer min-h-[84px] rounded-xl border border-[#3b3b3b] bg-[linear-gradient(180deg,#363636_0%,#2a2a2a_100%)] px-5 py-4 text-left hover:border-amber-400/55 transition-colors"
               @click="openSupportQr"
             >
-              <div class="text-[18px] font-bold leading-[1.3] text-amber-300">规模用户</div>
-              <div class="mt-1 text-[18px] font-bold leading-[1.3] text-amber-300">获得额外折扣</div>
+              <div class="text-[18px] font-bold leading-[1.3] text-amber-300">
+                规模用户
+              </div>
+              <div
+                class="mt-1 text-[18px] font-bold leading-[1.3] text-amber-300"
+              >
+                获得额外折扣
+              </div>
               <div class="mt-3">
-                <span class="rounded-full bg-[#f1d54b] px-2 py-[2px] text-[10px] font-semibold text-[#2d2a17]">
+                <span
+                  class="rounded-full bg-[#f1d54b] px-2 py-[2px] text-[10px] font-semibold text-[#2d2a17]"
+                >
                   联系客服
                 </span>
               </div>
@@ -471,19 +482,27 @@ function openSupportQr() {
               />
             </label>
 
-            <div class="flex items-center rounded-[4px] border border-[#383838] bg-[#262626] h-8 overflow-hidden">
+            <div
+              class="flex items-center rounded-[4px] border border-[#383838] bg-[#262626] h-8 overflow-hidden"
+            >
               <input
                 v-model="customRechargeAmount"
                 type="text"
                 class="w-16 h-full bg-transparent px-3 text-center text-sm text-white outline-none"
               />
-              <span class="flex h-full w-8 items-center justify-center border-l border-[#383838] text-[#7d7d7d] text-xs">
+              <span
+                class="flex h-full w-8 items-center justify-center border-l border-[#383838] text-[#7d7d7d] text-xs"
+              >
                 W
               </span>
             </div>
 
-            <div class="text-[20px] font-bold text-amber-300">¥{{ customRechargePrice }}</div>
-            <div class="text-[12px] font-semibold text-amber-300">自定义充值：输入算力数量自动计算金额</div>
+            <div class="text-[20px] font-bold text-amber-300">
+              ¥{{ customRechargePrice }}
+            </div>
+            <div class="text-[12px] font-semibold text-amber-300">
+              自定义充值：输入算力数量自动计算金额
+            </div>
           </div>
 
           <div class="mt-6 flex items-center gap-5 text-sm text-[#bdbdbd]">
@@ -543,7 +562,10 @@ function openSupportQr() {
 .profile-tabs :deep(.n-data-table-td) {
   background: #1a1a1a !important;
 }
-.profile-tabs :deep(.n-data-table-tr:not(.n-data-table-tr--summary):hover .n-data-table-td) {
+.profile-tabs
+  :deep(
+    .n-data-table-tr:not(.n-data-table-tr--summary):hover .n-data-table-td
+  ) {
   background: #222222 !important;
 }
 .account-form :deep(.n-form-item) {

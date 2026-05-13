@@ -7,18 +7,18 @@ const props = defineProps({
   show: Boolean,
   title: {
     type: String,
-    default: '上传文件'
+    default: '上传文件',
   },
   accept: String,
   max: {
     type: Number,
-    default: 1
+    default: 1,
   },
   description: String,
   uploadMode: {
     type: String,
-    default: 'local'
-  }
+    default: 'local',
+  },
 })
 
 const emit = defineEmits(['update:show', 'close'])
@@ -32,8 +32,14 @@ function handleClose() {
 </script>
 
 <template>
-  <n-modal :show="show" :mask-closable="true" @update:show="val => emit('update:show', val)">
-    <div class="w-[600px] rounded-[8px] border border-white/10 bg-[#161719] p-4 text-white shadow-2xl">
+  <n-modal
+    :show="show"
+    :mask-closable="true"
+    @update:show="(val) => emit('update:show', val)"
+  >
+    <div
+      class="w-[600px] rounded-[8px] border border-white/10 bg-[#161719] p-4 text-white shadow-2xl"
+    >
       <div class="mb-4 flex items-center justify-between">
         <span class="text-[14px] font-medium">{{ title }}</span>
         <button
@@ -54,7 +60,14 @@ function handleClose() {
               value="local"
               class="accent-[#18d2e5]"
             />
-            <span :class="internalUploadMode === 'local' ? 'text-[#18d2e5]' : 'text-white/65'">本地上传</span>
+            <span
+              :class="
+                internalUploadMode === 'local'
+                  ? 'text-[#18d2e5]'
+                  : 'text-white/65'
+              "
+              >本地上传</span
+            >
           </label>
           <label class="flex cursor-pointer items-center gap-2 opacity-50">
             <input
@@ -64,7 +77,14 @@ function handleClose() {
               class="accent-[#18d2e5]"
               disabled
             />
-            <span :class="internalUploadMode === 'cloud' ? 'text-[#18d2e5]' : 'text-white/65'">云盘选择</span>
+            <span
+              :class="
+                internalUploadMode === 'cloud'
+                  ? 'text-[#18d2e5]'
+                  : 'text-white/65'
+              "
+              >云盘选择</span
+            >
           </label>
         </div>
 
@@ -73,9 +93,14 @@ function handleClose() {
             class="!border-dashed !border-white/10 !bg-[#17181a] hover:!border-[#18d2e5]/40"
           >
             <div class="flex flex-col items-center py-8">
-              <n-icon :size="48" :component="CloudUpload" class="mb-4 text-white/30" />
+              <n-icon
+                :size="48"
+                :component="CloudUpload"
+                class="mb-4 text-white/30"
+              />
               <div class="text-[12px] text-white/65">
-                Drop file here or <span class="text-[#18d2e5]">click to upload</span>
+                Drop file here or
+                <span class="text-[#18d2e5]">click to upload</span>
               </div>
             </div>
           </n-upload-dragger>

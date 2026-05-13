@@ -240,8 +240,14 @@ router.beforeEach((to) => {
     }
   }
 
-  if (auth.isLoggedIn && (to.name === 'login' || to.name === 'register' || to.name === 'forgot-password')) {
-    const redirect = typeof to.query.redirect === 'string' ? to.query.redirect : '/'
+  if (
+    auth.isLoggedIn &&
+    (to.name === 'login' ||
+      to.name === 'register' ||
+      to.name === 'forgot-password')
+  ) {
+    const redirect =
+      typeof to.query.redirect === 'string' ? to.query.redirect : '/'
     return redirect
   }
 
