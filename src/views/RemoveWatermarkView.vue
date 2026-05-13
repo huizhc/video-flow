@@ -225,7 +225,7 @@ const executeTask = () => {
   <div class="text-white flex p-[20px] min-h-[500px] h-full bg-[#060709] overflow-hidden rounded-[18px]">
     <div class="flex w-full h-full gap-[15px]  sm:flex-row">
       <!-- Left Section (Video Upload and Preview) -->
-      <section class="flex-1 flex flex-col border border-white/8 bg-[#232323] rounded-[4px] overflow-hidden">
+      <section class="w-[400px] flex flex-col border border-white/8 bg-[#232323] rounded-[4px] overflow-hidden">
         <div
           class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
           视频消除字幕及水印
@@ -299,7 +299,8 @@ const executeTask = () => {
             <div class="mt-4 flex items-center justify-between text-xs text-white/60">
               <span v-if="videoWidth > 0">视频尺寸：{{ videoWidth }} x {{ videoHeight }}</span>
               <span v-else>正在加载视频信息...</span>
-              <n-button type="error" size="small" class="!h-[28px] !px-3 !rounded-[4px] !text-sm" @click="removeVideo">
+              <n-button type="error" size="small" class="!h-[28px] !px-3 !rounded-[4px] text-#fff! !text-sm"
+                @click="removeVideo">
                 移除视频
               </n-button>
             </div>
@@ -309,7 +310,7 @@ const executeTask = () => {
 
       <!-- Right Section (Parameters) -->
       <section
-        class="w-full sm:w-[360px] flex flex-col border border-white/8 bg-[#232323] rounded-[4px] overflow-hidden flex-shrink-0">
+        class="w-full sm:w-[400px] flex flex-col border border-white/8 bg-[#232323] rounded-[4px] overflow-hidden flex-shrink-0">
         <div
           class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
           参数设置
@@ -331,7 +332,7 @@ const executeTask = () => {
             </div>
           </div>
           <div v-else class="flex-1 flex items-center justify-center text-sm text-white/30 text-center">
-            暂无选区<br />请在左侧视频画面中框选
+            暂无选区
           </div>
 
           <button type="button"
@@ -357,6 +358,12 @@ const executeTask = () => {
               <span class="text-white/48">消耗算力：</span>
               <n-icon :size="14" :component="Currency" />
               <span class="font-medium text-sm">400</span>
+              <n-tooltip trigger="hover">
+                <template #trigger>
+                  <i class="i-mingcute-question-line text-white/48 cursor-pointer"></i>
+                </template>
+                根据上传视频时长计算，每30秒400算力
+              </n-tooltip>
             </div>
           </div>
 
