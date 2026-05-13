@@ -42,9 +42,9 @@ const onFileChange = (e) => {
 </script>
 
 <template>
-  <div class="flex-1 flex flex-col min-h-0 w-full h-full">
+  <div class="flex-1 flex flex-col min-h-0 w-full ">
     <template v-if="!hasFile">
-      <div class="flex-1 flex items-center justify-center">
+      <div class="flex-1 flex  justify-center">
         <div class="w-full max-w-[400px]">
           <n-radio-group v-model:value="uploadSource" size="small" class="mb-4">
             <div class="flex items-center gap-5 text-sm">
@@ -62,7 +62,7 @@ const onFileChange = (e) => {
                 <span class="text-[#16d4e4]">click to upload</span>
               </div>
             </div>
-            <div class="pt-3 text-sm text-white/38 text-center">{{ description }}</div>
+            <div class="pt-3 text-xs text-white/38 ">{{ description }}</div>
           </div>
           <input type="file" ref="fileInputRef" class="hidden" :accept="accept" @change="onFileChange" />
         </div>
