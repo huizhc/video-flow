@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { NButton, NIcon, NRadio, NRadioGroup } from 'naive-ui'
 import { Add, CloudUpload, Currency, Delete } from '@vicons/carbon'
+import UploadArea from '@/components/UploadArea.vue'
 
 const uploadSource = ref('local')
 const algorithm = ref('normal')
@@ -121,8 +122,7 @@ const triggerUpload = () => {
   }
 }
 
-const onFileChange = (e) => {
-  const file = e.target.files[0]
+const onFileChange = (file) => {
   if (!file) return
   // mock the specified file
   fileName.value = '2a36b34ae329461ebf3622364727be6c.mp4'
@@ -232,79 +232,59 @@ const executeTask = () => {
         </div>
 
         <div class="flex-1 p-4 flex flex-col relative min-h-0">
-          <div v-if="!videoUrl" class="flex-1 flex items-center justify-center">
-            <div class="w-full max-w-[400px]">
-              <n-radio-group v-model:value="uploadSource" size="small" class="mb-4">
-                <div class="flex items-center gap-5 text-sm">
-                  <n-radio value="local">本地上传</n-radio>
-                  <n-radio value="cloud">云盘选择</n-radio>
-                </div>
-              </n-radio-group>
+          <UploadArea :has-file="!!videoUrl" @file-change="onFileChange">
+            <template #uploaded>
+              <div class="flex-1 flex flex-col min-h-0 h-full w-full">
+                <div class="flex-1 bg-black/50 relative overflow-hidden rounded-[4px] flex items-center justify-center"
+                  ref="containerRef">
+                  <div
+                    :style="{ width: displayWidth ? displayWidth + 'px' : '100%', height: displayHeight ? displayHeight + 'px' : '100%', visibility: displayWidth ? 'visible' : 'hidden' }"
+                    class="relative">
+                    <video ref="videoRef" crossorigin="anonymous" :src="videoUrl" class="w-full h-full object-contain"
+                      @loadedmetadata="onLoadedMetadata" controls controlsList="nodownload"></video>
 
-              <div class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2" @click="triggerUpload">
-                <div
-                  class="flex min-h-[228px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center cursor-pointer hover:border-[#16d4e4]/50 transition-colors">
-                  <n-icon :size="34" :component="CloudUpload" class="text-white/70" />
-                  <div class="mt-3 text-sm text-white/55">
-                    Drop file here or
-                    <span class="text-[#16d4e4]">click to upload</span>
+                    <!-- Drawing Overlay -->
+                    <div class="absolute inset-0 z-10 pointer-events-none" style="bottom: 50px;">
+                      <div v-for="(area, index) in areas" :key="index"
+                        class="absolute border-2 border-yellow-400 bg-yellow-400/20 pointer-events-auto cursor-move flex items-center justify-center"
+                        :style="getAreaStyle(area)" @mousedown="startInteract($event, index, 'move')">
+                        <span
+                          class="text-yellow-400 text-sm font-bold whitespace-nowrap cursor-default pointer-events-none"
+                          style="text-shadow: 0 1px 2px rgba(0,0,0,0.8);">区域 {{ index + 1 }}</span>
+
+                        <!-- Resize Handles -->
+                        <div class="absolute w-3 h-3 bg-transparent -left-1.5 -top-1.5 cursor-nwse-resize"
+                          @mousedown="startInteract($event, index, 'tl')"></div>
+                        <div class="absolute w-full h-3 bg-transparent left-0 -top-1.5 cursor-ns-resize"
+                          @mousedown="startInteract($event, index, 't')"></div>
+                        <div class="absolute w-3 h-3 bg-transparent -right-1.5 -top-1.5 cursor-nesw-resize"
+                          @mousedown="startInteract($event, index, 'tr')"></div>
+                        <div class="absolute w-3 h-full bg-transparent -right-1.5 top-0 cursor-ew-resize"
+                          @mousedown="startInteract($event, index, 'r')"></div>
+                        <div class="absolute w-3 h-3 bg-transparent -right-1.5 -bottom-1.5 cursor-nwse-resize"
+                          @mousedown="startInteract($event, index, 'br')"></div>
+                        <div class="absolute w-full h-3 bg-transparent left-0 -bottom-1.5 cursor-ns-resize"
+                          @mousedown="startInteract($event, index, 'b')"></div>
+                        <div class="absolute w-3 h-3 bg-transparent -left-1.5 -bottom-1.5 cursor-nesw-resize"
+                          @mousedown="startInteract($event, index, 'bl')"></div>
+                        <div class="absolute w-3 h-full bg-transparent -left-1.5 top-0 cursor-ew-resize"
+                          @mousedown="startInteract($event, index, 'l')"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="pt-3 text-sm text-white/38 text-center">mp4/mov 文件，建议1G以内</div>
-              </div>
-              <input type="file" ref="fileInputRef" class="hidden" accept="video/mp4,video/quicktime"
-                @change="onFileChange" />
-            </div>
-          </div>
 
-          <div v-else class="flex-1 flex flex-col min-h-0">
-            <div class="flex-1 bg-black/50 relative overflow-hidden rounded-[4px] flex items-center justify-center"
-              ref="containerRef">
-              <div
-                :style="{ width: displayWidth ? displayWidth + 'px' : '100%', height: displayHeight ? displayHeight + 'px' : '100%', visibility: displayWidth ? 'visible' : 'hidden' }"
-                class="relative">
-                <video ref="videoRef" crossorigin="anonymous" :src="videoUrl" class="w-full h-full object-contain"
-                  @loadedmetadata="onLoadedMetadata" controls controlsList="nodownload"></video>
-
-                <!-- Drawing Overlay -->
-                <div class="absolute inset-0 z-10 pointer-events-none" style="bottom: 50px;">
-                  <div v-for="(area, index) in areas" :key="index"
-                    class="absolute border-2 border-yellow-400 bg-yellow-400/20 pointer-events-auto cursor-move flex items-center justify-center"
-                    :style="getAreaStyle(area)" @mousedown="startInteract($event, index, 'move')">
-                    <span class="text-yellow-400 text-sm font-bold whitespace-nowrap cursor-default pointer-events-none"
-                      style="text-shadow: 0 1px 2px rgba(0,0,0,0.8);">区域 {{ index + 1 }}</span>
-
-                    <!-- Resize Handles -->
-                    <div class="absolute w-3 h-3 bg-transparent -left-1.5 -top-1.5 cursor-nwse-resize"
-                      @mousedown="startInteract($event, index, 'tl')"></div>
-                    <div class="absolute w-full h-3 bg-transparent left-0 -top-1.5 cursor-ns-resize"
-                      @mousedown="startInteract($event, index, 't')"></div>
-                    <div class="absolute w-3 h-3 bg-transparent -right-1.5 -top-1.5 cursor-nesw-resize"
-                      @mousedown="startInteract($event, index, 'tr')"></div>
-                    <div class="absolute w-3 h-full bg-transparent -right-1.5 top-0 cursor-ew-resize"
-                      @mousedown="startInteract($event, index, 'r')"></div>
-                    <div class="absolute w-3 h-3 bg-transparent -right-1.5 -bottom-1.5 cursor-nwse-resize"
-                      @mousedown="startInteract($event, index, 'br')"></div>
-                    <div class="absolute w-full h-3 bg-transparent left-0 -bottom-1.5 cursor-ns-resize"
-                      @mousedown="startInteract($event, index, 'b')"></div>
-                    <div class="absolute w-3 h-3 bg-transparent -left-1.5 -bottom-1.5 cursor-nesw-resize"
-                      @mousedown="startInteract($event, index, 'bl')"></div>
-                    <div class="absolute w-3 h-full bg-transparent -left-1.5 top-0 cursor-ew-resize"
-                      @mousedown="startInteract($event, index, 'l')"></div>
-                  </div>
+                <div class="mt-4 flex items-center justify-between text-xs text-white/60 shrink-0">
+                  <span v-if="videoWidth > 0">视频尺寸：{{ videoWidth }} x {{ videoHeight }}</span>
+                  <span v-else>正在加载视频信息...</span>
+                  <n-button type="error" size="small" class="!h-[28px] !px-3 !rounded-[4px] text-#fff! !text-sm"
+                    @click="removeVideo">
+                    移除视频
+                  </n-button>
                 </div>
               </div>
-            </div>
-
-            <div class="mt-4 flex items-center justify-between text-xs text-white/60">
-              <span v-if="videoWidth > 0">视频尺寸：{{ videoWidth }} x {{ videoHeight }}</span>
-              <span v-else>正在加载视频信息...</span>
-              <n-button type="error" size="small" class="!h-[28px] !px-3 !rounded-[4px] text-#fff! !text-sm"
-                @click="removeVideo">
-                移除视频
-              </n-button>
-            </div>
-          </div>
+            </template>
+          </UploadArea>
         </div>
       </section>
 
