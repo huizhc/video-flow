@@ -58,15 +58,15 @@ const startInteract = (e, index, type) => {
 const onInteract = (e) => {
   const state = interactionState.value
   if (state.index === -1) return
-  
+
   const scaleX = videoWidth.value / displayWidth.value
   const scaleY = videoHeight.value / displayHeight.value
-  
+
   const dx = (e.clientX - state.startX) * scaleX
   const dy = (e.clientY - state.startY) * scaleY
-  
+
   let { x, y, w, h } = state.startArea
-  
+
   if (state.type === 'move') {
     x += dx
     y += dy
@@ -86,7 +86,7 @@ const onInteract = (e) => {
       h += dy
     }
   }
-  
+
   // Constrain to video bounds
   if (w < 20) w = 20
   if (h < 20) h = 20
@@ -100,7 +100,7 @@ const onInteract = (e) => {
     if (state.type === 'move') y = videoHeight.value - h
     else h = videoHeight.value - y
   }
-  
+
   areas.value[state.index] = {
     x: Math.round(x),
     y: Math.round(y),
@@ -129,7 +129,7 @@ const onFileChange = (e) => {
   // Mock the required URL directly, but we need a real blob URL to show the video.
   // Actually, we can just use URL.createObjectURL(file) for preview, and output the required URL on execution.
   videoUrl.value = URL.createObjectURL(file)
-  
+
   // reset state
   areas.value = []
   videoWidth.value = 0
@@ -158,10 +158,10 @@ const updateDisplaySize = () => {
   const containerW = containerRef.value.clientWidth
   const containerH = containerRef.value.clientHeight
   containerHeight.value = containerH
-  
+
   const videoRatio = videoWidth.value / videoHeight.value
   const containerRatio = containerW / containerH
-  
+
   if (videoRatio > containerRatio) {
     displayWidth.value = containerW
     displayHeight.value = containerW / videoRatio
@@ -215,7 +215,7 @@ const executeTask = () => {
     code: '2',
     fileName: '2a36b34ae329461ebf3622364727be6c.mp4'
   }
-  
+
   console.log(JSON.stringify(payload, null, 2))
   alert('数据已生成，请在控制台查看：\n' + JSON.stringify(payload, null, 2))
 }
@@ -226,10 +226,11 @@ const executeTask = () => {
     <div class="flex w-full h-full gap-[15px]  sm:flex-row">
       <!-- Left Section (Video Upload and Preview) -->
       <section class="flex-1 flex flex-col border border-white/8 bg-[#232323] rounded-[4px] overflow-hidden">
-        <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+        <div
+          class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
           视频消除字幕及水印
         </div>
-        
+
         <div class="flex-1 p-4 flex flex-col relative min-h-0">
           <div v-if="!videoUrl" class="flex-1 flex items-center justify-center">
             <div class="w-full max-w-[400px]">
@@ -239,9 +240,10 @@ const executeTask = () => {
                   <n-radio value="cloud">云盘选择</n-radio>
                 </div>
               </n-radio-group>
-              
+
               <div class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2" @click="triggerUpload">
-                <div class="flex min-h-[228px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center cursor-pointer hover:border-[#16d4e4]/50 transition-colors">
+                <div
+                  class="flex min-h-[228px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center cursor-pointer hover:border-[#16d4e4]/50 transition-colors">
                   <n-icon :size="34" :component="CloudUpload" class="text-white/70" />
                   <div class="mt-3 text-sm text-white/55">
                     Drop file here or
@@ -250,34 +252,50 @@ const executeTask = () => {
                 </div>
                 <div class="pt-3 text-sm text-white/38 text-center">mp4/mov 文件，建议1G以内</div>
               </div>
-              <input type="file" ref="fileInputRef" class="hidden" accept="video/mp4,video/quicktime" @change="onFileChange" />
+              <input type="file" ref="fileInputRef" class="hidden" accept="video/mp4,video/quicktime"
+                @change="onFileChange" />
             </div>
           </div>
-          
+
           <div v-else class="flex-1 flex flex-col min-h-0">
-            <div class="flex-1 bg-black/50 relative overflow-hidden rounded-[4px] flex items-center justify-center" ref="containerRef">
-              <div :style="{ width: displayWidth ? displayWidth + 'px' : '100%', height: displayHeight ? displayHeight + 'px' : '100%', visibility: displayWidth ? 'visible' : 'hidden' }" class="relative">
-                <video ref="videoRef" crossorigin="anonymous" :src="videoUrl" class="w-full h-full object-contain" @loadedmetadata="onLoadedMetadata" controls controlsList="nodownload"></video>
-                
+            <div class="flex-1 bg-black/50 relative overflow-hidden rounded-[4px] flex items-center justify-center"
+              ref="containerRef">
+              <div
+                :style="{ width: displayWidth ? displayWidth + 'px' : '100%', height: displayHeight ? displayHeight + 'px' : '100%', visibility: displayWidth ? 'visible' : 'hidden' }"
+                class="relative">
+                <video ref="videoRef" crossorigin="anonymous" :src="videoUrl" class="w-full h-full object-contain"
+                  @loadedmetadata="onLoadedMetadata" controls controlsList="nodownload"></video>
+
                 <!-- Drawing Overlay -->
                 <div class="absolute inset-0 z-10 pointer-events-none" style="bottom: 50px;">
-                  <div v-for="(area, index) in areas" :key="index" class="absolute border-2 border-yellow-400 bg-yellow-400/20 pointer-events-auto cursor-move flex items-center justify-center" :style="getAreaStyle(area)" @mousedown="startInteract($event, index, 'move')">
-                    <span class="text-yellow-400 text-sm font-bold whitespace-nowrap cursor-default pointer-events-none" style="text-shadow: 0 1px 2px rgba(0,0,0,0.8);">区域 {{ index + 1 }}</span>
-                    
+                  <div v-for="(area, index) in areas" :key="index"
+                    class="absolute border-2 border-yellow-400 bg-yellow-400/20 pointer-events-auto cursor-move flex items-center justify-center"
+                    :style="getAreaStyle(area)" @mousedown="startInteract($event, index, 'move')">
+                    <span class="text-yellow-400 text-sm font-bold whitespace-nowrap cursor-default pointer-events-none"
+                      style="text-shadow: 0 1px 2px rgba(0,0,0,0.8);">区域 {{ index + 1 }}</span>
+
                     <!-- Resize Handles -->
-                    <div class="absolute w-3 h-3 bg-transparent -left-1.5 -top-1.5 cursor-nwse-resize" @mousedown="startInteract($event, index, 'tl')"></div>
-                    <div class="absolute w-full h-3 bg-transparent left-0 -top-1.5 cursor-ns-resize" @mousedown="startInteract($event, index, 't')"></div>
-                    <div class="absolute w-3 h-3 bg-transparent -right-1.5 -top-1.5 cursor-nesw-resize" @mousedown="startInteract($event, index, 'tr')"></div>
-                    <div class="absolute w-3 h-full bg-transparent -right-1.5 top-0 cursor-ew-resize" @mousedown="startInteract($event, index, 'r')"></div>
-                    <div class="absolute w-3 h-3 bg-transparent -right-1.5 -bottom-1.5 cursor-nwse-resize" @mousedown="startInteract($event, index, 'br')"></div>
-                    <div class="absolute w-full h-3 bg-transparent left-0 -bottom-1.5 cursor-ns-resize" @mousedown="startInteract($event, index, 'b')"></div>
-                    <div class="absolute w-3 h-3 bg-transparent -left-1.5 -bottom-1.5 cursor-nesw-resize" @mousedown="startInteract($event, index, 'bl')"></div>
-                    <div class="absolute w-3 h-full bg-transparent -left-1.5 top-0 cursor-ew-resize" @mousedown="startInteract($event, index, 'l')"></div>
+                    <div class="absolute w-3 h-3 bg-transparent -left-1.5 -top-1.5 cursor-nwse-resize"
+                      @mousedown="startInteract($event, index, 'tl')"></div>
+                    <div class="absolute w-full h-3 bg-transparent left-0 -top-1.5 cursor-ns-resize"
+                      @mousedown="startInteract($event, index, 't')"></div>
+                    <div class="absolute w-3 h-3 bg-transparent -right-1.5 -top-1.5 cursor-nesw-resize"
+                      @mousedown="startInteract($event, index, 'tr')"></div>
+                    <div class="absolute w-3 h-full bg-transparent -right-1.5 top-0 cursor-ew-resize"
+                      @mousedown="startInteract($event, index, 'r')"></div>
+                    <div class="absolute w-3 h-3 bg-transparent -right-1.5 -bottom-1.5 cursor-nwse-resize"
+                      @mousedown="startInteract($event, index, 'br')"></div>
+                    <div class="absolute w-full h-3 bg-transparent left-0 -bottom-1.5 cursor-ns-resize"
+                      @mousedown="startInteract($event, index, 'b')"></div>
+                    <div class="absolute w-3 h-3 bg-transparent -left-1.5 -bottom-1.5 cursor-nesw-resize"
+                      @mousedown="startInteract($event, index, 'bl')"></div>
+                    <div class="absolute w-3 h-full bg-transparent -left-1.5 top-0 cursor-ew-resize"
+                      @mousedown="startInteract($event, index, 'l')"></div>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <div class="mt-4 flex items-center justify-between text-xs text-white/60">
               <span v-if="videoWidth > 0">视频尺寸：{{ videoWidth }} x {{ videoHeight }}</span>
               <span v-else>正在加载视频信息...</span>
@@ -290,33 +308,40 @@ const executeTask = () => {
       </section>
 
       <!-- Right Section (Parameters) -->
-      <section class="w-full sm:w-[360px] flex flex-col border border-white/8 bg-[#232323] rounded-[4px] overflow-hidden flex-shrink-0">
-        <div class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
+      <section
+        class="w-full sm:w-[360px] flex flex-col border border-white/8 bg-[#232323] rounded-[4px] overflow-hidden flex-shrink-0">
+        <div
+          class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]">
           参数设置
         </div>
-        
+
         <div class="flex-1 flex flex-col p-4 overflow-y-auto min-h-0">
           <div class="flex flex-col gap-3" v-if="areas.length > 0">
-            <div v-for="(area, index) in areas" :key="index" class="border border-white/10 rounded-[4px] p-3 flex justify-between items-center bg-[#1c1c1c] transition-colors hover:border-white/20">
+            <div v-for="(area, index) in areas" :key="index"
+              class="border border-white/10 rounded-[4px] p-3 flex justify-between items-center bg-[#1c1c1c] transition-colors hover:border-white/20">
               <div class="text-sm text-white/80">
                 <div class="font-medium mb-1">区域 {{ index + 1 }}</div>
                 <div class="text-white/50 text-xs">x:{{ area.x }} y:{{ area.y }} 宽:{{ area.w }} 高:{{ area.h }}</div>
               </div>
-              <button type="button" class="btn-close text-red-400/80 hover:text-red-400 flex items-center justify-center p-1 rounded transition-colors hover:bg-red-400/10" @click="removeArea(index)">
+              <button type="button"
+                class="btn-close text-red-400/80 hover:text-red-400 flex items-center justify-center p-1 rounded transition-colors hover:bg-red-400/10"
+                @click="removeArea(index)">
                 <n-icon :size="16" :component="Delete" />
               </button>
             </div>
           </div>
           <div v-else class="flex-1 flex items-center justify-center text-sm text-white/30 text-center">
-            暂无选区<br/>请在左侧视频画面中框选
+            暂无选区<br />请在左侧视频画面中框选
           </div>
-          
-          <button type="button" class="mt-3 w-full flex h-[36px] items-center justify-center rounded-[4px] border border-white/8 bg-transparent text-sm text-white/45 transition-colors hover:text-white/70 hover:bg-white/5" v-if="videoUrl" @click="addArea">
+
+          <button type="button"
+            class="mt-3 w-full flex h-[36px] items-center justify-center rounded-[4px] border border-white/8 bg-transparent text-sm text-white/45 transition-colors hover:text-white/70 hover:bg-white/5"
+            v-if="videoUrl" @click="addArea">
             <n-icon :size="14" :component="Add" class="mr-1" />
             添加选区
           </button>
         </div>
-        
+
         <div class="p-4 border-t border-white/8">
           <div class="text-sm text-white/48">
             <div class="flex items-center gap-3">
@@ -336,7 +361,8 @@ const executeTask = () => {
           </div>
 
           <div class="pt-4 flex justify-end">
-            <n-button type="warning" size="small" class="!h-[32px] !px-6 !rounded-[4px] !text-sm !font-medium" @click="executeTask">
+            <n-button type="warning" size="small" class="!h-[32px] !px-6 !rounded-[4px] !text-sm !font-medium"
+              @click="executeTask">
               后台执行
             </n-button>
           </div>
