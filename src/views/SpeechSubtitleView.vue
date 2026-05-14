@@ -482,8 +482,8 @@ function goHome() {
                     <span v-else>正在加载视频信息...</span>
                     <n-button
                       type="error"
-                      size="small"
-                      class="!h-[28px] !px-3 !rounded-[4px] text-#fff! !text-sm"
+                      size="tiny"
+                      class="!px-3 !rounded-[4px] text-#fff! !text-xs"
                       @click="removeVideo"
                     >
                       移除视频
