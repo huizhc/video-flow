@@ -237,7 +237,9 @@ const executeTask = () => {
         <div class="flex-1 p-4 flex flex-col relative min-h-0">
           <UploadArea :has-file="!!videoUrl" @file-change="onFileChange">
             <template #uploaded>
-              <div class="flex-1 flex flex-col min-h-0 h-full w-full">
+              <div
+                class="border-[1px] border-solid border-#ffffff10 p-[10px] flex flex-col min-h-0 w-full"
+              >
                 <div
                   class="flex-1 bg-black/50 relative overflow-hidden rounded-[4px] flex items-center justify-center"
                   ref="containerRef"
