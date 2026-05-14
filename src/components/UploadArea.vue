@@ -45,7 +45,7 @@ const onFileChange = (e) => {
   <div class="flex-1 flex flex-col min-h-0 w-full">
     <template v-if="!hasFile">
       <div class="flex-1 flex justify-center">
-        <div class="w-full max-w-[400px]">
+        <div class="w-full">
           <n-radio-group v-model:value="uploadSource" size="small" class="mb-4">
             <div class="flex items-center gap-5 text-sm">
               <n-radio value="local">本地上传</n-radio>
