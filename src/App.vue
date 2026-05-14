@@ -26,6 +26,27 @@ const themeOverrides = {
     itemTextColorHover: '#e5e7eb',
     itemIconColorHover: '#e5e7eb',
   },
+  Select: {
+    menuBoxShadow: '0 4px 12px rgba(0,0,0,0.6)',
+  },
+  InternalSelection: {
+    fontSizeMedium: '14px',
+    heightMedium: '34px',
+    borderRadius: '4px',
+    textColor: '#d1d5db',
+    placeholderColor: '#6b7280',
+    color: '#1a1c1e',
+    border: '1px solid rgba(255,255,255,0.12)',
+    borderHover: '1px solid rgba(79,209,197,0.4)',
+    borderFocus: '1px solid #4fd1c5',
+  },
+  InternalSelectMenu: {
+    optionTextColor: '#d1d5db',
+    optionTextColorActive: '#4fd1c5',
+    optionColorActive: 'rgba(79,209,197,0.12)',
+    color: '#1a1c1e',
+    borderRadius: '4px',
+  },
 }
 </script>
 
