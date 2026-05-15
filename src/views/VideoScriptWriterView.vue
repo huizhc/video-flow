@@ -5,7 +5,6 @@ import {
   Add,
   Currency,
   Download,
-  Information,
   SendAltFilled,
   TrashCan,
 } from '@vicons/carbon'
@@ -118,19 +117,19 @@ function sendMessage() {
 <template>
   <div class="min-h-[500px] h-full bg-[#000] p-[14px] text-white">
     <div
-      class="mx-auto grid grid-cols-1 gap-[16px] h-full rounded-[10px] border border-white/8 p-[6px] min-[980px]:grid-cols-[300px_minmax(0,1fr)]"
+      class="mx-auto grid h-full grid-cols-1 gap-[16px] rounded-[10px] border border-white/8 p-[6px] min-[980px]:grid-cols-[400px_minmax(0,1fr)]"
     >
       <aside
-        class="overflow-hidden rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#242425_0%,#1d1e20_100%)]"
+        class="min-w-[400px] overflow-hidden rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#242425_0%,#1d1e20_100%)]"
       >
         <div
           class="flex items-center justify-between border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[12px] py-[10px]"
         >
-          <span class="text-[12px] font-medium text-white/88">会话列表</span>
+          <span class="text-sm font-medium text-white/88">会话列表</span>
           <n-button
             type="primary"
             size="tiny"
-            class="text-white !rounded-[6px] !border-0 !bg-[#18d2e5] !px-[12px] !text-[12px] !font-medium"
+            class="text-white !rounded-[6px] !border-0 !bg-[#18d2e5] !px-[12px] !text-sm !font-medium"
             @click="createConversation"
           >
             <template #icon>
@@ -155,7 +154,7 @@ function sendMessage() {
               @click="selectConversation(item.id)"
             >
               <div class="flex items-start justify-between">
-                <div class="truncate text-[14px] font-bold text-white/92">
+                <div class="truncate text-sm font-bold text-white/92">
                   {{ item.title }}
                 </div>
                 <n-icon
@@ -166,7 +165,7 @@ function sendMessage() {
                 />
               </div>
 
-              <div class="mt-[6px] truncate text-[12px] text-white/45">
+              <div class="mt-[6px] truncate text-sm text-white/45">
                 {{
                   item.messages.length > 0
                     ? item.messages[item.messages.length - 1].content
@@ -174,7 +173,7 @@ function sendMessage() {
                 }}
               </div>
 
-              <div class="mt-[6px] text-[11px] text-white/25">刚刚</div>
+              <div class="mt-[6px] text-xs text-white/25">刚刚</div>
             </button>
           </div>
         </n-scrollbar>
@@ -186,13 +185,13 @@ function sendMessage() {
         <div
           class="flex items-center justify-between border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[12px] py-[8px]"
         >
-          <div class="text-[12px] text-white/88">
+          <div class="text-sm text-white/88">
             {{ activeConversation?.title || '新会话' }}
           </div>
           <div class="flex items-center gap-[8px]">
             <button
               type="button"
-              class="inline-flex h-[26px] items-center justify-center rounded-[4px] border border-white/8 bg-transparent text-[12px] text-white/45 transition-colors hover:text-white/70"
+              class="inline-flex h-[26px] items-center justify-center rounded-[4px] border border-white/8 bg-transparent text-sm text-white/45 transition-colors hover:text-white/70"
               @click="deleteConversation"
             >
               <n-icon :component="TrashCan" :size="12" />
@@ -200,7 +199,7 @@ function sendMessage() {
             </button>
             <button
               type="button"
-              class="inline-flex h-[26px] items-center justify-center rounded-[4px] border border-white/8 bg-transparent text-[12px] text-white/45 transition-colors hover:text-white/70"
+              class="inline-flex h-[26px] items-center justify-center rounded-[4px] border border-white/8 bg-transparent text-sm text-white/45 transition-colors hover:text-white/70"
               @click="exportConversation"
             >
               <n-icon :component="Download" :size="12" />
@@ -224,7 +223,7 @@ function sendMessage() {
                 "
               >
                 <div
-                  class="max-w-[78%] rounded-[8px] px-[12px] py-[10px] text-[12px] leading-[1.75]"
+                  class="max-w-[78%] rounded-[8px] px-[12px] py-[10px] text-sm leading-[1.75]"
                   :class="
                     message.role === 'user'
                       ? 'bg-[#1b5d88] text-white'
@@ -238,7 +237,7 @@ function sendMessage() {
 
             <div
               v-else
-              class="flex h-full min-h-[360px] items-center justify-center text-[12px] text-white/30"
+              class="flex h-full min-h-[360px] items-center justify-center text-sm text-white/30"
             >
               暂无消息内容
             </div>
@@ -250,17 +249,17 @@ function sendMessage() {
               type="textarea"
               :autosize="{ minRows: 3, maxRows: 3 }"
               placeholder="请输入您的问题..."
-              class="text-[12px] border border-[1px] border-solid border-#ffffff10 [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#1c1d20] [&_.n-input-wrapper]:!px-[8px] [&_.n-input-wrapper]:!py-[6px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!text-white/84 [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/24"
+              class="border border-[1px] border-solid border-#ffffff10 text-sm [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#1c1d20] [&_.n-input-wrapper]:!px-[8px] [&_.n-input-wrapper]:!py-[6px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-sm [&_.n-input__textarea-el]:!text-white/84 [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-sm [&_.n-input__placeholder]:!text-white/24"
             />
 
             <div class="mt-[6px] flex flex-col gap-[10px]">
-              <div class="text-[10px] text-white/34">
+              <div class="text-xs text-white/34">
                 输入字数: {{ draftCount }}
               </div>
 
               <div class="flex items-center gap-[12px]">
                 <div
-                  class="ml-auto flex items-center gap-[4px] text-[11px] text-white/46"
+                  class="ml-auto flex items-center gap-[4px] text-sm text-white/46"
                 >
                   <span>消耗算力：</span>
                   <n-icon
@@ -282,7 +281,7 @@ function sendMessage() {
                 <n-button
                   type="primary"
                   size="small"
-                  class="!h-[28px] text-#fff! shadow-none! rounded-[4px] !bg-[#3a73aa] !px-[12px] !text-[11px] !font-medium"
+                  class="!h-[28px] text-#fff! shadow-none! rounded-[4px] !bg-[#3a73aa] !px-[12px] !text-sm !font-medium"
                   @click="sendMessage"
                 >
                   <template #icon>

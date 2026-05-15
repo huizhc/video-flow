@@ -66,10 +66,10 @@ function startGenerate() {
     >
       <div class="flex h-full gap-[8px] p-[8px]">
         <section
-          class="overflow-hidden w-[400px] rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]"
+          class="overflow-hidden min-w-[400px] rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]"
         >
           <div
-            class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[14px] py-[12px] text-[12px] text-white/84"
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[14px] py-[12px] text-sm text-white/84"
           >
             生成标题及口播文案
           </div>
@@ -83,7 +83,7 @@ function startGenerate() {
                 placeholder="请输入产品名称，例如：护发素"
                 class="[&_.n-input-wrapper]:!rounded-[2px] text-[12px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22"
               />
-              <div class="mt-[6px] text-[10px] text-white/28">例如：护发素</div>
+              <div class="mt-[6px] text-xs text-white/28">例如：护发素</div>
             </div>
 
             <div class="mb-[12px]">
@@ -94,13 +94,13 @@ function startGenerate() {
                 placeholder="请输入产品卖点，例如：深层滋养，修复受损发质"
                 class="text-[12px] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22"
               />
-              <div class="mt-[6px] text-[10px] text-white/28">
+              <div class="mt-[6px] text-xs text-white/28">
                 例如：深层滋养，修复受损发质
               </div>
             </div>
 
             <div class="mb-[10px] flex items-center gap-[10px]">
-              <div class="w-[58px] shrink-0 text-[11px] text-white/52">
+              <div class="w-[58px] shrink-0 text-sm text-white/52">
                 原文语种:
               </div>
               <div class="min-w-0 flex-1">
@@ -114,7 +114,7 @@ function startGenerate() {
             </div>
 
             <div class="mb-[10px] flex items-center gap-[10px]">
-              <div class="w-[58px] shrink-0 text-[11px] text-white/52">
+              <div class="w-[58px] shrink-0 text-sm text-white/52">
                 目标国家:
               </div>
               <div class="min-w-0 flex-1">
@@ -128,7 +128,7 @@ function startGenerate() {
             </div>
 
             <div class="mb-[14px] flex items-start gap-[10px]">
-              <div class="w-[58px] shrink-0 pt-[8px] text-[11px] text-white/52">
+              <div class="w-[58px] shrink-0 pt-[8px] text-sm text-white/52">
                 目标人群:
               </div>
               <div class="min-w-0 flex-1">
@@ -143,9 +143,7 @@ function startGenerate() {
             </div>
 
             <div class="mt-[10px] flex items-center justify-between">
-              <div
-                class="flex items-center gap-[4px] text-[11px] text-white/44"
-              >
+              <div class="flex items-center gap-[4px] text-xs text-white/44">
                 <span>消耗算力：</span>
                 <n-icon
                   :component="Currency"
@@ -179,7 +177,7 @@ function startGenerate() {
           class="overflow-hidden flex-1 flex flex-col rounded-[6px] border border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]"
         >
           <div
-            class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[14px] py-[12px] text-[12px] text-white/84"
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[14px] py-[12px] text-sm text-white/84"
           >
             结果
           </div>
@@ -188,9 +186,9 @@ function startGenerate() {
             <div
               class="rounded-[2px] border border-white/8 bg-[#101113] px-[12px] py-[10px]"
             >
-              <div class="mb-[10px] text-[11px] text-white/36">结果示例：</div>
+              <div class="mb-[10px] text-sm text-white/36">结果示例：</div>
 
-              <div class="space-y-[8px] text-[11px] leading-[1.65]">
+              <div class="space-y-[8px] text-sm leading-[1.65]">
                 <div
                   v-for="item in resultSections"
                   :key="item.label"

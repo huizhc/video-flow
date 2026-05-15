@@ -2,7 +2,6 @@
 import { computed, ref } from 'vue'
 import {
   NButton,
-  NIcon,
   NInput,
   NInputNumber,
   NModal,
@@ -265,26 +264,26 @@ function cancelSelection() {
         <template v-if="currentStep === 1">
           <div class="h-full flex-1 overflow-hidden flex">
             <section
-              class="border-b sm:w-[400px] border-white/8 p-[14px] min-[920px]:border-b-0 min-[920px]:border-r [&>div>span]:w-[80px] [&>div>span]:min-w-[80px]"
+              class="border-b min-w-[400px] border-white/8 p-[14px] min-[920px]:border-b-0 min-[920px]:border-r [&>div>span]:w-[80px] [&>div>span]:min-w-[80px]"
             >
-              <div class="mb-[14px] text-[12px] font-medium text-white/88">
+              <div class="mb-[14px] text-sm font-medium text-white/88">
                 口播参数
               </div>
 
-              <div class="text-[12px] mb-[14px] flex items-center gap-[12px]">
+              <div class="mb-[14px] flex items-center gap-[12px] text-sm">
                 <span>视频总量</span>
                 <n-input-number
                   v-model:value="totalVideos"
                   :min="1"
                   size="small"
                   button-placement="both"
-                  class="w-[104px] [&_input]:!text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#1a1b1d] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-[12px] [&_.n-input-number-input]:!text-white/86 [&_.n-input-number-button]:!w-[28px] [&_.n-input-number-button]:!text-white/48"
+                  class="w-[104px] [&_input]:!text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#1a1b1d] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-sm [&_.n-input-number-input]:!text-white/86 [&_.n-input-number-button]:!w-[28px] [&_.n-input-number-button]:!text-white/48"
                 />
-                <span class="text-[12px] text-white/58">条</span>
+                <span class="text-sm text-white/58">条</span>
               </div>
 
               <div
-                class="text-[12px] mb-[14px] flex items-center flex-wrap gap-[12px]"
+                class="mb-[14px] flex items-center flex-wrap gap-[12px] text-sm"
               >
                 <span>口播数量</span>
                 <n-input-number
@@ -292,18 +291,18 @@ function cancelSelection() {
                   :min="1"
                   size="small"
                   button-placement="both"
-                  class="w-[104px] [&_input]:!text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#1a1b1d] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-[12px] [&_.n-input-number-input]:!text-white/86 [&_.n-input-number-button]:!w-[28px] [&_.n-input-number-button]:!text-white/48"
+                  class="w-[104px] [&_input]:!text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#1a1b1d] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-sm [&_.n-input-number-input]:!text-white/86 [&_.n-input-number-button]:!w-[28px] [&_.n-input-number-button]:!text-white/48"
                 />
-                <span class="text-[12px] text-white/58">条</span>
+                <span class="text-sm text-white/58">条</span>
                 <div
-                  class="mb-[22px] pl-[72px] text-[10px] leading-[1.6] text-white/32"
+                  class="mb-[22px] self-end pl-[72px] text-xs leading-[1.6] text-white/32"
                 >
                   提示：如口播数量小于视频总量，则循环选取口播。
                 </div>
               </div>
 
               <div
-                class="mb-[8px] flex items-center gap-[12px] text-[12px] text-white/82"
+                class="mb-[8px] flex items-center gap-[12px] text-sm text-white/82"
               >
                 <span>音色选择</span>
                 <div class="flex flex-wrap items-center gap-[8px]">
@@ -311,7 +310,7 @@ function cancelSelection() {
                     v-for="option in voiceOptions"
                     :key="option.value"
                     type="button"
-                    class="inline-flex items-center gap-[6px] border-0 bg-transparent p-0 text-[12px] text-white/82"
+                    class="inline-flex items-center gap-[6px] border-0 bg-transparent p-0 text-sm text-white/82"
                     :class="
                       selectedVoiceLabel !== option.label
                         ? 'text-white/92'
@@ -336,7 +335,7 @@ function cancelSelection() {
                     </svg>
                     {{ selectedVoiceLabel }}
                   </button>
-                  <div class="text-[10px] leading-[1.7] text-white/32">
+                  <div class="self-end text-xs leading-[1.7] text-white/32">
                     提示：建议根据首音样类型选择音色，例如：悲生产感情的视频，则选择超情音色。音色数量不能超过口播数量。
                   </div>
                 </div>
@@ -345,13 +344,11 @@ function cancelSelection() {
 
             <section class="grid flex-1 grid-rows-[34px_1fr] p-[10px]">
               <div class="mb-[8px] flex items-center justify-between">
-                <div class="text-[12px] font-medium text-white/88">
-                  文案列表
-                </div>
+                <div class="text-sm font-medium text-white/88">文案列表</div>
                 <n-button
                   type="primary"
                   size="tiny"
-                  class="!h-[26px] !rounded-[4px] !border-0 !bg-[#18d2e5] !px-[12px] !text-[11px] !font-medium"
+                  class="!h-[26px] !rounded-[4px] !border-0 !bg-[#18d2e5] !px-[12px] !text-sm !font-medium"
                   @click="addScript"
                 >
                   生成文案
@@ -369,19 +366,19 @@ function cancelSelection() {
                     :value="item"
                     type="textarea"
                     :autosize="{ minRows: 4, maxRows: 4 }"
-                    class="[&_.n-input-wrapper]:!rounded-[4px] text-[12px] border-solid border-[1px] border-white/8 flex-1 overflow-hidden [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#1b1b1d] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/24"
+                    class="border-solid border-[1px] border-white/8 text-sm flex-1 overflow-hidden [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#1b1b1d] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-sm [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-sm [&_.n-input__placeholder]:!text-white/24"
                     placeholder="请输入文案内容"
                     @update:value="updateScript(index, $event)"
                   />
                   <div
-                    class="mt-[8px] flex items-center justify-between text-[10px]"
+                    class="mt-[8px] flex items-center justify-between text-sm"
                   >
-                    <span class="text-white/36"
+                    <span class="self-end text-xs text-white/36"
                       >字数：{{ textCount(item) }}</span
                     >
                     <button
                       type="button"
-                      class="border-0 text-[12px] bg-transparent p-0 text-[#f86f6f]"
+                      class="border-0 bg-transparent p-0 text-sm text-[#f86f6f]"
                       @click="removeScript(index)"
                     >
                       删除
@@ -395,18 +392,16 @@ function cancelSelection() {
 
         <template v-else-if="currentStep === 2">
           <div
-            class="grid flex-1 overflow-hidden min-h-[410px] grid-cols-1 min-[920px]:grid-cols-[300px_minmax(0,1fr)]"
+            class="grid flex-1 min-h-[410px] grid-cols-1 overflow-hidden min-[920px]:grid-cols-[400px_minmax(0,1fr)]"
           >
             <section
-              class="border-b border-white/8 p-[12px] min-[920px]:border-b-0 min-[920px]:border-r"
+              class="border-b min-w-[400px] border-white/8 p-[12px] min-[920px]:border-b-0 min-[920px]:border-r"
             >
               <div
                 class="mb-[10px] flex items-center justify-between gap-[8px]"
               >
-                <div class="text-[12px] font-medium text-white/88">
-                  主角照片
-                </div>
-                <div class="text-[10px] text-white/36">
+                <div class="text-sm font-medium text-white/88">主角照片</div>
+                <div class="self-end text-xs text-white/36">
                   最多 5 张（与步骤1「口播数量」一致）
                 </div>
               </div>
@@ -416,7 +411,7 @@ function cancelSelection() {
                 @click="handleAddAvatar"
               >
                 <div class="text-[28px] leading-none">+</div>
-                <div class="mt-[6px] text-[10px]">添加主角</div>
+                <div class="mt-[6px] text-sm">添加主角</div>
               </div>
             </section>
 
@@ -424,10 +419,10 @@ function cancelSelection() {
               <div
                 class="mb-[10px] flex items-center justify-between gap-[10px]"
               >
-                <div class="text-[12px] font-medium text-white/88">
+                <div class="text-sm font-medium text-white/88">
                   素材列表（每个素材时长最少要4秒）
                 </div>
-                <div class="text-[10px] text-white/36">
+                <div class="self-end text-xs text-white/36">
                   每类最多 5 个（与步骤1「视频总量」一致）
                 </div>
               </div>
@@ -439,7 +434,7 @@ function cancelSelection() {
                     :key="section.key"
                     class="rounded-[4px] border border-#ffffff10 border-solid border-[1px] bg-[#222325]"
                   >
-                    <div class="px-[10px] pt-[10px] text-[11px] text-white/64">
+                    <div class="px-[10px] pt-[10px] text-sm text-white/64">
                       {{ section.title }}
                     </div>
 
@@ -449,17 +444,17 @@ function cancelSelection() {
                       >
                         <button
                           type="button"
-                          class="absolute cursor-pointer right-[10px] top-[10px] border-0 bg-transparent p-0 text-[10px] text-[#18d2e5]"
+                          class="absolute right-[10px] top-[10px] cursor-pointer border-0 bg-transparent p-0 text-sm text-[#18d2e5]"
                           @click="handleCopy(section.description)"
                         >
                           复制
                         </button>
-                        <div class="text-[10px] pb-[5px]">
+                        <div class="self-end pb-[5px] text-xs text-white/32">
                           优先使用 实拍 制作片段，若需使用工具15/工具18
                           制作片段，可参考使用以下提示词
                         </div>
                         <div
-                          class="pr-[48px] text-[10px] leading-[1.65] text-white/58"
+                          class="self-end pr-[48px] text-xs leading-[1.65] text-white/58"
                         >
                           {{ section.description }}
                         </div>
@@ -489,7 +484,7 @@ function cancelSelection() {
                           @click="handleAddMaterial"
                         >
                           <div class="text-[26px] leading-none">+</div>
-                          <div class="mt-[6px] text-[10px]">添加素材</div>
+                          <div class="mt-[6px] text-sm">添加素材</div>
                         </button>
                       </div>
                     </div>
@@ -507,13 +502,13 @@ function cancelSelection() {
             <div class="mb-[8px] flex gap-y-[15px] flex-col items-center">
               <div class="flex items-center gap-[12px]">
                 <template v-if="selectedStyleInfo">
-                  <span class="text-[12px] text-white/45">已选：</span>
-                  <span class="text-[12px] font-medium text-[#18d2e5]">{{
+                  <span class="self-end text-xs text-white/45">已选：</span>
+                  <span class="text-sm font-medium text-[#18d2e5]">{{
                     selectedStyleInfo.title
                   }}</span>
                   <button
                     type="button"
-                    class="border-0 bg-transparent p-0 text-[12px] text-white/32 hover:text-white/64"
+                    class="border-0 bg-transparent p-0 text-sm text-white/32 hover:text-white/64"
                     @click="cancelSelection"
                   >
                     <i class="i-carbon-close text-[#18d2e5] text-[16px]"></i>
@@ -574,7 +569,7 @@ function cancelSelection() {
                   </div> -->
                   <div class="h-full flex justify-center items-center">
                     <div
-                      class="text-[12px] text-center font-extrabold text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
+                      class="text-sm text-center font-extrabold text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
                     >
                       {{ item.title }}
                     </div>
@@ -588,7 +583,9 @@ function cancelSelection() {
         <div
           class="flex items-center justify-between border-t border-white/8 bg-[#090a0c] px-[12px] py-[10px]"
         >
-          <div class="flex items-center gap-[6px] text-[12px] text-white/48">
+          <div
+            class="flex items-center gap-[6px] self-end text-xs text-white/48"
+          >
             <span>消耗算力：</span>
             <i class="i-carbon-currency text-[#ffd24c] text-[14px]"></i>
             <span class="font-medium text-[#ffd24c]">{{ totalPower }}</span>
@@ -606,7 +603,7 @@ function cancelSelection() {
             <n-button
               v-if="currentStep > 1"
               size="small"
-              class="!h-[30px] !rounded-[4px] !border-white/12 !bg-transparent !px-[16px] !text-[12px] !font-medium !text-white/86"
+              class="!h-[30px] !rounded-[4px] !border-white/12 !bg-transparent !px-[16px] !text-sm !font-medium !text-white/86"
               @click="goPrevStep"
             >
               上一步
@@ -615,7 +612,7 @@ function cancelSelection() {
             <n-button
               :type="currentStep === 3 ? 'success' : 'primary'"
               size="small"
-              class="!h-[30px] !rounded-[4px] !border-0 !px-[16px] !text-[12px] !font-medium"
+              class="!h-[30px] !rounded-[4px] !border-0 !px-[16px] !text-sm !font-medium"
               :class="currentStep === 3 ? '!bg-[#4dd865]' : '!bg-[#18d2e5]'"
               @click="currentStep === 3 ? null : goNextStep()"
             >
@@ -636,7 +633,7 @@ function cancelSelection() {
         class="mx-auto mt-[80px] w-[min(620px,calc(100vw-40px))] rounded-[8px] bg-[#07080a] px-[20px] pb-[18px] pt-[18px] text-white shadow-[0_18px_60px_rgba(0,0,0,0.5)]"
       >
         <div class="mb-[18px] flex items-start justify-between">
-          <div class="text-[15px] font-semibold tracking-[0.1px] text-white/96">
+          <div class="text-sm font-semibold tracking-[0.1px] text-white/96">
             选择音色
           </div>
           <button
@@ -650,14 +647,14 @@ function cancelSelection() {
 
         <div class="space-y-[14px]">
           <div class="flex items-center gap-[12px]">
-            <div class="w-[74px] text-[13px] font-medium text-white/72">
+            <div class="w-[74px] text-sm font-medium text-white/72">
               口播音色：
             </div>
             <n-select
               v-model:value="selectedVoiceTone"
               :options="voiceToneOptions"
               size="medium"
-              class="max-w-[430px] flex-1 [&_.n-base-selection]:!h-[40px] [&_.n-base-selection]:!rounded-[6px] [&_.n-base-selection]:!border-white/25 [&_.n-base-selection]:!bg-[#101113] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[40px] [&_.n-base-selection-label]:!text-[13px] [&_.n-base-selection__render-label]:!text-white/86"
+              class="max-w-[430px] flex-1 [&_.n-base-selection]:!h-[40px] [&_.n-base-selection]:!rounded-[6px] [&_.n-base-selection]:!border-white/25 [&_.n-base-selection]:!bg-[#101113] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[40px] [&_.n-base-selection-label]:!text-sm [&_.n-base-selection__render-label]:!text-white/86"
             />
             <button
               type="button"
@@ -668,14 +665,14 @@ function cancelSelection() {
           </div>
 
           <div class="flex items-center gap-[12px]">
-            <div class="w-[74px] text-[13px] font-medium text-white/72">
+            <div class="w-[74px] text-sm font-medium text-white/72">
               语调风格：
             </div>
             <n-select
               v-model:value="selectedVoiceStyle"
               :options="voiceStyleOptions"
               size="medium"
-              class="max-w-[430px] flex-1 [&_.n-base-selection]:!h-[40px] [&_.n-base-selection]:!rounded-[6px] [&_.n-base-selection]:!border-white/25 [&_.n-base-selection]:!bg-[#101113] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[40px] [&_.n-base-selection-label]:!text-[13px] [&_.n-base-selection__render-label]:!text-white/86"
+              class="max-w-[430px] flex-1 [&_.n-base-selection]:!h-[40px] [&_.n-base-selection]:!rounded-[6px] [&_.n-base-selection]:!border-white/25 [&_.n-base-selection]:!bg-[#101113] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[40px] [&_.n-base-selection-label]:!text-sm [&_.n-base-selection__render-label]:!text-white/86"
             />
           </div>
         </div>
@@ -684,7 +681,7 @@ function cancelSelection() {
           <n-button
             ghost
             size="medium"
-            class="!h-[38px] !w-[76px] !rounded-[6px] !border-white/30 !bg-transparent !text-[13px] !font-semibold !text-white/86"
+            class="!h-[38px] !w-[76px] !rounded-[6px] !border-white/30 !bg-transparent !text-sm !font-semibold !text-white/86"
             @click="closeVoiceModal"
           >
             取消
@@ -692,7 +689,7 @@ function cancelSelection() {
           <n-button
             type="primary"
             size="medium"
-            class="!h-[38px] !w-[76px] !rounded-[6px] !border-0 !bg-[#18d2e5] !text-[13px] !font-semibold"
+            class="!h-[38px] !w-[76px] !rounded-[6px] !border-0 !bg-[#18d2e5] !text-sm !font-semibold"
             @click="confirmVoiceModal"
           >
             确定

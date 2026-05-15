@@ -11,20 +11,18 @@ const resolution = ref('480p')
 <template>
   <div class="min-h-[500px] h-full bg-[#060709] p-[20px] text-white">
     <div class="flex h-full overflow-hidden border border-white/8 bg-[#0b0d10]">
-      <div
-        class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[300px_300px_minmax(0,1fr)]"
-      >
+      <div class="flex w-full grid-cols-1 gap-x-[15px]">
         <section
-          class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
+          class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r min-w-[400px]"
         >
           <div
-            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
           >
             照片数字人
           </div>
           <div class="px-3 py-3">
             <n-radio-group v-model:value="imageSource" size="small">
-              <div class="flex items-center gap-5 text-[12px]">
+              <div class="flex items-center gap-5 text-sm">
                 <n-radio value="local">本地上传</n-radio>
                 <n-radio value="cloud">云盘选择</n-radio>
               </div>
@@ -41,12 +39,12 @@ const resolution = ref('480p')
                   :component="CloudUpload"
                   class="text-white/70"
                 />
-                <div class="mt-3 text-[11px] text-white/55">
+                <div class="mt-3 text-sm text-white/55">
                   Drop file here or
                   <span class="text-[#16d4e4]">click to upload</span>
                 </div>
               </div>
-              <div class="pt-3 text-[11px] text-white/38">
+              <div class="pt-3 text-xs text-white/38">
                 JPG、PNG、JPEG、WEBP文件，30Mb以内
               </div>
             </div>
@@ -54,14 +52,14 @@ const resolution = ref('480p')
         </section>
 
         <section
-          class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
+          class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r min-w-[400px]"
         >
           <div
-            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
           >
             口播语音
           </div>
-          <div class="px-3 py-3 text-[11px] text-white/48">
+          <div class="px-3 py-3 text-sm text-white/48">
             <div class="mb-4 flex items-center gap-3">
               <span class="shrink-0">视频分辨率:</span>
               <div
@@ -69,7 +67,7 @@ const resolution = ref('480p')
               >
                 <button
                   type="button"
-                  class="h-[24px] min-w-[48px] border-0 px-3 text-[11px] transition-colors"
+                  class="h-[24px] min-w-[48px] border-0 px-3 text-sm transition-colors"
                   :class="
                     resolution === '480p'
                       ? 'bg-[#18d2e5] text-white'
@@ -81,7 +79,7 @@ const resolution = ref('480p')
                 </button>
                 <button
                   type="button"
-                  class="h-[24px] min-w-[48px] border-0 px-3 text-[11px] transition-colors"
+                  class="h-[24px] min-w-[48px] border-0 px-3 text-sm transition-colors"
                   :class="
                     resolution === '720p'
                       ? 'bg-[#18d2e5] text-white'
@@ -95,7 +93,7 @@ const resolution = ref('480p')
             </div>
 
             <n-radio-group v-model:value="audioSource" size="small">
-              <div class="flex items-center gap-5 text-[12px]">
+              <div class="flex items-center gap-5 text-sm">
                 <n-radio value="local">本地上传</n-radio>
                 <n-radio value="cloud">云盘选择</n-radio>
               </div>
@@ -112,12 +110,12 @@ const resolution = ref('480p')
                   :component="CloudUpload"
                   class="text-white/70"
                 />
-                <div class="mt-3 text-[11px] text-white/55">
+                <div class="mt-3 text-sm text-white/55">
                   Drop file here or
                   <span class="text-[#16d4e4]">click to upload</span>
                 </div>
               </div>
-              <div class="pt-3 text-[11px] text-white/38">
+              <div class="pt-3 text-xs text-white/38">
                 mp3/wav/flac 文件，30Mb以内
               </div>
             </div>
@@ -132,7 +130,7 @@ const resolution = ref('480p')
               <n-button
                 type="warning"
                 size="small"
-                class="!h-[28px] !px-3 !rounded-[4px] !text-[12px]"
+                class="!h-[28px] !px-3 !rounded-[4px] !text-sm"
               >
                 后台执行
               </n-button>
@@ -140,7 +138,7 @@ const resolution = ref('480p')
           </div>
         </section>
 
-        <section class="relative flex min-h-[320px] flex-col">
+        <section class="relative flex min-h-[320px] flex-col min-w-[400px]">
           <div class="flex flex-1 items-center justify-center">
             <div class="flex flex-col items-center">
               <div class="relative h-[120px] w-[120px]">
@@ -154,7 +152,7 @@ const resolution = ref('480p')
                   class="absolute left-[82px] top-[26px] h-[22px] w-[22px] rounded-full bg-[#26735c]"
                 />
               </div>
-              <div class="-mt-1 text-[12px] text-white/34">AIKC</div>
+              <div class="-mt-1 text-sm text-white/34">AIKC</div>
             </div>
           </div>
         </section>

@@ -62,19 +62,19 @@ function toggleCharacter(index) {
         class="grid w-full grid-cols-1 gap-x-[15px] sm:grid-cols-[400px_400px_minmax(0,1fr)]"
       >
         <section
-          class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
+          class="min-w-[400px] border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
         >
           <div
-            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
           >
             参考图片
           </div>
           <div class="px-3 py-3">
-            <div class="mb-2 text-[10px] text-[#f4b13d]">
+            <div class="mb-2 text-sm text-[#f4b13d]">
               特别注意：不允许上传包含人物的照片，否则有可能被封号！！！
             </div>
             <n-radio-group v-model:value="imageSource" size="small">
-              <div class="flex items-center gap-5 text-[12px]">
+              <div class="flex items-center gap-5 text-sm">
                 <n-radio value="local">本地上传</n-radio>
                 <n-radio value="cloud">云盘选择</n-radio>
               </div>
@@ -91,12 +91,12 @@ function toggleCharacter(index) {
                   :component="CloudUpload"
                   class="text-white/70"
                 />
-                <div class="mt-3 text-[11px] text-white/55">
+                <div class="mt-3 text-sm text-white/55">
                   Drop file here or
                   <span class="text-[#16d4e4]">click to upload</span>
                 </div>
               </div>
-              <div class="pt-3 text-[11px] text-white/38">
+              <div class="pt-3 text-xs text-white/38">
                 JPG、PNG、JPEG、WEBP文件，30Mb以内
               </div>
             </div>
@@ -104,14 +104,14 @@ function toggleCharacter(index) {
         </section>
 
         <section
-          class="border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
+          class="min-w-[400px] border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
         >
           <div
-            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
           >
             视频设置
           </div>
-          <div class="px-3 py-3 text-[11px] text-white/48">
+          <div class="px-3 py-3 text-sm text-white/48">
             <div class="space-y-4">
               <div class="flex items-center gap-3">
                 <span class="w-[62px] shrink-0">选择模型:</span>
@@ -133,12 +133,12 @@ function toggleCharacter(index) {
                   <n-radio-button
                     value="10s"
                     label="10秒"
-                    class="!bg-transparent !text-[11px] !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    class="!bg-transparent !text-sm !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
                   />
                   <n-radio-button
                     value="15s"
                     label="15秒"
-                    class="!bg-transparent !text-[11px] !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    class="!bg-transparent !text-sm !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
                   />
                 </n-radio-group>
               </div>
@@ -160,7 +160,7 @@ function toggleCharacter(index) {
                     :key="item.value"
                     :value="item.value"
                     :label="item.label"
-                    class="!bg-[#16181a] !text-[10px] !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    class="!bg-[#16181a] !text-sm !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
                   />
                 </n-radio-group>
               </div>
@@ -186,7 +186,7 @@ function toggleCharacter(index) {
                       class="h-full w-full object-cover"
                     />
                   </button>
-                  <div class="w-full text-[10px] text-white/34">
+                  <div class="w-full text-xs text-white/34">
                     {{
                       selectedCharacters.length > 0
                         ? `已选中 ${selectedCharacters.length} 个角色`
@@ -202,12 +202,12 @@ function toggleCharacter(index) {
                   v-model:value="prompt"
                   type="textarea"
                   :autosize="{ minRows: 11, maxRows: 11 }"
-                  class="text-[12px] flex-1 [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.55] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-white/28"
+                  class="text-sm flex-1 [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-sm [&_.n-input__textarea-el]:!leading-[1.55] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-sm [&_.n-input__placeholder]:!text-white/28"
                 />
               </div>
             </div>
 
-            <div class="mt-4 flex items-center gap-1.5 text-amber-400/95">
+            <div class="mt-4 flex items-center gap-1.5 text-xs text-amber-400/95">
               <span class="text-white/48">消耗算力：</span>
               <n-icon :size="14" :component="Currency" />
               <span class="font-medium">3800</span>
@@ -217,7 +217,7 @@ function toggleCharacter(index) {
               <n-button
                 type="warning"
                 size="small"
-                class="!h-[28px] !px-3 !rounded-[4px] !text-[12px]"
+                class="!h-[28px] !px-3 !rounded-[4px] !text-sm"
               >
                 后台执行
               </n-button>
@@ -239,7 +239,7 @@ function toggleCharacter(index) {
                   class="absolute left-[82px] top-[26px] h-[22px] w-[22px] rounded-full bg-[#26735c]"
                 />
               </div>
-              <div class="-mt-1 text-[12px] text-white/34">AIKC</div>
+              <div class="-mt-1 text-sm text-white/34">AIKC</div>
             </div>
           </div>
         </section>

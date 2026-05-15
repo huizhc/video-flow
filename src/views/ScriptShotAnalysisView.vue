@@ -9,18 +9,16 @@ const uploadSource = ref('local')
 <template>
   <div class="min-h-[500px] h-full bg-[#060709] p-3 text-white">
     <div class="overflow-hidden h-full border border-white/8 bg-[#0b0d10]">
-      <div
-        class="grid h-full grid-cols-1 gap-x-[15px] lg:grid-cols-[275px_minmax(0,1fr)]"
-      >
-        <section class="bg-[#232323]">
+      <div class="flex h-full gap-x-[15px]">
+        <section class="bg-[#232323] min-w-[400px]">
           <div
-            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
           >
             提取视频文案分析镜头
           </div>
           <div class="px-3 py-3">
             <n-radio-group v-model:value="uploadSource" size="small">
-              <div class="flex items-center gap-5 text-[12px]">
+              <div class="flex items-center gap-5 text-sm">
                 <n-radio value="local">本地上传</n-radio>
                 <n-radio value="cloud">云盘选择</n-radio>
               </div>
@@ -37,21 +35,19 @@ const uploadSource = ref('local')
                   :component="CloudUpload"
                   class="text-white/70"
                 />
-                <div class="mt-3 text-[11px] text-white/55">
+                <div class="mt-3 text-sm text-white/55">
                   Drop file here or
                   <span class="text-[#16d4e4]">click to upload</span>
                 </div>
               </div>
-              <div class="pt-3 text-[11px] text-white/38">
-                mp4/wav 文件，5G以内
-              </div>
+              <div class="pt-3 text-xs text-white/38">mp4/wav 文件，5G以内</div>
             </div>
           </div>
         </section>
 
-        <section class="bg-[#232323] flex flex-col">
+        <section class="bg-[#232323] flex-1 flex flex-col min-w-[400px]">
           <div
-            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+            class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
           >
             结果
           </div>

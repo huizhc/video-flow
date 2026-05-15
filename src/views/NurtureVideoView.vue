@@ -216,7 +216,7 @@ function handleAvatarClick(index, type) {
         class="flex-1 overflow-hidden border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
       >
         <div
-          class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
         >
           视频模板（已选：1个）
         </div>
@@ -250,7 +250,7 @@ function handleAvatarClick(index, type) {
                     :component="CloudUpload"
                     class="text-white/55"
                   />
-                  <div class="mt-3 text-[11px] text-white/28">上传</div>
+                  <div class="mt-3 text-sm text-white/28">上传</div>
                 </div>
               </template>
               <template v-else>
@@ -274,7 +274,7 @@ function handleAvatarClick(index, type) {
                     class="text-white/90 drop-shadow-md"
                   />
                 </div>
-                <div class="absolute bottom-2 left-2 text-[10px] text-white/76">
+                <div class="absolute bottom-2 left-2 text-xs text-white/76">
                   {{ item.label }}
                 </div>
               </template>
@@ -284,10 +284,10 @@ function handleAvatarClick(index, type) {
       </div>
 
       <section
-        class="grid min-h-0 w-[500px] grid-rows-[auto_1fr_120px] grid-cols-1 bg-[#232323]"
+        class="grid min-h-0 min-w-[400px] w-[500px] grid-rows-[auto_1fr_120px] grid-cols-1 bg-[#232323]"
       >
         <div
-          class="border-b h-full border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-[12px] font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
+          class="border-b h-full border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
         >
           人像及其他参数设置（已选：{{ selectedAvatarCount }}个）
         </div>
@@ -320,7 +320,7 @@ function handleAvatarClick(index, type) {
                     :component="CloudUpload"
                     class="text-white/55"
                   />
-                  <div class="mt-2 text-[10px] text-white/28">上传</div>
+                  <div class="mt-2 text-sm text-white/28">上传</div>
                 </div>
               </template>
               <template v-else>
@@ -334,7 +334,7 @@ function handleAvatarClick(index, type) {
                 <div
                   class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.14)_0%,rgba(0,0,0,0.38)_100%)]"
                 />
-                <div class="absolute bottom-2 left-2 text-[10px] text-white/76">
+                <div class="absolute bottom-2 left-2 text-xs text-white/76">
                   {{ item.label }}
                 </div>
               </template>
@@ -343,14 +343,14 @@ function handleAvatarClick(index, type) {
         </n-scrollbar>
 
         <div
-          class="mt-auto h-full border-t border-white/8 px-3 py-4 text-[11px] text-white/48"
+          class="mt-auto h-full border-t border-white/8 px-3 py-4 text-sm text-white/48"
         >
-          <div class="text-[12px] font-medium text-[#f4b13d]">
+          <div class="text-sm font-medium text-[#f4b13d]">
             总数量：{{ selectedAvatarCount }}
             <span class="text-white/42">（模板数量 x 人像数量）</span>
           </div>
 
-          <div class="mt-3 flex items-center gap-1.5 text-amber-400/95">
+          <div class="mt-3 flex items-center gap-1.5 text-xs text-amber-400/95">
             <span class="text-white/48">消耗算力：</span>
             <n-icon :size="14" :component="Currency" />
             <span class="font-medium">50</span>
@@ -368,7 +368,7 @@ function handleAvatarClick(index, type) {
             <n-button
               type="warning"
               size="small"
-              class="!h-[28px] !px-3 !rounded-[4px] !text-[12px]"
+              class="!h-[28px] !px-3 !rounded-[4px] !text-sm"
             >
               后台执行
             </n-button>
