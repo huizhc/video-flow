@@ -54,7 +54,7 @@ const onFileChange = (e) => {
           </n-radio-group>
 
           <div
-            class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2"
+            class=" rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2"
             @click="triggerUpload"
           >
             <div
