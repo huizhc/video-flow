@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import UploadArea from '@/components/UploadArea.vue'
 import {
   NButton,
   NIcon,
@@ -9,7 +10,7 @@ import {
   NSelect,
   NRadioButton,
 } from 'naive-ui'
-import { CloudUpload, Currency } from '@vicons/carbon'
+import { Currency } from '@vicons/carbon'
 
 const imageSource = ref('local')
 const model = ref('runninghub-normal')
@@ -73,33 +74,7 @@ function toggleCharacter(index) {
             <div class="mb-2 text-sm text-[#f4b13d]">
               特别注意：不允许上传包含人物的照片，否则有可能被封号！！！
             </div>
-            <n-radio-group v-model:value="imageSource" size="small">
-              <div class="flex items-center gap-5 text-sm">
-                <n-radio value="local">本地上传</n-radio>
-                <n-radio value="cloud">云盘选择</n-radio>
-              </div>
-            </n-radio-group>
-
-            <div
-              class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2"
-            >
-              <div
-                class="flex min-h-[128px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center"
-              >
-                <n-icon
-                  :size="34"
-                  :component="CloudUpload"
-                  class="text-white/70"
-                />
-                <div class="mt-3 text-sm text-white/55">
-                  Drop file here or
-                  <span class="text-[#16d4e4]">click to upload</span>
-                </div>
-              </div>
-              <div class="pt-3 text-xs text-white/38">
-                JPG、PNG、JPEG、WEBP文件，30Mb以内
-              </div>
-            </div>
+            <UploadArea accept="image/*" description="JPG、PNG、JPEG、WEBP文件，30Mb以内" />
           </div>
         </section>
 

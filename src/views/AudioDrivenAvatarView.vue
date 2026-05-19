@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { NButton, NIcon, NRadio, NRadioGroup } from 'naive-ui'
-import { CloudUpload, Currency } from '@vicons/carbon'
+import { Currency } from '@vicons/carbon'
+import UploadArea from '@/components/UploadArea.vue'
 
 const imageSource = ref('local')
 const audioSource = ref('local')
@@ -21,33 +22,7 @@ const resolution = ref('480p')
             照片数字人
           </div>
           <div class="px-3 py-3">
-            <n-radio-group v-model:value="imageSource" size="small">
-              <div class="flex items-center gap-5 text-sm">
-                <n-radio value="local">本地上传</n-radio>
-                <n-radio value="cloud">云盘选择</n-radio>
-              </div>
-            </n-radio-group>
-
-            <div
-              class="mt-4 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2"
-            >
-              <div
-                class="flex min-h-[228px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center"
-              >
-                <n-icon
-                  :size="34"
-                  :component="CloudUpload"
-                  class="text-white/70"
-                />
-                <div class="mt-3 text-sm text-white/55">
-                  Drop file here or
-                  <span class="text-[#16d4e4]">click to upload</span>
-                </div>
-              </div>
-              <div class="pt-3 text-xs text-white/38">
-                JPG、PNG、JPEG、WEBP文件，30Mb以内
-              </div>
-            </div>
+            <UploadArea accept="image/*" description="JPG、PNG、JPEG、WEBP文件，30Mb以内" />
           </div>
         </section>
 
@@ -92,33 +67,7 @@ const resolution = ref('480p')
               </div>
             </div>
 
-            <n-radio-group v-model:value="audioSource" size="small">
-              <div class="flex items-center gap-5 text-sm">
-                <n-radio value="local">本地上传</n-radio>
-                <n-radio value="cloud">云盘选择</n-radio>
-              </div>
-            </n-radio-group>
-
-            <div
-              class="mt-3 rounded-[2px] border border-white/6 bg-[#1f1f1f] p-2"
-            >
-              <div
-                class="flex min-h-[102px] flex-col items-center justify-center rounded-[2px] border border-white/6 border-dashed bg-[#202020] text-center"
-              >
-                <n-icon
-                  :size="28"
-                  :component="CloudUpload"
-                  class="text-white/70"
-                />
-                <div class="mt-3 text-sm text-white/55">
-                  Drop file here or
-                  <span class="text-[#16d4e4]">click to upload</span>
-                </div>
-              </div>
-              <div class="pt-3 text-xs text-white/38">
-                mp3/wav/flac 文件，30Mb以内
-              </div>
-            </div>
+            <UploadArea accept="audio/*" description="mp3/wav/flac 文件，30Mb以内" />
 
             <div class="mt-4 flex items-center gap-1.5 text-amber-400/95">
               <span class="text-white/48">消耗算力：</span>
