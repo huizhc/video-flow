@@ -58,6 +58,20 @@ const themeOverrides = {
     buttonBoxShadowFocus: 'none',
     buttonBoxShadowHover: 'none',
   },
+  Input: {
+    borderRadius: '4px',
+    heightMedium: '34px',
+    fontSizeMedium: '14px',
+    textColor: '#d1d5db',
+    placeholderColor: '#6b7280',
+    color: '#1a1c1e',
+    border: '1px solid rgba(255,255,255,0.12)',
+    borderHover: '1px solid rgba(79,209,197,0.4)',
+    borderFocus: '1px solid #4fd1c5',
+    boxShadowFocus: '0 0 0 2px rgba(79,209,197,0.2)',
+    caretColor: '#4fd1c5',
+    lineHeight: '1.6',
+  },
 }
 </script>
 
