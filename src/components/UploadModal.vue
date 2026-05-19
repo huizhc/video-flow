@@ -21,13 +21,17 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:show', 'close'])
+const emit = defineEmits(['update:show', 'close', 'change'])
 
 const internalUploadMode = ref(props.uploadMode)
 
 function handleClose() {
   emit('update:show', false)
   emit('close')
+}
+
+function handleChange(data) {
+  emit('change', data)
 }
 </script>
 
@@ -88,7 +92,7 @@ function handleClose() {
           </label>
         </div>
 
-        <n-upload multiple directory-dnd :max="max" :accept="accept">
+        <n-upload multiple directory-dnd :max="max" :accept="accept" @change="handleChange">
           <n-upload-dragger
             class="!border-dashed !border-white/10 !bg-[#17181a] hover:!border-[#18d2e5]/40"
           >
