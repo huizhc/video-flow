@@ -47,6 +47,17 @@ const themeOverrides = {
     color: '#1a1c1e',
     borderRadius: '4px',
   },
+  Radio: {
+    buttonColor: 'transparent',
+    buttonColorActive: '#57d7ea',
+    buttonTextColor: '#fff',
+    buttonTextColorHover: '#57d7ea',
+    buttonTextColorActive: '#fff',
+    buttonBorderColorActive: '#57d7ea',
+    buttonBoxShadow: 'none',
+    buttonBoxShadowFocus: 'none',
+    buttonBoxShadowHover: 'none',
+  },
 }
 </script>
 
