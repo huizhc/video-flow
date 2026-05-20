@@ -96,7 +96,7 @@ export const toolsCatalog = [
     description: '多渠道建模、生成与处理，提升视频创作效率',
     categories: ['video', 'text'],
     previewImage:
-      'https://images.unsplash.com/photo-1516321310764-8d1b15c4cb8d?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=80',
   },
   {
     id: '16',
