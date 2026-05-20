@@ -27,7 +27,10 @@ const prompt = ref('')
             分身照片
           </div>
           <div class="px-3 py-3">
-            <UploadArea accept="image/*" description="JPG、PNG、JPEG、WEBP文件，30Mb以内" />
+            <UploadArea
+              accept="image/*"
+              description="JPG、PNG、JPEG、WEBP文件，30Mb以内"
+            />
           </div>
 
           <div
@@ -36,7 +39,10 @@ const prompt = ref('')
             语音样本
           </div>
           <div class="px-3 py-3">
-            <UploadArea accept="audio/*" description="mp3/wav/flac 文件，30Mb以内" />
+            <UploadArea
+              accept="audio/*"
+              description="mp3/wav/flac 文件，30Mb以内"
+            />
           </div>
         </section>
 
@@ -51,105 +57,87 @@ const prompt = ref('')
           <div class="px-3 py-3 text-sm text-white/48">
             <div class="space-y-3">
               <div class="flex items-center gap-3">
-                <span class="w-[66px] shrink-0">视频方向:</span>
-                <div
+                <span class="w-[80px] shrink-0">视频方向:</span>
+                <n-radio-group
+                  v-model:value="videoRatio"
+                  size="small"
                   class="inline-flex overflow-hidden rounded-[2px] border border-white/10 bg-[#16181a]"
                 >
-                  <button
-                    type="button"
-                    class="h-[24px] min-w-[46px] border-0 px-3 text-sm transition-colors"
-                    :class="
-                      videoRatio === 'vertical'
-                        ? 'bg-[#18d2e5] text-white'
-                        : 'bg-transparent text-white/56'
-                    "
-                    @click="videoRatio = 'vertical'"
+                  <n-radio-button
+                    value="vertical"
+                    class="h-[24px] min-w-[46px] border-0 px-3 text-sm text-center"
+                    >竖屏</n-radio-button
                   >
-                    竖屏
-                  </button>
-                  <button
-                    type="button"
-                    class="h-[24px] min-w-[46px] border-0 px-3 text-sm transition-colors"
-                    :class="
-                      videoRatio === 'landscape'
-                        ? 'bg-[#18d2e5] text-white'
-                        : 'bg-transparent text-white/56'
-                    "
-                    @click="videoRatio = 'landscape'"
+                  <n-radio-button
+                    value="landscape"
+                    class="h-[24px] min-w-[46px] border-0 px-3 text-sm text-center"
+                    >横屏</n-radio-button
                   >
-                    横屏
-                  </button>
-                </div>
+                </n-radio-group>
               </div>
 
               <div class="flex items-center gap-3">
-                <span class="w-[66px] shrink-0">视频分辨率:</span>
-                <div
+                <span class="w-[80px] shrink-0">视频分辨率:</span>
+                <n-radio-group
+                  v-model:value="resolution"
+                  size="small"
                   class="inline-flex overflow-hidden rounded-[2px] border border-white/10 bg-[#16181a]"
                 >
-                  <button
-                    type="button"
-                    class="h-[24px] min-w-[46px] border-0 px-3 text-sm transition-colors"
-                    :class="
-                      resolution === '480p'
-                        ? 'bg-[#18d2e5] text-white'
-                        : 'bg-transparent text-white/56'
-                    "
-                    @click="resolution = '480p'"
+                  <n-radio-button
+                    value="480p"
+                    class="h-[24px] min-w-[46px] border-0 px-3 text-sm text-center"
+                    >480P</n-radio-button
                   >
-                    480P
-                  </button>
-                  <button
-                    type="button"
-                    class="h-[24px] min-w-[46px] border-0 px-3 text-sm transition-colors"
-                    :class="
-                      resolution === '720p'
-                        ? 'bg-[#18d2e5] text-white'
-                        : 'bg-transparent text-white/56'
-                    "
-                    @click="resolution = '720p'"
+                  <n-radio-button
+                    value="720p"
+                    class="h-[24px] min-w-[46px] border-0 px-3 text-sm text-center"
+                    >720P</n-radio-button
                   >
-                    720P
-                  </button>
-                </div>
+                </n-radio-group>
               </div>
 
-              <div class="pt-1 text-sm text-[#f4b13d]">
+              <div class="pt-1 text-xs text-[#f4b13d]">
                 注意：目前只支持中文和英文，输入其他语言会出现异常
               </div>
 
-              <div>
-                <div class="mb-2 text-sm text-white/52">请输入口播内容</div>
+              <div class="flex flex-col">
                 <n-input
                   v-model:value="script"
                   type="textarea"
                   :autosize="{ minRows: 6, maxRows: 6 }"
-                  placeholder="例如：大家好，我是小明，今天天气不错，很高兴见到大家。"
+                  :placeholder="`请输入口播内容\n例如：大家好，我是小明，今天天气不错，很高兴见到大家。`"
                   class="text-sm [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-sm [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-sm [&_.n-input__placeholder]:!text-white/28"
                 />
-                <div class="pt-2 text-left text-xs text-white/34">
+                <div class="pt-2 ml-auto text-left text-xs text-white/34">
                   输入字数：0
                 </div>
               </div>
 
               <div>
-                <div class="mb-2 text-sm text-white/52">
-                  (可选) 语气提示词
-                </div>
                 <n-input
                   v-model:value="prompt"
                   type="textarea"
                   :autosize="{ minRows: 5, maxRows: 5 }"
-                  placeholder="例如：请用温柔的语气说话。"
+                  :placeholder="`(可选) 语气提示词\n例如：请用温柔的语气说话。`"
                   class="text-sm [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-sm [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-sm [&_.n-input__placeholder]:!text-white/28"
                 />
               </div>
             </div>
 
-            <div class="mt-4 flex items-center gap-1.5 text-xs text-amber-400/95">
+            <div
+              class="mt-4 flex items-center gap-1.5 text-sm text-amber-400/95"
+            >
               <span class="text-white/48">消耗算力：</span>
               <n-icon :size="14" :component="Currency" />
               <span class="font-medium">1800</span>
+              <n-tooltip trigger="hover">
+                <template #trigger>
+                  <i
+                    class="i-mingcute-question-line text-sm text-white/48 cursor-pointer"
+                  ></i>
+                </template>
+                根据口播字数计算，每50字1800算力
+              </n-tooltip>
             </div>
 
             <div class="pt-4 flex justify-end">
