@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { NIcon, NRadio, NRadioGroup } from 'naive-ui'
+import { NButton, NCheckbox, NInput, NSelect } from 'naive-ui'
 import UploadArea from '@/components/UploadArea.vue'
 
 const uploadSource = ref('local')
@@ -52,7 +52,7 @@ function onVideoMetadata(e) {
           </div>
           <div class="px-3 py-3">
             <UploadArea
-              :accept="'video/*,audio/*'"
+              accept=".mp4,.wav"
               description="mp4/wav 文件，5G以内"
               :hasFile="hasFile"
               @file-change="onFileChange"
@@ -70,41 +70,77 @@ function onVideoMetadata(e) {
                   </div>
 
                   <div class="flex items-center justify-between">
-                    <div class="text-sm">视频尺寸: {{ videoSize || '—' }}</div>
-                    <button type="button" class="text-sm text-white bg-[#f87171] px-3 py-1 rounded" @click="removeFile">移除视频</button>
+                    <div class="text-xs text-white/48">
+                      视频尺寸: {{ videoSize || '—' }}
+                    </div>
+                    <n-button
+                      class="text-#fff!"
+                      size="small"
+                      type="error"
+                      @click="removeFile"
+                      >移除视频</n-button
+                    >
                   </div>
 
-                  <div class="space-y-2">
-                    <label class="flex items-center gap-2 text-sm">
-                      <input type="checkbox" v-model="translate" />
-                      <span>翻译</span>
-                    </label>
+                  <div
+                    class="flex flex-col space-y-3 [&>div>span]:text-white/48 [&>div>span]:w-[80px] [&>div>span]:min-w-[80px]"
+                  >
+                    <div class="flex items-center gap-2 text-sm">
+                      <span>是否翻译：</span>
+                      <n-checkbox v-model:value="translate"> 翻译 </n-checkbox>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                      <span>目标语种：</span>
+                      <n-select
+                        v-model:value="targetLang"
+                        :options="[
+                          { label: '英文', value: '英文' },
+                          { label: '中文', value: '中文' },
+                          { label: '日文', value: '日文' },
+                        ]"
+                        size="small"
+                        class="min-w-[140px]"
+                      />
+                    </div>
+
+                    <div class="flex items-center gap-2 text-sm">
+                      <span>调整人群：</span>
+                      <n-checkbox v-model:value="adjust"> 调整 </n-checkbox>
+                    </div>
+
+                    <div class="flex items-center gap-2 text-sm">
+                      <span class="text-sm mb-2">人群描述：</span>
+                      <n-input
+                        v-model:value="audienceDesc"
+                        type="textarea"
+                        rows="3"
+                        placeholder="请输入人群描述"
+                        size="small"
+                        class="w-full rounded border border-white/10 bg-[#141414] text-sm text-white"
+                      />
+                    </div>
 
                     <div class="flex items-center gap-3">
-                      <div class="text-sm">目标语种：</div>
-                      <select v-model="targetLang" class="text-sm bg-transparent border border-white/10 rounded px-2 py-1">
-                        <option>英文</option>
-                        <option>中文</option>
-                        <option>日文</option>
-                      </select>
-                    </div>
-
-                    <label class="flex items-center gap-2 text-sm">
-                      <input type="checkbox" v-model="adjust" />
-                      <span>调整</span>
-                    </label>
-
-                    <div>
-                      <div class="text-sm">人群描述：</div>
-                      <textarea v-model="audienceDesc" rows="3" class="w-full rounded border border-white/10 bg-transparent text-sm p-2"></textarea>
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                      <div class="text-sm">消耗算力： <span class="text-sm">💰 {{ cost }}</span></div>
-                      <div class="flex items-center gap-3">
-                        <button class="text-sm bg-[#6b7280] text-white px-3 py-1 rounded">提取音频</button>
-                        <button class="text-sm bg-[#06b6d4] text-white px-3 py-1 rounded">分析视频</button>
+                      <span class="text-sm"> 消耗算力： </span>
+                      <div class="flex items-center">
+                        <i
+                          class="i-carbon-currency text-[13px] text-[#ffd24c]"
+                        ></i>
+                        &nbsp;
+                        <p class="text-sm mr-[10px]">{{ cost }}</p>
+                        <n-tooltip trigger="hover">
+                          <template #trigger>
+                            <i
+                              class="i-mingcute-question-line text-sm text-white/48 cursor-pointer"
+                            ></i>
+                          </template>
+                          根据上传视频时长计算，提取音频每30秒30算力，分析视频每30秒300算力
+                        </n-tooltip>
                       </div>
+                    </div>
+                    <div class="inline-flex gap-3 ml-auto">
+                      <n-button size="small" type="default">提取音频</n-button>
+                      <n-button size="small" type="primary">分析视频</n-button>
                     </div>
                   </div>
                 </div>
