@@ -64,7 +64,7 @@ const motionOptions = [
         class="grid h-full grid-cols-1 sm:grid-cols-[minmax(400px,500px)_minmax(0,1fr)]"
       >
         <section
-          class="min-w-[400px] border-b border-white/8 bg-[linear-gradient(180deg,#1f1f20_0%,#1a1a1b_100%)] min-[1200px]:border-b-0 min-[1200px]:border-r"
+          class="min-w-[600px] border-b border-white/8 bg-[linear-gradient(180deg,#1f1f20_0%,#1a1a1b_100%)] min-[1200px]:border-b-0 min-[1200px]:border-r"
         >
           <div
             class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-[14px] pb-[13px] pt-[14px] text-sm text-white/82"
@@ -72,9 +72,9 @@ const motionOptions = [
             Veo 3.1 视频参数
           </div>
 
-          <div class="p-[14px]">
+          <div class="p-[14px] flex flex-col">
             <div class="mb-[12px] flex items-center gap-[10px]">
-              <div class="w-[58px] shrink-0 pt-[2px] text-sm text-white/52">
+              <div class="w-[80px] shrink-0 pt-[2px] text-sm text-white/52">
                 模型版本:
               </div>
               <div class="min-w-0 flex-1">
@@ -88,7 +88,7 @@ const motionOptions = [
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
-              <div class="w-[58px] shrink-0 pt-[2px] text-sm text-white/52">
+              <div class="w-[80px] shrink-0 pt-[2px] text-sm text-white/52">
                 生成方式:
               </div>
               <div class="min-w-0 flex-1">
@@ -101,7 +101,6 @@ const motionOptions = [
                     v-for="option in generationModes"
                     :key="option.value"
                     :value="option.value"
-                    class="!bg-[#151618] !text-sm !text-white/72 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden [&_.n-radio-button__background]:!hidden [&_.n-radio-button__content]:!px-[10px] [&_.n-radio-button__content]:!h-full [&_.n-radio-button__content]:!flex [&_.n-radio-button__content]:!items-center"
                   >
                     {{ option.label }}
                   </n-radio-button>
@@ -110,7 +109,7 @@ const motionOptions = [
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
-              <div class="w-[58px] shrink-0 pt-[2px] text-sm text-white/52">
+              <div class="w-[80px] shrink-0 pt-[2px] text-sm text-white/52">
                 视频时长:
               </div>
               <div class="min-w-0 flex-1">
@@ -123,7 +122,6 @@ const motionOptions = [
                     v-for="option in durationOptions"
                     :key="option.value"
                     :value="option.value"
-                    class="!bg-[#151618] !text-sm !text-white/72 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden [&_.n-radio-button__background]:!hidden [&_.n-radio-button__content]:!px-[12px] [&_.n-radio-button__content]:!h-full [&_.n-radio-button__content]:!flex [&_.n-radio-button__content]:!items-center"
                   >
                     {{ option.label }}
                   </n-radio-button>
@@ -132,7 +130,7 @@ const motionOptions = [
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
-              <div class="w-[58px] shrink-0 pt-[2px] text-sm text-white/52">
+              <div class="w-[80px] shrink-0 pt-[2px] text-sm text-white/52">
                 分辨率:
               </div>
               <div class="min-w-0 flex-1">
@@ -145,7 +143,6 @@ const motionOptions = [
                     v-for="option in resolutionOptions"
                     :key="option.value"
                     :value="option.value"
-                    class="!bg-[#151618] !text-sm !text-white/72 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden [&_.n-radio-button__background]:!hidden [&_.n-radio-button__content]:!px-[10px] [&_.n-radio-button__content]:!h-full [&_.n-radio-button__content]:!flex [&_.n-radio-button__content]:!items-center"
                   >
                     {{ option.label }}
                   </n-radio-button>
@@ -154,7 +151,7 @@ const motionOptions = [
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
-              <div class="w-[58px] shrink-0 pt-[2px] text-sm text-white/52">
+              <div class="w-[80px] shrink-0 pt-[2px] text-sm text-white/52">
                 宽高比例:
               </div>
               <div class="min-w-0 flex-1">
@@ -167,7 +164,6 @@ const motionOptions = [
                     v-for="option in ratioOptions"
                     :key="option.value"
                     :value="option.value"
-                    class="!bg-[#151618] !text-sm !text-white/72 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden [&_.n-radio-button__background]:!hidden [&_.n-radio-button__content]:!px-[10px] [&_.n-radio-button__content]:!h-full [&_.n-radio-button__content]:!flex [&_.n-radio-button__content]:!items-center"
                   >
                     {{ option.label }}
                   </n-radio-button>
@@ -176,7 +172,7 @@ const motionOptions = [
             </div>
 
             <div class="mb-[12px] flex items-center gap-[10px]">
-              <div class="w-[58px] shrink-0 pt-[2px] text-sm text-white/52">
+              <div class="w-[80px] shrink-0 pt-[2px] text-sm text-white/52">
                 随机种子:
               </div>
               <div class="min-w-0 flex-1 flex items-center gap-[6px]">
@@ -189,7 +185,6 @@ const motionOptions = [
                     v-for="option in motionOptions"
                     :key="option.value"
                     :value="option.value"
-                    class="!bg-[#151618] !text-sm !text-white/72 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden [&_.n-radio-button__background]:!hidden [&_.n-radio-button__content]:!px-[10px] [&_.n-radio-button__content]:!h-full [&_.n-radio-button__content]:!flex [&_.n-radio-button__content]:!items-center"
                   >
                     {{ option.label }}
                   </n-radio-button>
@@ -210,7 +205,7 @@ const motionOptions = [
             </div>
 
             <div class="mb-[12px] flex flex-col gap-[10px]">
-              <div class="w-[58px] shrink-0 pt-[2px] text-sm text-white/52">
+              <div class="w-[80px] shrink-0 pt-[2px] text-sm text-white/52">
                 提示词:
               </div>
               <div class="min-w-0 flex-1">
@@ -224,35 +219,29 @@ const motionOptions = [
               </div>
             </div>
 
-            <div class="mt-[12px] flex items-center justify-between gap-[10px]">
-              <div
-                class="flex flex-wrap items-center gap-[5px] text-xs text-white/48"
-              >
-                <span>消耗算力：</span>
-                <n-icon
-                  :size="14"
-                  class="text-[#ffd24c]"
-                  :component="Currency"
-                />
-                <span class="font-semibold text-[#ffd24c]">44800</span>
-                <n-tooltip trigger="hover">
-                  <template #trigger>
-                    <i
-                      class="i-mingcute-question-line text-white/48 cursor-pointer"
-                    ></i>
-                  </template>
-                  根据视频时长计算
-                </n-tooltip>
-              </div>
-
-              <n-button
-                type="warning"
-                size="small"
-                class="!h-[32px] !rounded-[4px] !px-4 !text-sm !font-medium"
-              >
-                后台执行
-              </n-button>
+            <div
+              class="flex mt-[12px] flex-wrap items-center gap-[5px] text-sm text-white/48"
+            >
+              <span>消耗算力：</span>
+              <n-icon :size="14" class="text-[#ffd24c]" :component="Currency" />
+              <span class="font-semibold text-[#ffd24c]">44800</span>
+              <n-tooltip trigger="hover">
+                <template #trigger>
+                  <i
+                    class="i-mingcute-question-line text-white/48 cursor-pointer"
+                  ></i>
+                </template>
+                根据视频时长计算
+              </n-tooltip>
             </div>
+
+            <n-button
+              type="warning"
+              size="small"
+              class="ml-auto !h-[32px] !rounded-[4px] !px-4 !text-sm !font-medium"
+            >
+              后台执行
+            </n-button>
           </div>
         </section>
 
