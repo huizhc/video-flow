@@ -109,9 +109,9 @@ export const toolsCatalog = [
   },
   {
     id: '17',
-    title: '养号视频',
+    title: '动作迁移',
     cost: 1000,
-    description: '快速生成多个养号视频，批量用于日常内容运营',
+    description: '保持人物动作不变，更换视频换场景',
     categories: ['video'],
     previewImage:
       'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=900&q=80',
