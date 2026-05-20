@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import UploadArea from '@/components/UploadArea.vue'
 import {
   NButton,
@@ -17,7 +17,8 @@ const model = ref('runninghub-normal')
 const duration = ref('10s')
 const direction = ref('vertical-720')
 const selectedCharacters = ref([])
-const prompt = ref(`请输入画面提示词，例如
+const prompt = ref('')
+const promptPlaceholder = `请输入画面提示词，例如
 镜头1（00:00-00:05）
 [主角动作]：模特微笑侧身与 SIMC（全保镜头）...
 [主体] 两道白发散在额前站立
@@ -25,11 +26,11 @@ const prompt = ref(`请输入画面提示词，例如
 [动作]
 - 左侧：旧式 ABF 刀割痕落在白发上一圈色晕变成一片亮斑
 - 右侧：SIMC 修护球环绕游走一圈色均匀，自然，颗粒感降低
-（如用 Sora，描述为：旧用户生理焕发淡灰反应，新附着特清爽流动）
+(如用 Sora，描述为：旧用户生理焕发淡灰反应，新附着特清爽流动）
 [镜头语言]
 - 跟随（Macro）展示细节
 - 分屏比对，效果清晰
-`)
+`
 
 const modelOptions = [
   { label: 'runninghub-normal', value: 'runninghub-normal' },
@@ -46,9 +47,23 @@ const characters = [
   'https://images.unsplash.com/photo-1546961329-78bef0414d7c?auto=format&fit=crop&w=120&q=80',
 ]
 
+const characterNames = ['雪梨', '可琳', '薇薇', '艾玛', '莉娜', '米娅', '诺拉']
+
+const maxSelected = 3
+
+const selectedLabel = computed(() => {
+  const len = selectedCharacters.value.length
+  if (len === 0) return '未选中角色'
+  const names = selectedCharacters.value
+    .slice(0, maxSelected)
+    .map((i) => characterNames[i] ?? `角色${i + 1}`)
+  return `已选择（${len}/${maxSelected}）： ${names.join('、')}`
+})
+
 function toggleCharacter(index) {
   const i = selectedCharacters.value.indexOf(index)
   if (i === -1) {
+    if (selectedCharacters.value.length >= maxSelected) return
     selectedCharacters.value.push(index)
   } else {
     selectedCharacters.value.splice(i, 1)
@@ -71,15 +86,18 @@ function toggleCharacter(index) {
             参考图片
           </div>
           <div class="px-3 py-3">
-            <div class="mb-2 text-sm text-[#f4b13d]">
+            <div class="mb-2 text-xs text-[#f4b13d]">
               特别注意：不允许上传包含人物的照片，否则有可能被封号！！！
             </div>
-            <UploadArea accept="image/*" description="JPG、PNG、JPEG、WEBP文件，30Mb以内" />
+            <UploadArea
+              accept="image/*"
+              description="JPG、PNG、JPEG、WEBP文件，30Mb以内"
+            />
           </div>
         </section>
 
         <section
-          class="min-w-[400px] border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
+          class="min-w-[500px] border-b border-white/8 bg-[#232323] xl:border-b-0 xl:border-r"
         >
           <div
             class="border-b border-white/8 bg-[linear-gradient(180deg,#3a3a3a_0%,#343434_100%)] px-3 py-3 text-sm font-medium text-white/78 shadow-[inset_0_-1px_0_rgba(255,255,255,0.04)]"
@@ -89,40 +107,37 @@ function toggleCharacter(index) {
           <div class="px-3 py-3 text-sm text-white/48">
             <div class="space-y-4">
               <div class="flex items-center gap-3">
-                <span class="w-[62px] shrink-0">选择模型:</span>
+                <span class="w-[80px] shrink-0">选择模型:</span>
                 <n-select
                   v-model:value="model"
-                  size="small"
                   :options="modelOptions"
                   class="flex-1"
                 />
               </div>
 
               <div class="flex items-center gap-3">
-                <span class="w-[62px] shrink-0">视频时长:</span>
+                <span class="w-[80px] shrink-0">视频时长:</span>
                 <n-radio-group
                   v-model:value="duration"
-                  size="small"
                   class="custom-radio-group"
                 >
                   <n-radio-button
                     value="10s"
                     label="10秒"
-                    class="!bg-transparent !text-sm !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    class="!bg-transparent !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
                   />
                   <n-radio-button
                     value="15s"
                     label="15秒"
-                    class="!bg-transparent !text-sm !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    class="!bg-transparent !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
                   />
                 </n-radio-group>
               </div>
 
               <div class="flex items-center gap-3">
-                <span class="w-[62px] shrink-0">方向尺寸:</span>
+                <span class="w-[80px] shrink-0">方向尺寸:</span>
                 <n-radio-group
                   v-model:value="direction"
-                  size="small"
                   class="custom-radio-group"
                 >
                   <n-radio-button
@@ -135,57 +150,80 @@ function toggleCharacter(index) {
                     :key="item.value"
                     :value="item.value"
                     :label="item.label"
-                    class="!bg-[#16181a] !text-sm !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    class="!bg-[#16181a] !text-white/56 [&.n-radio-button--checked]:!bg-[#18d2e5] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
                   />
                 </n-radio-group>
               </div>
 
               <div class="flex items-center gap-3">
-                <span class="w-[62px] shrink-0 pt-1">角色(可选):</span>
+                <span class="w-[80px] shrink-0 pt-1">角色(可选):</span>
                 <div class="flex flex-wrap gap-2">
                   <button
                     v-for="(avatar, index) in characters"
                     :key="avatar"
                     type="button"
-                    class="h-[56px] w-[56px] overflow-hidden rounded-full border transition-colors"
-                    :class="
+                    class="h-[56px] w-[56px] overflow-visible rounded-full border-[2px] border-solid transition-colors relative"
+                    :class="[
                       selectedCharacters.includes(index)
                         ? 'border-[#18d2e5]'
-                        : 'border-white/12'
+                        : 'border-white/12',
+                      selectedCharacters.length >= maxSelected &&
+                      !selectedCharacters.includes(index)
+                        ? 'opacity-50 pointer-events-none'
+                        : '',
+                    ]"
+                    :disabled="
+                      selectedCharacters.length >= maxSelected &&
+                      !selectedCharacters.includes(index)
                     "
                     @click="toggleCharacter(index)"
                   >
-                    <img
-                      :src="avatar"
-                      alt=""
-                      class="h-full w-full object-cover"
-                    />
+                    <div class="h-full w-full rounded-full overflow-hidden">
+                      <img
+                        :src="avatar"
+                        alt=""
+                        class="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div
+                      v-if="selectedCharacters.includes(index)"
+                      class="absolute -right-1 -bottom-1 h-5 w-5 rounded-full bg-[#19c37d] flex items-center justify-center text-white text-xs border-2 border-[#0b0b0b]"
+                    >
+                      ✓
+                    </div>
                   </button>
                   <div class="w-full text-xs text-white/34">
-                    {{
-                      selectedCharacters.length > 0
-                        ? `已选中 ${selectedCharacters.length} 个角色`
-                        : '未选中角色'
-                    }}
+                    {{ selectedLabel }}
                   </div>
                 </div>
               </div>
 
               <div class="flex items-center gap-3">
-                <span class="w-[62px] shrink-0 pt-1">提示词:</span>
+                <span class="w-[80px] shrink-0 pt-1">提示词:</span>
                 <n-input
                   v-model:value="prompt"
                   type="textarea"
                   :autosize="{ minRows: 11, maxRows: 11 }"
+                  :placeholder="promptPlaceholder"
                   class="text-sm flex-1 [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-sm [&_.n-input__textarea-el]:!leading-[1.55] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-sm [&_.n-input__placeholder]:!text-white/28"
                 />
               </div>
             </div>
 
-            <div class="mt-4 flex items-center gap-1.5 text-xs text-amber-400/95">
+            <div
+              class="mt-4 flex items-center gap-1.5 text-sm text-amber-400/95"
+            >
               <span class="text-white/48">消耗算力：</span>
               <n-icon :size="14" :component="Currency" />
               <span class="font-medium">3800</span>
+              <n-tooltip trigger="hover">
+                <template #trigger>
+                  <i
+                    class="i-mingcute-question-line text-sm text-white/48 cursor-pointer"
+                  ></i>
+                </template>
+                渠道A-sora普通：380算力/秒；渠道B-sora普通：380算力/秒；渠道B-sora高级：1400算力/秒；官方-sora2：每5秒1500算力；渠道B--veo3：190算力/秒
+              </n-tooltip>
             </div>
 
             <div class="pt-4 flex justify-end">
