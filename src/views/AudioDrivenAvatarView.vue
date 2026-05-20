@@ -22,7 +22,10 @@ const resolution = ref('480p')
             照片数字人
           </div>
           <div class="px-3 py-3">
-            <UploadArea accept="image/*" description="JPG、PNG、JPEG、WEBP文件，30Mb以内" />
+            <UploadArea
+              accept="image/*"
+              description="JPG、PNG、JPEG、WEBP文件，30Mb以内"
+            />
           </div>
         </section>
 
@@ -37,42 +40,29 @@ const resolution = ref('480p')
           <div class="px-3 py-3 text-sm text-white/48">
             <div class="mb-4 flex items-center gap-3">
               <span class="shrink-0">视频分辨率:</span>
-              <div
-                class="inline-flex overflow-hidden rounded-[2px] border border-white/10 bg-[#16181a]"
-              >
-                <button
-                  type="button"
-                  class="h-[24px] min-w-[48px] border-0 px-3 text-sm transition-colors"
-                  :class="
-                    resolution === '480p'
-                      ? 'bg-[#18d2e5] text-white'
-                      : 'bg-transparent text-white/56'
-                  "
-                  @click="resolution = '480p'"
-                >
-                  480P
-                </button>
-                <button
-                  type="button"
-                  class="h-[24px] min-w-[48px] border-0 px-3 text-sm transition-colors"
-                  :class="
-                    resolution === '720p'
-                      ? 'bg-[#18d2e5] text-white'
-                      : 'bg-transparent text-white/56'
-                  "
-                  @click="resolution = '720p'"
-                >
-                  720P
-                </button>
-              </div>
+              <n-radio-group v-model:value="resolution" size="small">
+                <n-radio-button value="480p" label="480p" />
+                <n-radio-button value="720p" label="720p" />
+              </n-radio-group>
             </div>
 
-            <UploadArea accept="audio/*" description="mp3/wav/flac 文件，30Mb以内" />
+            <UploadArea
+              accept="audio/*"
+              description="mp3/wav/flac 文件，30Mb以内"
+            />
 
             <div class="mt-4 flex items-center gap-1.5 text-amber-400/95">
               <span class="text-white/48">消耗算力：</span>
               <n-icon :size="14" :component="Currency" />
               <span class="font-medium">1680</span>
+              <n-tooltip trigger="hover">
+                <template #trigger>
+                  <i
+                    class="i-mingcute-question-line text-sm text-white/48 cursor-pointer"
+                  ></i>
+                </template>
+                根据上传语音时长计算，每10秒1680算力
+              </n-tooltip>
             </div>
 
             <div class="pt-4 flex justify-end">
@@ -87,7 +77,9 @@ const resolution = ref('480p')
           </div>
         </section>
 
-        <section class="relative flex min-h-[320px] flex-col min-w-[400px]">
+        <section
+          class="relative flex min-h-[320px] flex-1 flex-col min-w-[400px]"
+        >
           <div class="flex flex-1 items-center justify-center">
             <div class="flex flex-col items-center">
               <div class="relative h-[120px] w-[120px]">
