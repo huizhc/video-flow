@@ -25,7 +25,10 @@ const scriptLength = computed(() => script.value.length)
             声音样本
           </div>
           <div class="px-3 py-3">
-            <UploadArea accept="audio/*" description="mp3/wav/flac 文件，30Mb以内" />
+            <UploadArea
+              accept="audio/*"
+              description="mp3/wav/flac 文件，30Mb以内"
+            />
           </div>
         </section>
 
@@ -38,17 +41,16 @@ const scriptLength = computed(() => script.value.length)
             口播内容
           </div>
           <div class="px-3 py-3 text-sm text-white/48">
-            <div class="pb-2 text-sm leading-[1.5] text-[#f4b13d]">
+            <div class="pb-2 text-xs leading-[1.5] text-[#f4b13d]">
               注意：目前只支持中文和英文，输入其他语言会出现异常
             </div>
 
             <div>
-              <div class="pb-1.5 text-sm text-white/48">请输入口播内容</div>
               <n-input
                 v-model:value="script"
                 type="textarea"
                 :autosize="{ minRows: 7, maxRows: 7 }"
-                placeholder="例如：大家好，我是小明，今天天气不错，陪单元见证大家。"
+                :placeholder="`请输入口播内容\n例如：大家好，我是小明，今天天气不错，陪单元见证大家。`"
                 class="text-sm [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-sm [&_.n-input__textarea-el]:!leading-[1.6] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-sm [&_.n-input__placeholder]:!text-white/24"
               />
               <div class="pt-1 text-left text-xs text-white/32">
@@ -57,18 +59,17 @@ const scriptLength = computed(() => script.value.length)
             </div>
 
             <div class="pt-3">
-              <div class="pb-1.5 text-sm text-white/48">(可选) 语气提示词</div>
               <n-input
                 v-model:value="speechTone"
                 type="textarea"
                 :autosize="{ minRows: 5, maxRows: 5 }"
-                placeholder="例如：请用温柔的语气说话。"
+                :placeholder="`(可选) 语气提示词\n例如：请用温柔的语气说话。`"
                 class="text-sm [&_.n-input-wrapper]:!bg-[#151719] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:!border-white/6 [&_.n-input__textarea-el]:!text-sm [&_.n-input__textarea-el]:!leading-[1.6] [&_.n-input__textarea-el]:!text-white/74 [&_.n-input__placeholder]:!text-sm [&_.n-input__placeholder]:!text-white/24"
               />
             </div>
 
             <div
-              class="mt-4 flex items-center gap-1.5 text-xs text-amber-400/95"
+              class="mt-4 flex items-center gap-1.5 text-sm text-amber-400/95"
             >
               <span class="text-white/48">消耗算力：</span>
               <n-icon :size="14" :component="Currency" />
