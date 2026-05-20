@@ -59,13 +59,13 @@ export default defineConfig({
       // gray: 'var(--theme-gray)',
       // lightgray: 'var(--theme-lightgray)',
     },
-    breakpoints: {
-      // 'sm': '640px',
-      // 'md': '919px',
-      // 'lg': '1024px',
-      // 'xl': '1260px',
-      // '2xl': '1520px',
-    },
+    // breakpoints: {
+    // 'sm': '640px',
+    // 'md': '919px',
+    // 'lg': '1024px',
+    // 'xl': '1260px',
+    // '2xl': '1520px',
+    // },
   },
   transformers: [transformerDirectives()],
 })
