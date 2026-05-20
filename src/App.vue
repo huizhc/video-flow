@@ -52,7 +52,7 @@ const themeOverrides = {
     // buttonColorActive: '#57d7ea',
     // buttonTextColor: '#fff',
     // buttonTextColorHover: '#57d7ea',
-    // buttonTextColorActive: '#fff',
+    buttonTextColorActive: '#fff',
     // buttonBorderColorActive: '#57d7ea',
     // buttonBoxShadow: 'none',
     // buttonBoxShadowFocus: 'none',

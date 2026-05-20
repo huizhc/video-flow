@@ -15,6 +15,7 @@ import {
   NUploadDragger,
   NRadioGroup,
   NRadioButton,
+  NSwitch,
 } from 'naive-ui'
 import UploadArea from '@/components/UploadArea.vue'
 import UploadModal from '@/components/UploadModal.vue'
@@ -102,15 +103,43 @@ const nextShotId = ref(2)
 const titleStylePresets = [
   { key: 'default', label: '默认样式', className: 'preview-title--default' },
   { key: 'black', label: '常规黑字', className: 'preview-title--black' },
-  { key: 'white-outline', label: '粉白描边', className: 'preview-title--white-outline' },
-  { key: 'orange-outline', label: '橙红描边', className: 'preview-title--orange-outline' },
+  {
+    key: 'white-outline',
+    label: '粉白描边',
+    className: 'preview-title--white-outline',
+  },
+  {
+    key: 'orange-outline',
+    label: '橙红描边',
+    className: 'preview-title--orange-outline',
+  },
   { key: 'flame', label: '火焰字', className: 'preview-title--flame' },
-  { key: 'red-bold', label: '鲁红黑边重', className: 'preview-title--red-bold' },
-  { key: 'black-outline', label: '黑白描边', className: 'preview-title--black-outline' },
+  {
+    key: 'red-bold',
+    label: '鲁红黑边重',
+    className: 'preview-title--red-bold',
+  },
+  {
+    key: 'black-outline',
+    label: '黑白描边',
+    className: 'preview-title--black-outline',
+  },
   { key: 'shadow', label: '黑底强冷阴影', className: 'preview-title--shadow' },
-  { key: 'yellow-outline', label: '黄红描边', className: 'preview-title--yellow-outline' },
-  { key: 'blue-outline', label: '蓝白描边', className: 'preview-title--blue-outline' },
-  { key: 'green-outline', label: '黄绿描边', className: 'preview-title--green-outline' },
+  {
+    key: 'yellow-outline',
+    label: '黄红描边',
+    className: 'preview-title--yellow-outline',
+  },
+  {
+    key: 'blue-outline',
+    label: '蓝白描边',
+    className: 'preview-title--blue-outline',
+  },
+  {
+    key: 'green-outline',
+    label: '黄绿描边',
+    className: 'preview-title--green-outline',
+  },
   { key: 'deep-red', label: '深红描边', className: 'preview-title--deep-red' },
 ]
 
@@ -268,7 +297,11 @@ function removeShotClip(shot, clipIndex) {
 }
 
 function previewShot(shotIndex) {
-  if (showPreview.value && editingShotIndex.value === shotIndex && !showTitleModal.value) {
+  if (
+    showPreview.value &&
+    editingShotIndex.value === shotIndex &&
+    !showTitleModal.value
+  ) {
     showPreview.value = false
     return
   }
@@ -283,7 +316,9 @@ function openTitleModal(shotIndex, titleIndex = -1) {
   editingTitleIndex.value = titleIndex
   titleName.value = title?.name || '新标题'
   titleSize.value = title?.size || 32
-  titlePosition.value = title?.position ? { ...title.position } : { x: 23, y: 44 }
+  titlePosition.value = title?.position
+    ? { ...title.position }
+    : { x: 23, y: 44 }
   titleStyle.value = title?.style || 'yellow-outline'
   showTitleModal.value = true
   showPreview.value = true
@@ -344,8 +379,10 @@ function startTitleDrag(event, title) {
     index: title.index,
   }
   titleDragOffset = {
-    x: event.clientX - previewRect.left - (position.x / 100) * previewRect.width,
-    y: event.clientY - previewRect.top - (position.y / 100) * previewRect.height,
+    x:
+      event.clientX - previewRect.left - (position.x / 100) * previewRect.width,
+    y:
+      event.clientY - previewRect.top - (position.y / 100) * previewRect.height,
   }
   window.addEventListener('mousemove', moveTitle)
   window.addEventListener('mouseup', stopTitleDrag)
@@ -356,14 +393,20 @@ function moveTitle(event) {
   const preview = document.querySelector('.title-preview-canvas')
   if (!preview) return
   const rect = preview.getBoundingClientRect()
-  const nextX = ((event.clientX - rect.left - titleDragOffset.x) / rect.width) * 100
-  const nextY = ((event.clientY - rect.top - titleDragOffset.y) / rect.height) * 100
+  const nextX =
+    ((event.clientX - rect.left - titleDragOffset.x) / rect.width) * 100
+  const nextY =
+    ((event.clientY - rect.top - titleDragOffset.y) / rect.height) * 100
   const nextPosition = {
     x: Math.min(88, Math.max(0, Math.round(nextX))),
     y: Math.min(88, Math.max(0, Math.round(nextY))),
   }
 
-  if (!titleDragTarget || titleDragTarget.source === 'draft' || titleDragTarget.source === 'selected') {
+  if (
+    !titleDragTarget ||
+    titleDragTarget.source === 'draft' ||
+    titleDragTarget.source === 'selected'
+  ) {
     titlePosition.value = nextPosition
     return
   }
@@ -473,7 +516,7 @@ onUnmounted(() => {
             <n-button
               type="button"
               ghost
-              class="flex border-[1px] border-solid border-#ffffff10 h-[30px] items-center justify-center rounded-[4px]  bg-transparent text-sm text-white/45 transition-colors hover:text-white/70"
+              class="flex border-[1px] border-solid border-#ffffff10 h-[30px] items-center justify-center rounded-[4px] bg-transparent text-sm text-white/45 transition-colors hover:text-white/70"
               @click.stop="router.push({ name: 'tool-batch-video-mix' })"
             >
               项目列表
@@ -652,7 +695,9 @@ onUnmounted(() => {
               >
                 <div class="flex min-w-0 items-center gap-3">
                   <i class="i-carbon-move text-[20px] text-white/60"></i>
-                  <div class="flex items-center gap-3 text-sm font-bold leading-none">
+                  <div
+                    class="flex items-center gap-3 text-sm font-bold leading-none"
+                  >
                     <span class="text-white">镜头{{ shotIndex + 1 }}:</span>
                     <span class="text-white">{{ shot.name }}</span>
                   </div>
@@ -716,7 +761,9 @@ onUnmounted(() => {
                 </button>
               </div>
 
-              <div class="space-y-2 text-sm font-bold leading-[1.45] text-white/55">
+              <div
+                class="space-y-2 text-sm font-bold leading-[1.45] text-white/55"
+              >
                 <div class="flex items-center gap-4">
                   <div class="w-[72px] shrink-0">口播内容:</div>
                   <div class="min-w-0 text-white/62">{{ shot.speech }}</div>
@@ -727,7 +774,12 @@ onUnmounted(() => {
                 </div>
                 <div class="flex items-center gap-4">
                   <div class="w-[72px] shrink-0">片段音频:</div>
-                  <n-radio-group v-model:value="shot.audioMode" size="small" class="custom-radio-group" @click.stop>
+                  <n-radio-group
+                    v-model:value="shot.audioMode"
+                    size="small"
+                    class="custom-radio-group"
+                    @click.stop
+                  >
                     <n-radio-button value="使用口播" label="使用口播" />
                     <n-radio-button value="素材原音" label="素材原音" />
                     <n-radio-button value="静音" label="静音" />
@@ -735,7 +787,12 @@ onUnmounted(() => {
                 </div>
                 <div class="flex items-center gap-4">
                   <div class="w-[72px] shrink-0">片段时长:</div>
-                  <n-radio-group v-model:value="shot.durationMode" size="small" class="custom-radio-group" @click.stop>
+                  <n-radio-group
+                    v-model:value="shot.durationMode"
+                    size="small"
+                    class="custom-radio-group"
+                    @click.stop
+                  >
                     <n-radio-button value="参考口播" label="参考口播" />
                     <n-radio-button value="参考素材" label="参考素材" />
                     <n-radio-button value="自定义" label="自定义" />
@@ -743,7 +800,12 @@ onUnmounted(() => {
                 </div>
                 <div class="flex items-center gap-4">
                   <div class="w-[72px] shrink-0">人物位置:</div>
-                  <n-radio-group v-model:value="shot.position" size="small" class="custom-radio-group" @click.stop>
+                  <n-radio-group
+                    v-model:value="shot.position"
+                    size="small"
+                    class="custom-radio-group"
+                    @click.stop
+                  >
                     <n-radio-button value="正中（置底）" label="正中(置底)" />
                     <n-radio-button value="左上" label="左上" />
                     <n-radio-button value="右上" label="右上" />
@@ -758,14 +820,14 @@ onUnmounted(() => {
                       v-for="(title, titleIndex) in shot.titles"
                       :key="title.id"
                       type="button"
-                      class="rounded-[3px] text-[#57d7ea] border-[1px] border-solid border-[#57d7ea10] bg-[rgba(87,_215,_234,_0.12)] px-2 py-1 text-xs  transition"
+                      class="rounded-[3px] text-[#57d7ea] border-[1px] border-solid border-[#57d7ea10] bg-[rgba(87,_215,_234,_0.12)] px-2 py-1 text-xs transition"
                       @click.stop="openTitleModal(shotIndex, titleIndex)"
                     >
                       {{ title.name }}
                     </button>
                     <button
                       type="button"
-                      class="flex btn-close  py-[2px] w-10 items-center justify-center rounded-[4px] border-[1px]! border-solid! border-[#57595e] bg-[#242529] text-white/70 transition hover:border-[#18d2e5]/70 hover:text-white"
+                      class="flex btn-close py-[2px] w-10 items-center justify-center rounded-[4px] border-[1px]! border-solid! border-[#57595e] bg-[#242529] text-white/70 transition hover:border-[#18d2e5]/70 hover:text-white"
                       aria-label="添加片段标题"
                       @click.stop="openTitleModal(shotIndex)"
                     >
@@ -800,7 +862,7 @@ onUnmounted(() => {
           </div>
 
           <div class="flex h-[calc(100%-49px)] flex-col justify-between p-3">
-            <div class="space-y-[14px]">
+            <div class="space-y-[14px] flex flex-col">
               <div class="flex items-center gap-3">
                 <div class="w-[66px] shrink-0 text-sm text-white/48">
                   智能包装:
@@ -817,41 +879,23 @@ onUnmounted(() => {
                 <div class="w-[66px] shrink-0 text-sm text-white/48">
                   启用字幕:
                 </div>
-                <div class="flex items-center gap-2 text-sm">
-                  <button
-                    type="button"
-                    class="border-0 bg-transparent p-0"
-                    :class="
-                      !subtitleEnabled ? 'text-[#18d2e5]' : 'text-white/36'
-                    "
-                    @click="subtitleEnabled = false"
-                  >
-                    关闭
-                  </button>
-                  <button
-                    type="button"
-                    class="relative h-[18px] w-[34px] rounded-full border border-white/10 bg-[#111214] p-0 transition"
-                    :class="
-                      subtitleEnabled
-                        ? '!bg-[#18d2e5]/28 !border-[#18d2e5]/40'
-                        : ''
-                    "
-                    @click="subtitleEnabled = !subtitleEnabled"
-                  >
-                    <span
-                      class="absolute top-[1px] h-[14px] w-[14px] rounded-full bg-white transition"
-                      :class="subtitleEnabled ? 'left-[17px]' : 'left-[1px]'"
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    class="border-0 bg-transparent p-0"
-                    :class="subtitleEnabled ? 'text-white/76' : 'text-white/36'"
-                    @click="subtitleEnabled = true"
-                  >
-                    启用
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  class="border-0 bg-transparent p-0"
+                  :class="!subtitleEnabled ? 'text-theme' : 'text-white'"
+                  @click="subtitleEnabled = false"
+                >
+                  关闭
+                </button>
+                <n-switch v-model:value="subtitleEnabled" size="small" />
+                <button
+                  type="button"
+                  class="border-0 bg-transparent p-0"
+                  :class="subtitleEnabled ? 'text-theme' : 'text-white'"
+                  @click="subtitleEnabled = true"
+                >
+                  启用
+                </button>
               </div>
 
               <div class="flex items-center gap-3">
@@ -861,19 +905,19 @@ onUnmounted(() => {
                 <div class="flex items-center gap-[6px] text-sm text-white/36">
                   <n-input-number
                     v-model:value="subtitleStart"
-                    :show-button="false"
-                    size="small"
-                    class="w-[52px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-sm [&_.n-input-number-input]:!text-white/78"
-                  />
-                  <span>%</span>
-                  <span>-</span>
+                    button-placement="both"
+                    class="text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-sm [&_.n-input-number-input]:!text-white/78"
+                  >
+                    <template #suffix> % </template>
+                  </n-input-number>
+                  <span>～</span>
                   <n-input-number
                     v-model:value="subtitleEnd"
-                    :show-button="false"
-                    size="small"
-                    class="w-[52px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-sm [&_.n-input-number-input]:!text-white/78"
-                  />
-                  <span>%</span>
+                    button-placement="both"
+                    class="text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-sm [&_.n-input-number-input]:!text-white/78"
+                  >
+                    <template #suffix> % </template>
+                  </n-input-number>
                 </div>
               </div>
 
@@ -885,8 +929,7 @@ onUnmounted(() => {
                   <n-select
                     v-model:value="fontSize"
                     :options="[{ label: '中', value: 'middle' }]"
-                    size="tiny"
-                    class="[&_.n-base-selection]:!min-h-[30px] [&_.n-base-selection]:!rounded-[4px] [&_.n-base-selection]:!border-white/8 [&_.n-base-selection]:!bg-[#151618] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[30px] [&_.n-base-selection-label]:!text-sm [&_.n-base-selection__render-label]:!text-white/82"
+                    class="[&_.n-base-selection]:!min-h-[30px] [&_.n-base-selection]:!rounded-[4px] [&_.n-base-selection]:!border-white/8 [&_.n-base-selection]:!bg-[#151618] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!text-sm [&_.n-base-selection__render-label]:!text-white/82"
                   />
                 </div>
               </div>
@@ -900,7 +943,6 @@ onUnmounted(() => {
                     v-model:value="textColor"
                     :show-alpha="false"
                     :actions="['confirm']"
-                    size="small"
                     class="[&_.n-color-picker-trigger]:!h-[20px] [&_.n-color-picker-trigger]:!w-[20px] [&_.n-color-picker-trigger]:!rounded-[3px] [&_.n-color-picker-trigger]:!border [&_.n-color-picker-trigger]:!border-white/8 [&_.n-color-picker-trigger__fill]:!rounded-[2px]"
                   >
                     <template #trigger="{ value, onClick, ref: triggerRef }">
@@ -924,7 +966,6 @@ onUnmounted(() => {
                     v-model:value="bgColor"
                     :show-alpha="false"
                     :actions="['confirm']"
-                    size="small"
                     class="[&_.n-color-picker-trigger]:!h-[20px] [&_.n-color-picker-trigger]:!w-[20px] [&_.n-color-picker-trigger]:!rounded-[3px] [&_.n-color-picker-trigger]:!border [&_.n-color-picker-trigger]:!border-white/8 [&_.n-color-picker-trigger__fill]:!rounded-[2px]"
                   >
                     <template #trigger="{ value, onClick, ref: triggerRef }">
@@ -957,14 +998,15 @@ onUnmounted(() => {
                   >
                     {{ bgmStatus }}
                   </span>
-                  <button
-                    type="button"
+                  <n-button
+                    ghost
+                    size="tiny"
                     class="flex h-[30px] items-center justify-center rounded-[4px] border border-white/8 bg-transparent text-sm text-white/45 transition-colors hover:text-white/70"
                     @click="showBgmModal = true"
                   >
                     <i class="i-carbon-cloud-upload text-[14px]"></i>
                     选择BGM
-                  </button>
+                  </n-button>
                 </div>
               </div>
 
@@ -973,14 +1015,14 @@ onUnmounted(() => {
                   音乐音量:
                 </div>
                 <div class="flex items-center gap-[6px] text-sm text-white/36">
-                  <span>-</span>
                   <n-input-number
                     v-model:value="bgmVolume"
-                    :show-button="false"
-                    size="small"
-                    class="w-[52px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-sm [&_.n-input-number-input]:!text-white/78"
-                  />
-                  <span>%</span>
+                    :show-button="true"
+                    button-placement="both"
+                    class="w-[120px] text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-sm [&_.n-input-number-input]:!text-white/78"
+                  >
+                    <template #suffix> % </template>
+                  </n-input-number>
                 </div>
               </div>
 
@@ -988,18 +1030,9 @@ onUnmounted(() => {
                 <div class="w-[66px] shrink-0 text-sm text-white/48">
                   视频方向:
                 </div>
-                <n-radio-group
-                  v-model:value="videoDirection"
-                  size="small"
-                                 >
-                  <n-radio-button
-                    value="portrait"
-                    label="竖屏"
-                                     />
-                  <n-radio-button
-                    value="landscape"
-                    label="横屏"
-                                     />
+                <n-radio-group v-model:value="videoDirection">
+                  <n-radio-button value="portrait" label="竖屏" />
+                  <n-radio-button value="landscape" label="横屏" />
                 </n-radio-group>
               </div>
 
@@ -1007,16 +1040,13 @@ onUnmounted(() => {
                 <div class="w-[66px] shrink-0 pt-[4px] text-sm text-white/48">
                   视频尺寸:
                 </div>
-                <n-radio-group
-                  v-model:value="resolution"
-                  size="small"
-                                 >
+                <n-radio-group v-model:value="resolution">
                   <n-radio-button
                     v-for="item in resolutionOptions"
                     :key="item"
                     :value="item"
                     :label="item"
-                                     />
+                  />
                 </n-radio-group>
               </div>
 
@@ -1025,14 +1055,12 @@ onUnmounted(() => {
                   数量限制:
                 </div>
                 <div class="flex items-center gap-[6px] text-sm text-white/36">
-                  <span>-</span>
                   <n-input-number
                     v-model:value="amountRange"
-                    :show-button="false"
-                    size="small"
-                    class="w-[52px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-sm [&_.n-input-number-input]:!text-white/78"
+                    :show-button="true"
+                    button-placement="both"
+                    class="w-[120px] text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-sm [&_.n-input-number-input]:!text-white/78"
                   />
-                  <span>-</span>
                 </div>
               </div>
             </div>
@@ -1061,30 +1089,37 @@ onUnmounted(() => {
             <div class="flex-1 rounded-[4px] bg-[#090a0c]" />
 
             <div
-              class="mt-3 flex items-center justify-between border-t border-white/8 pt-3"
+              class="mt-3 flex items-center justify-between border-t border-white/8"
             >
               <div class="flex items-center gap-2 text-sm">
-                <button
-                  type="button"
+                <n-button
+                  ghost
                   class="rounded-[3px] border border-white/8 bg-[#161719] px-[10px] py-[3px] text-white/42"
                 >
                   全选
-                </button>
-                <button
-                  type="button"
+                </n-button>
+                <n-button
+                  ghost
                   class="rounded-[3px] border border-white/8 bg-[#161719] px-[10px] py-[3px] text-white/42"
                 >
                   反选
-                </button>
+                </n-button>
               </div>
 
               <div class="flex items-center gap-4 text-sm text-white/40">
                 <span>已选: 0/0</span>
                 <div class="flex items-center gap-1">
-                  <span>单次消耗算力:</span>
+                  <span>导出消耗算力:</span>
                   <i class="i-carbon-currency text-[13px] text-[#ffd24c]"></i>
                   <span class="text-[#ffd24c]">{{ totalPower }}</span>
-                  <i class="i-carbon-information text-[12px] text-white/28"></i>
+                  <n-tooltip trigger="hover">
+                    <template #trigger>
+                      <i
+                        class="i-mingcute-question-line text-sm text-white/48 cursor-pointer"
+                      ></i>
+                    </template>
+                    根据导出的视频数量，每条120算力
+                  </n-tooltip>
                 </div>
                 <n-button
                   type="warning"
@@ -1118,7 +1153,9 @@ onUnmounted(() => {
     <div
       class="w-[600px] rounded-[8px] border border-white/10 bg-[#151515] text-white shadow-2xl"
     >
-      <div class="flex items-center justify-between border-b border-white/8 px-4 py-3">
+      <div
+        class="flex items-center justify-between border-b border-white/8 px-4 py-3"
+      >
         <span class="text-sm font-medium">设置片段标题</span>
         <button
           type="button"
@@ -1159,7 +1196,7 @@ onUnmounted(() => {
             :min="12"
             :max="64"
             size="small"
-            class="w-[118px] text-center  [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#18191b] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-sm [&_.n-input-number-input]:!text-white/80"
+            class="w-[118px] text-center [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#18191b] [&_.n-input-wrapper]:!shadow-none [&_.n-input-number-input]:!text-center [&_.n-input-number-input]:!text-sm [&_.n-input-number-input]:!text-white/80"
           />
         </div>
         <div class="mt-2 text-xs text-white/62">
@@ -1177,18 +1214,10 @@ onUnmounted(() => {
             删除标题
           </n-button>
           <div class="flex items-center gap-3">
-            <n-button
-              ghost
-              size="small"
-              @click="closeTitleModal"
-            >
+            <n-button ghost size="small" @click="closeTitleModal">
               关闭
             </n-button>
-            <n-button
-              type="primary"
-              size="small"
-              @click="confirmTitle"
-            >
+            <n-button type="primary" size="small" @click="confirmTitle">
               确定
             </n-button>
           </div>
@@ -1213,7 +1242,9 @@ onUnmounted(() => {
         </button>
       </div>
 
-      <div class="title-preview-canvas relative mx-auto overflow-hidden bg-black">
+      <div
+        class="title-preview-canvas relative mx-auto overflow-hidden bg-black"
+      >
         <img
           v-if="avatarMaterial?.url"
           :src="avatarMaterial.url"
@@ -1221,7 +1252,10 @@ onUnmounted(() => {
           class="h-full w-full object-cover"
           draggable="false"
         />
-        <div v-else class="flex h-full items-center justify-center text-xs text-white/35">
+        <div
+          v-else
+          class="flex h-full items-center justify-center text-xs text-white/35"
+        >
           未上传人物照片
         </div>
 
@@ -1234,7 +1268,8 @@ onUnmounted(() => {
           class="preview-draggable-title"
           :class="[
             getTitleStyleClass(previewTitle.style),
-            previewTitle.source === 'selected' || previewTitle.source === 'draft'
+            previewTitle.source === 'selected' ||
+            previewTitle.source === 'draft'
               ? 'is-editing'
               : '',
           ]"
@@ -1248,15 +1283,21 @@ onUnmounted(() => {
           {{ previewTitle.name || '新标题' }}
         </div>
 
-        <div class="absolute bottom-[76px] left-5 text-xs leading-[1.55] text-white">
+        <div
+          class="absolute bottom-[76px] left-5 text-xs leading-[1.55] text-white"
+        >
           <div class="font-bold">@username</div>
           <div>description about the video</div>
           <div>#hashtag #trending #viral</div>
           <div class="mt-1 text-white/90">♫ Original sound - username</div>
         </div>
 
-        <div class="absolute bottom-[70px] right-4 flex flex-col items-center gap-4 text-xs text-white">
-          <div class="flex h-10 w-10 items-center justify-center rounded-full border border-white">
+        <div
+          class="absolute bottom-[70px] right-4 flex flex-col items-center gap-4 text-xs text-white"
+        >
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-full border border-white"
+          >
             <span class="text-sm">人</span>
           </div>
           <div class="text-center">
@@ -1341,7 +1382,9 @@ onUnmounted(() => {
             class="!border-dashed !border-white/10 !bg-[#17181a] hover:!border-[#18d2e5]/40"
           >
             <div class="flex flex-col items-center py-6">
-              <i class="i-carbon-cloud-upload text-[48px] mb-4 text-white/30"></i>
+              <i
+                class="i-carbon-cloud-upload text-[48px] mb-4 text-white/30"
+              ></i>
               <div class="text-sm text-white/65">
                 Drop file here or
                 <span class="text-[#18d2e5]">click to upload</span>
