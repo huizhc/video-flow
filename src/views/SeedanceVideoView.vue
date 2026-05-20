@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import { CloudUpload, Currency } from '@vicons/carbon'
+import UploadArea from '@/components/UploadArea.vue'
 import {
   NButton,
   NCheckbox,
@@ -9,10 +10,10 @@ import {
   NInputNumber,
   NRadioButton,
   NRadioGroup,
+  NSelect,
+  NSwitch,
 } from 'naive-ui'
 
-const imageSource = ref('local')
-const tailImageSource = ref('local')
 const generationQuality = ref('seedance-15-pro-start-end')
 const isDurationUnspecified = ref(true)
 const durationSeconds = ref(5)
@@ -52,6 +53,54 @@ const motionOptions = [
   { label: '大变', value: 'large' },
   { label: '巨变', value: 'extreme' },
 ]
+
+const imageFile = ref(null)
+const tailImageFile = ref(null)
+const imagePreview = ref('')
+const tailPreview = ref('')
+
+const onImageChange = (file) => {
+  if (!file) return
+  if (imagePreview.value.startsWith('blob:')) {
+    URL.revokeObjectURL(imagePreview.value)
+  }
+  imageFile.value = file
+  imagePreview.value = URL.createObjectURL(file)
+}
+
+const onTailImageChange = (file) => {
+  if (!file) return
+  if (tailPreview.value.startsWith('blob:')) {
+    URL.revokeObjectURL(tailPreview.value)
+  }
+  tailImageFile.value = file
+  tailPreview.value = URL.createObjectURL(file)
+}
+
+const removeImage = () => {
+  if (imagePreview.value.startsWith('blob:')) {
+    URL.revokeObjectURL(imagePreview.value)
+  }
+  imageFile.value = null
+  imagePreview.value = ''
+}
+
+const removeTailImage = () => {
+  if (tailPreview.value.startsWith('blob:')) {
+    URL.revokeObjectURL(tailPreview.value)
+  }
+  tailImageFile.value = null
+  tailPreview.value = ''
+}
+
+onUnmounted(() => {
+  if (imagePreview.value.startsWith('blob:')) {
+    URL.revokeObjectURL(imagePreview.value)
+  }
+  if (tailPreview.value.startsWith('blob:')) {
+    URL.revokeObjectURL(tailPreview.value)
+  }
+})
 </script>
 
 <template>
@@ -77,18 +126,12 @@ const motionOptions = [
                 模型版本:
               </div>
               <div class="min-w-0 flex-1">
-                <select
-                  v-model="generationQuality"
-                  class="h-[30px] w-full appearance-none rounded-[4px] border border-white/8 bg-[#161719] px-[10px] text-sm text-white/82 outline-none focus:border-[rgba(35,208,228,0.88)]"
-                >
-                  <option
-                    v-for="option in qualityOptions"
-                    :key="option.value"
-                    :value="option.value"
-                  >
-                    {{ option.label }}
-                  </option>
-                </select>
+                <n-select
+                  v-model:value="generationQuality"
+                  size="small"
+                  :options="qualityOptions"
+                  class="w-full"
+                />
               </div>
             </div>
 
@@ -112,7 +155,7 @@ const motionOptions = [
                       v-model:value="durationSeconds"
                       min="1"
                       max="15"
-                      class="w-[120px] [&_.n-input-wrapper]:!h-[30px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__input-el]:!text-center [&_.n-input__input-el]:!text-sm [&_.n-input__input-el]:!text-white/82"
+                      class="w-[120px] [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]: [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__input-el]:!text-center [&_.n-input__input-el]:!text-sm [&_.n-input__input-el]:!text-white/82"
                     />
                     <span class="text-xs text-white/34"
                       >秒（4~12，Seedance 2.0 最长 15 秒）</span
@@ -131,7 +174,7 @@ const motionOptions = [
                     :key="option.value"
                     :value="option.value"
                     :label="option.label"
-                    class="!border-white/8 !bg-[#151618] !px-[10px] !text-sm !text-white/58 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    class="!px-[10px] transition-colors"
                   />
                 </n-radio-group>
               </div>
@@ -148,7 +191,7 @@ const motionOptions = [
                     :key="option.value"
                     :value="option.value"
                     :label="option.label"
-                    class="!border-white/8 !bg-[#151618] !px-[10px] !text-sm !text-white/58 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    class="!px-[10px] transition-colors"
                   />
                 </n-radio-group>
               </div>
@@ -159,31 +202,23 @@ const motionOptions = [
                 生成声音:
               </div>
               <div class="min-w-0 flex-1 flex items-center gap-[8px]">
-                <span
-                  class="text-sm"
-                  :class="!soundEnabled ? 'text-#4fd1c5' : ''"
-                  >关闭</span
-                >
                 <button
                   type="button"
-                  class="relative h-[18px] w-[34px] rounded-[999px] border border-white/10 bg-[#111214] p-0 transition-colors"
-                  :class="
-                    soundEnabled
-                      ? '!border-[rgba(20,199,225,0.75)] !bg-[rgba(20,199,225,0.35)]'
-                      : ''
-                  "
-                  @click="soundEnabled = !soundEnabled"
+                  class="border-0 bg-transparent p-0"
+                  :class="!soundEnabled ? 'text-theme' : 'text-white'"
+                  @click="soundEnabled = false"
                 >
-                  <span
-                    class="absolute left-[1px] top-[1px] h-[14px] w-[14px] rounded-[999px] bg-white transition-transform"
-                    :class="soundEnabled ? 'translate-x-[16px]' : ''"
-                  />
+                  关闭
                 </button>
-                <span
-                  class="text-sm"
-                  :class="soundEnabled ? 'text-#4fd1c5' : ''"
-                  >开启（与画面同步）</span
+                <n-switch v-model:value="soundEnabled" size="small" />
+                <button
+                  type="button"
+                  class="border-0 bg-transparent p-0"
+                  :class="soundEnabled ? 'text-theme' : 'text-white'"
+                  @click="soundEnabled = true"
                 >
+                  开启（与画面同步）
+                </button>
                 <n-tooltip trigger="hover">
                   <template #trigger>
                     <i
@@ -200,31 +235,23 @@ const motionOptions = [
                 样片模式:
               </div>
               <div class="min-w-0 flex-1 flex items-center gap-[8px]">
-                <span
-                  class="text-sm"
-                  :class="!storyboardEnabled ? 'text-#4fd1c5' : ''"
-                  >关闭</span
-                >
                 <button
                   type="button"
-                  class="relative h-[18px] w-[34px] rounded-[999px] border border-white/10 bg-[#111214] p-0 transition-colors"
-                  :class="
-                    storyboardEnabled
-                      ? '!border-[rgba(20,199,225,0.75)] !bg-[rgba(20,199,225,0.35)]'
-                      : ''
-                  "
-                  @click="storyboardEnabled = !storyboardEnabled"
+                  class="border-0 bg-transparent p-0"
+                  :class="!storyboardEnabled ? 'text-theme' : 'text-white'"
+                  @click="storyboardEnabled = false"
                 >
-                  <span
-                    class="absolute left-[1px] top-[1px] h-[14px] w-[14px] rounded-[999px] bg-white transition-transform"
-                    :class="storyboardEnabled ? 'translate-x-[16px]' : ''"
-                  />
+                  关闭
                 </button>
-                <span
-                  class="text-sm"
-                  :class="storyboardEnabled ? 'text-#4fd1c5' : ''"
-                  >开启</span
+                <n-switch v-model:value="storyboardEnabled" size="small" />
+                <button
+                  type="button"
+                  class="border-0 bg-transparent p-0"
+                  :class="storyboardEnabled ? 'text-theme' : 'text-white'"
+                  @click="storyboardEnabled = true"
                 >
+                  开启
+                </button>
                 <n-tooltip trigger="hover">
                   <template #trigger>
                     <i
@@ -236,7 +263,7 @@ const motionOptions = [
               </div>
             </div>
 
-            <div class="mb-[12px] flex items-start gap-[10px]">
+            <div class="mb-[12px] flex items-center gap-[10px]">
               <div class="shrink-0 pt-[2px] text-sm text-white/52">
                 随机种子:
               </div>
@@ -247,7 +274,7 @@ const motionOptions = [
                     :key="option.value"
                     :value="option.value"
                     :label="option.label"
-                    class="!border-white/8 !bg-[#151618] !px-[10px] !text-sm !text-white/58 transition-colors [&.n-radio-button--checked]:!border-[#14c7e1] [&.n-radio-button--checked]:!bg-[#14c7e1] [&.n-radio-button--checked]:!text-white [&_.n-radio-button__state-border]:!hidden"
+                    class="!px-[10px] transition-colors"
                   />
                 </n-radio-group>
                 <n-tooltip trigger="hover">
@@ -270,32 +297,26 @@ const motionOptions = [
                   v-model="prompt"
                   type="textarea"
                   :autosize="{ minRows: 8, maxRows: 8 }"
-                  class="text-sm [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]:!border-white/8 [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__textarea-el]:!text-sm [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-sm [&_.n-input__placeholder]:!text-white/28"
+                  class="text-sm [&_.n-input-wrapper]:!rounded-[4px] [&_.n-input-wrapper]: [&_.n-input-wrapper]:!bg-[#161719] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[rgba(35,208,228,0.88)] [&_.n-input__textarea-el]:!text-sm [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-sm [&_.n-input__placeholder]:!text-white/28"
                   placeholder="描述你想生成的视频画面，例如：戴着围巾穿着蓝色T恤的男生和柯基小狗，坐在草坪上，3D卡通风格"
                 />
               </div>
             </div>
 
             <div
-              class="mt-[14px] flex whitespace-nowrap items-center justify-between gap-[10px]"
+              class="mt-[14px] flex items-center gap-[5px] text-sm text-white/48"
             >
-              <div class="flex items-center gap-[5px] text-xs text-white/48">
-                <span>消耗算力：</span>
-                <n-icon
-                  class="text-[#ffd24c]"
-                  :size="14"
-                  :component="Currency"
-                />
-                <span class="font-semibold text-[#ffd24c]">10000</span>
-                <n-tooltip trigger="hover">
-                  <template #trigger>
-                    <i
-                      class="ml-[8px] i-mingcute-question-line text-sm text-white/48 cursor-pointer"
-                    ></i>
-                  </template>
-                  根据视频时长计算
-                </n-tooltip>
-              </div>
+              <span>消耗算力：</span>
+              <n-icon class="text-[#ffd24c]" :size="14" :component="Currency" />
+              <span class="font-semibold text-[#ffd24c]">10000</span>
+              <n-tooltip trigger="hover">
+                <template #trigger>
+                  <i
+                    class="i-mingcute-question-line text-sm text-white/48 cursor-pointer"
+                  ></i>
+                </template>
+                根据视频时长计算
+              </n-tooltip>
             </div>
             <n-button
               type="warning"
@@ -317,111 +338,85 @@ const motionOptions = [
           </div>
 
           <div class="border-b border-white/8 p-[14px]">
-            <div class="mb-[8px] text-sm text-[#f5b445]">
+            <div class="mb-[8px] text-xs text-[#f5b445]">
               首帧图片（开始画面）
             </div>
 
-            <div
-              class="mb-[10px] flex gap-[8px] rounded-[6px] bg-[#121315] p-[4px]"
+            <UploadArea
+              :has-file="!!imagePreview"
+              accept="image/jpeg,image/jpg,image/png,image/webp"
+              description="JPG、PNG、JPEG、WEBP，30MB以内"
+              @file-change="onImageChange"
             >
-              <label
-                class="inline-flex cursor-pointer items-center gap-[6px] px-[8px] py-[5px] text-sm text-white/72"
-              >
-                <input
-                  v-model="imageSource"
-                  type="radio"
-                  value="local"
-                  class="accent-[#18d2e5]"
-                />
-                本地上传
-              </label>
-              <label
-                class="inline-flex cursor-pointer items-center gap-[6px] px-[8px] py-[5px] text-sm text-white/72"
-              >
-                <input
-                  v-model="imageSource"
-                  type="radio"
-                  value="cloud"
-                  class="accent-[#18d2e5]"
-                />
-                云盘选择
-              </label>
-            </div>
-
-            <div
-              class="rounded-[4px] border border-white/5 bg-[#1b1c1e] p-[10px]"
-            >
-              <div
-                class="flex min-h-[126px] flex-col items-center justify-center rounded-[4px] border border-dashed border-white/9 bg-[linear-gradient(180deg,#1d1e20_0%,#1a1b1d_100%)] text-center"
-              >
-                <n-icon
-                  :size="38"
-                  :component="CloudUpload"
-                  class="text-white/62"
-                />
-                <div class="mt-[10px] text-sm text-white/58">
-                  Drop file here or
-                  <span class="text-[#16d4e4]">click to upload</span>
+              <template #uploaded>
+                <div
+                  class="rounded-[4px] border border-white/5 bg-[#1b1c1e] p-[10px]"
+                >
+                  <div class="mb-[10px] text-sm text-white/70">
+                    已上传首帧图片
+                  </div>
+                  <img
+                    :src="imagePreview"
+                    alt="首帧图片预览"
+                    class="h-[180px] w-full rounded-[4px] object-contain"
+                  />
+                  <div
+                    class="mt-[10px] flex items-center justify-between text-xs text-white/60"
+                  >
+                    <span>{{ imageFile?.name || '已选择文件' }}</span>
+                    <n-button
+                      type="error"
+                      size="tiny"
+                      class="!px-3 !rounded-[4px] !text-xs"
+                      @click="removeImage"
+                    >
+                      重置
+                    </n-button>
+                  </div>
                 </div>
-              </div>
-              <div class="mt-[10px] text-xs text-white/30">
-                JPG、PNG、JPEG、WEBP，30MB以内
-              </div>
-            </div>
+              </template>
+            </UploadArea>
           </div>
 
           <div class="p-[14px]">
-            <div class="mb-[8px] text-sm text-[#f5b445]">
+            <div class="mb-[8px] text-xs text-[#f5b445]">
               尾帧图片（结束画面）
             </div>
 
-            <div
-              class="mb-[10px] flex gap-[8px] rounded-[6px] bg-[#121315] p-[4px]"
+            <UploadArea
+              :has-file="!!tailPreview"
+              accept="image/jpeg,image/jpg,image/png,image/webp"
+              description="JPG、PNG、JPEG、WEBP，30MB以内"
+              @file-change="onTailImageChange"
             >
-              <label
-                class="inline-flex cursor-pointer items-center gap-[6px] px-[8px] py-[5px] text-sm text-white/72"
-              >
-                <input
-                  v-model="tailImageSource"
-                  type="radio"
-                  value="local"
-                  class="accent-[#18d2e5]"
-                />
-                本地上传
-              </label>
-              <label
-                class="inline-flex cursor-pointer items-center gap-[6px] px-[8px] py-[5px] text-sm text-white/72"
-              >
-                <input
-                  v-model="tailImageSource"
-                  type="radio"
-                  value="cloud"
-                  class="accent-[#18d2e5]"
-                />
-                云盘选择
-              </label>
-            </div>
-
-            <div
-              class="rounded-[4px] border border-white/5 bg-[#1b1c1e] p-[10px]"
-            >
-              <div
-                class="flex min-h-[126px] flex-col items-center justify-center rounded-[4px] border border-dashed border-white/9 bg-[linear-gradient(180deg,#1d1e20_0%,#1a1b1d_100%)] text-center"
-              >
-                <n-icon
-                  :size="38"
-                  :component="CloudUpload"
-                  class="text-white/62"
-                />
-                <div class="mt-[10px] text-sm text-white/58">
-                  Drop file here or
-                  <span class="text-[#16d4e4]">click to upload</span>
+              <template #uploaded>
+                <div
+                  class="rounded-[4px] border border-white/5 bg-[#1b1c1e] p-[10px]"
+                >
+                  <div class="mb-[10px] text-sm text-white/70">
+                    已上传尾帧图片
+                  </div>
+                  <img
+                    :src="tailPreview"
+                    alt="尾帧图片预览"
+                    class="h-[180px] w-full rounded-[4px] object-contain"
+                  />
+                  <div
+                    class="mt-[10px] flex items-center justify-between text-xs text-white/60"
+                  >
+                    <span>{{ tailImageFile?.name || '已选择文件' }}</span>
+                    <n-button
+                      type="error"
+                      size="tiny"
+                      class="!px-3 !rounded-[4px] !text-xs"
+                      @click="removeTailImage"
+                    >
+                      重置
+                    </n-button>
+                  </div>
                 </div>
-              </div>
-              <div class="mt-[10px] text-xs text-white/30">
-                JPG、PNG、JPEG、WEBP，30MB以内
-              </div>
-            </div>
+              </template>
+            </UploadArea>
           </div>
         </section>
 
