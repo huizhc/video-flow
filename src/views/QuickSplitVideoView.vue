@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 import {
   NButton,
   NInput,
@@ -16,9 +16,10 @@ import {
   NSteps,
   useMessage,
   NTooltip,
+  NIcon,
 } from 'naive-ui'
 import { showUploadModal } from '@/utils/modal'
-import { Currency } from '@vicons/carbon'
+import { Currency, TrashCan } from '@vicons/carbon'
 
 const message = useMessage()
 const currentStep = ref(1)
@@ -53,6 +54,25 @@ const regionOptions = [
   { label: '日本/韩国', value: '日本/韩国' },
 ]
 const scripts = ref(['', '', '', '', ''])
+const avatarFiles = ref([])
+const materialDescriptionPrefix =
+  '优先使用 实拍 制作片段，若需使用工具15/工具18 制作片段，可参考使用以下提示词'
+const materialSections = ref([
+  {
+    key: 'hook',
+    title: '视频钩子（片段最少需要 1 秒）',
+    description:
+      '严格遵循参考图的画面风格与主体。4~10 秒，开场即用强视觉冲击：产品大特写或悬念场景，运镜干脆，主体清晰，干净布光，画面稳定无抖动。',
+    files: [],
+  },
+  {
+    key: 'package',
+    title: '产品包装（片段最少需要 4 秒）',
+    description:
+      '严格遵循参考图中的包装外观。4~10 秒，慢速平移或稳定手持展示包装盒，LOGO 与文字清晰可读，纯色或简洁背景，色彩还原准确，商业棚拍质感。',
+    files: [],
+  },
+])
 
 const stepItems = [
   { index: 1, label: '口播文案' },
@@ -73,27 +93,6 @@ const voiceStyleOptions = [
 ]
 
 const totalPower = computed(() => 5150)
-
-const materialSections = [
-  {
-    key: 'hook',
-    title: '视频钩子（片段最少需要 1 秒）',
-    description:
-      '提示词严谨偏参考丰富的画面风格与主体。4~10 秒，开场即用爆发性冲击：产品大特写或悬念场景，进镜干脆。主体清晰，干净消光，画面稳定无抖动。',
-    thumbnails: [
-      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=300&q=80',
-    ],
-  },
-  {
-    key: 'package',
-    title: '产品包装（片段最少需要 4 秒）',
-    description:
-      '提示词严谨偏参考丰富的包装外观，4~10 秒，镜头平移或稳定手持展示包装、LOGO 与文字清晰可读，转场或镜头清晰，色彩还原准确，商业感拍质感。',
-    thumbnails: [
-      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=300&q=80',
-    ],
-  },
-]
 
 const stylePage = ref(1)
 const stylePageSize = 10
@@ -292,15 +291,52 @@ function handleAddAvatar() {
     accept: '.jpg,.png,.jpeg',
     max: 5,
     description: '支持 jpg/png，最多 5 张',
+    onChange: (data) => {
+      if (data.fileList && data.fileList.length > 0) {
+        data.fileList.forEach((file) => {
+          if (!avatarFiles.value.some((f) => f.name === file.name)) {
+            const rawFile = file.file || file
+            avatarFiles.value.push({
+              name: file.name,
+              status: file.status,
+              url: URL.createObjectURL(rawFile),
+              objectUrl: true,
+            })
+          }
+        })
+        message.success('上传成功')
+      }
+    },
   })
 }
 
-function handleAddMaterial() {
+function getMaterialSection(sectionKey) {
+  return materialSections.value.find((section) => section.key === sectionKey)
+}
+
+function handleAddMaterialToSection(sectionKey) {
   showUploadModal({
     title: '上传视频素材',
-    accept: '.mp4,.avi,.mkv',
+    accept: '.mp4,.avi,.mkv,.jpg,.png,.jpeg',
     max: 5,
-    description: '支持 mp4/avi/mkv，最多 5 个',
+    description: '支持图片/视频，最多 5 个',
+    onChange: (data) => {
+      const section = getMaterialSection(sectionKey)
+      if (!section || !data.fileList || data.fileList.length === 0) return
+      data.fileList.forEach((file) => {
+        if (!section.files.some((f) => f.name === file.name)) {
+          const rawFile = file.file || file
+          section.files.push({
+            name: file.name,
+            status: file.status,
+            url: URL.createObjectURL(rawFile),
+            objectUrl: true,
+            mimeType: rawFile.type || '',
+          })
+        }
+      })
+      message.success('上传成功')
+    },
   })
 }
 
@@ -313,6 +349,10 @@ async function handleCopy(text) {
   }
 }
 
+function getMaterialDescriptionText(description) {
+  return `${description}`
+}
+
 function selectStyle(index) {
   const actualIndex = (stylePage.value - 1) * stylePageSize + index
   selectedStyle.value = actualIndex
@@ -321,6 +361,37 @@ function selectStyle(index) {
 function cancelSelection() {
   selectedStyle.value = null
 }
+
+function removeAvatarFile(index) {
+  const file = avatarFiles.value[index]
+  if (file?.objectUrl && file.url) URL.revokeObjectURL(file.url)
+  avatarFiles.value.splice(index, 1)
+}
+
+function removeMaterialFile(sectionKey, index) {
+  const section = getMaterialSection(sectionKey)
+  if (!section) return
+  const file = section.files[index]
+  if (file?.objectUrl && file.url) URL.revokeObjectURL(file.url)
+  section.files.splice(index, 1)
+}
+
+function isVideoFile(file) {
+  const mimeType = file?.mimeType || ''
+  if (mimeType.startsWith('video/')) return true
+  return /\.(mp4|mov|avi|mkv|webm)$/i.test(file?.name || '')
+}
+
+onUnmounted(() => {
+  avatarFiles.value.forEach((file) => {
+    if (file?.objectUrl && file.url) URL.revokeObjectURL(file.url)
+  })
+  materialSections.value.forEach((section) => {
+    section.files.forEach((file) => {
+      if (file?.objectUrl && file.url) URL.revokeObjectURL(file.url)
+    })
+  })
+})
 </script>
 
 <template>
@@ -483,34 +554,62 @@ function cancelSelection() {
             class="grid flex-1 min-h-[410px] grid-cols-1 overflow-hidden min-[920px]:grid-cols-[400px_minmax(0,1fr)]"
           >
             <section
-              class="border-b min-w-[400px] border-white/8 p-[12px] min-[920px]:border-b-0 min-[920px]:border-r"
+              class="border-b min-w-[400px] border-white/8 p-[12px] min-[920px]:border-b-0 min-[920px]:border-r flex flex-col"
             >
               <div
                 class="mb-[10px] flex items-center justify-between gap-[8px]"
               >
-                <div class="text-sm font-medium text-white/88">主角照片</div>
+                <div class="text-sm font-semibold text-white/92">主角照片</div>
                 <div class="self-end text-xs text-white/36">
                   最多 5 张（与步骤1「口播数量」一致）
                 </div>
               </div>
 
-              <n-button
-                size="small"
-                ghost
-                class="flex h-[102px] w-[84px] flex-col items-center justify-center rounded-[2px] border border-dashed border-white/18 bg-[#18191b] text-white/52"
-                @click="handleAddAvatar"
-                :native-type="'button'"
-              >
-                <div class="text-[28px] leading-none">+</div>
-                <div class="mt-[6px] text-sm">添加主角</div>
-              </n-button>
+              <div class="flex-1 overflow-y-auto">
+                <div class="flex flex-wrap gap-[12px] pb-[10px]">
+                  <div
+                    v-for="(file, index) in avatarFiles"
+                    :key="`avatar-${index}`"
+                    class="relative h-[112px] w-[112px] overflow-hidden rounded-[14px] border border-white/12 bg-[#151515] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.03)]"
+                  >
+                    <img
+                      :src="file.url"
+                      :alt="file.name"
+                      class="h-full w-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      class="absolute right-[10px] top-[10px] flex h-[30px] w-[30px] items-center justify-center rounded-full bg-black/82 text-white/88"
+                      @click="removeAvatarFile(index)"
+                    >
+                      <n-icon :component="TrashCan" :size="18" />
+                    </button>
+                    <div class="absolute inset-x-[12px] bottom-[10px]">
+                      <div class="truncate text-sm font-semibold text-white">
+                        {{ file.name }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    class="flex h-[112px] w-[112px] flex-col items-center justify-center rounded-[14px] border-2 border-dashed border-white/22 bg-[#202020] text-white/60"
+                    @click="handleAddAvatar"
+                  >
+                    <div class="text-sm leading-none text-white/55">+</div>
+                    <div class="mt-[8px] text-sm font-medium text-white/52">
+                      添加主角
+                    </div>
+                  </button>
+                </div>
+              </div>
             </section>
 
             <section class="min-w-0 p-[12px] flex flex-col">
               <div
                 class="mb-[10px] flex items-center justify-between gap-[10px]"
               >
-                <div class="text-sm font-medium text-white/88">
+                <div class="text-sm font-semibold text-white/92">
                   素材列表（每个素材时长最少要4秒）
                 </div>
                 <div class="self-end text-xs text-white/36">
@@ -523,66 +622,92 @@ function cancelSelection() {
                   <div
                     v-for="section in materialSections"
                     :key="section.key"
-                    class="rounded-[4px] border border-#ffffff10 border-solid border-[1px] bg-[#222325]"
+                    class="rounded-[10px] border border-white/10 bg-[#1f1f1f] p-[10px]"
                   >
-                    <div class="px-[10px] pt-[10px] text-sm text-white/64">
+                    <div
+                      class="px-[2px] pt-[2px] text-xs font-medium text-white/56"
+                    >
                       {{ section.title }}
                     </div>
 
-                    <div class="px-[10px] py-[8px]">
+                    <div class="px-[2px] py-[10px]">
                       <div
-                        class="relative rounded-[4px] border border-white/8 bg-[#111214] px-[10px] py-[10px]"
+                        class="relative rounded-[10px] border border-white/10 bg-[#181818] px-[12px] py-[12px]"
                       >
                         <n-button
                           size="small"
-                          ghost
-                          class="absolute right-[10px] top-[10px] cursor-pointer border-0 bg-transparent p-0 text-sm text-[#18d2e5]"
-                          @click="handleCopy(section.description)"
+                          quaternary
+                          class="absolute right-[10px] top-[10px] cursor-pointer border-0 bg-transparent p-0 text-xs font-medium text-[#18d2e5]"
+                          @click="
+                            handleCopy(
+                              getMaterialDescriptionText(section.description)
+                            )
+                          "
                           :native-type="'button'"
                         >
                           复制
                         </n-button>
-                        <div class="self-end pb-[5px] text-xs text-white/32">
-                          优先使用 实拍 制作片段，若需使用工具15/工具18
-                          制作片段，可参考使用以下提示词
+                        <div
+                          class="pb-[4px] pr-[52px] text-xs leading-[1.7] text-white/42"
+                        >
+                          {{ materialDescriptionPrefix }}
                         </div>
                         <div
-                          class="self-end pr-[48px] text-xs leading-[1.65] text-white/58"
+                          class="pb-[8px] pr-[52px] whitespace-pre-line text-xs leading-[1.7] text-white/72"
                         >
                           {{ section.description }}
                         </div>
                       </div>
 
                       <div
-                        class="mt-[8px] flex items-start gap-[8px] overflow-x-auto pb-[2px]"
+                        class="mt-[10px] flex items-start gap-[10px] overflow-x-auto pb-[2px]"
                       >
-                        <n-button
-                          v-for="(image, index) in section.thumbnails"
+                        <div
+                          v-for="(file, index) in section.files"
                           :key="`${section.key}-${index}`"
-                          size="small"
-                          ghost
-                          class="group relative h-[92px] w-[80px] shrink-0 overflow-hidden rounded-[2px] border border-white/8 bg-[#17181a] p-0"
-                          :native-type="'button'"
+                          class="relative h-[112px] w-[112px] shrink-0 overflow-hidden rounded-[8px] border border-white/10 bg-[#111]"
                         >
                           <img
-                            :src="image"
-                            alt=""
-                            class="h-full w-full object-cover opacity-70"
-                            loading="lazy"
-                            referrerpolicy="no-referrer"
+                            v-if="!isVideoFile(file)"
+                            :src="file.url"
+                            :alt="file.name"
+                            class="h-full w-full object-cover"
                           />
-                        </n-button>
+                          <video
+                            v-else
+                            :src="file.url"
+                            class="h-full w-full object-cover"
+                            muted
+                            loop
+                            playsinline
+                          />
+                          <button
+                            type="button"
+                            class="absolute right-[6px] top-[6px] flex h-[24px] w-[24px] items-center justify-center rounded-full bg-black/72 text-white/88"
+                            @click="removeMaterialFile(section.key, index)"
+                          >
+                            <n-icon :component="TrashCan" :size="14" />
+                          </button>
+                          <div
+                            v-if="isVideoFile(file)"
+                            class="absolute left-[8px] bottom-[8px] rounded-[4px] bg-black/72 px-[6px] py-[2px] text-xs text-white"
+                          >
+                            3.84s
+                          </div>
+                        </div>
 
-                        <n-button
-                          size="small"
-                          ghost
-                          class="flex h-[92px] w-[80px] shrink-0 flex-col items-center justify-center rounded-[2px] border border-dashed border-white/18 bg-[#18191b] text-white/52 p-0"
-                          @click="handleAddMaterial"
-                          :native-type="'button'"
+                        <button
+                          type="button"
+                          class="flex h-[112px] w-[112px] shrink-0 flex-col items-center justify-center rounded-[8px] border-2 border-dashed border-white/22 bg-[#242424] text-white/52"
+                          @click="handleAddMaterialToSection(section.key)"
                         >
-                          <div class="text-[26px] leading-none">+</div>
-                          <div class="mt-[6px] text-sm">添加素材</div>
-                        </n-button>
+                          <div class="text-sm leading-none text-white/52">
+                            +
+                          </div>
+                          <div class="mt-[8px] text-sm text-white/50">
+                            添加素材
+                          </div>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -597,22 +722,19 @@ function cancelSelection() {
             class="flex-1 overflow-hidden min-h-[410px] flex flex-col justify-between p-[10px]"
           >
             <div class="mb-[8px] flex gap-y-[15px] flex-col items-center">
-              <div class="flex items-center gap-[12px]">
-                <template v-if="selectedStyleInfo">
-                  <span class="self-end text-xs text-white/45">已选：</span>
-                  <span class="text-sm font-medium text-[#18d2e5]">{{
-                    selectedStyleInfo.title
-                  }}</span>
-                  <n-button
-                    size="small"
-                    ghost
-                    class="border-0 bg-transparent p-0 text-sm text-white/32 hover:text-white/64"
-                    @click="cancelSelection"
-                    :native-type="'button'"
-                  >
-                    <i class="i-carbon-close text-[#18d2e5] text-[16px]"></i>
-                  </n-button>
-                </template>
+              <div class="flex items-center" v-if="selectedStyleInfo">
+                <span class="text-sm font-medium text-[#18d2e5]"
+                  >已选择：{{ selectedStyleInfo.title }}</span
+                >
+                <n-button
+                  size="small"
+                  quaternary
+                  class="border-0 ml-[2px] bg-transparent! p-0 text-sm text-white/32 hover:text-white/64"
+                  @click="cancelSelection"
+                  :native-type="'button'"
+                >
+                  <i class="i-carbon-close text-sm text-[#18d2e5]"></i>
+                </n-button>
               </div>
               <n-pagination
                 v-model:page="stylePage"
@@ -624,19 +746,19 @@ function cancelSelection() {
               />
             </div>
 
-            <n-scrollbar class="flex-1 overflow-hidden pr-[4px]">
+            <n-scrollbar class="flex-1 pr-[4px]">
               <div
-                class="grid grid-cols-2 gap-[6px] min-[760px]:grid-cols-4 min-[980px]:grid-cols-5"
+                class="grid grid-cols-2 gap-[15px] py-[10px] px-[10px] sm:grid-cols-5"
               >
-                <n-button
+                <div
                   v-for="(item, index) in pagedStyleCards"
                   :key="item.title + index"
                   size="small"
                   ghost
-                  class="relative aspect-[0.76] overflow-hidden grid grid-cols-1 grid-rows-[1fr_30px] rounded-[2px] border bg-[#151618] text-left p-0"
+                  class="relative w-full grid-rows-[1fr_34px] aspect-152/247 overflow-hidden grid grid-cols-1 rounded-[8px] border-[2px] border-solid border-[#ffffff10] bg-[#151618] text-left p-0"
                   :class="
                     selectedStyle === (stylePage - 1) * stylePageSize + index
-                      ? 'border-[#18d2e5] shadow-[0_0_0_1px_rgba(24,210,229,0.35)]'
+                      ? 'border-[#18d2e5]!'
                       : 'border-white/8'
                   "
                   @click="selectStyle(index)"
@@ -644,7 +766,7 @@ function cancelSelection() {
                 >
                   <video
                     :src="item.video"
-                    class="h-full w-full object-cover transition-transform duration-400 group-hover:scale-103"
+                    class="h-full z-1 w-full object-cover transition-transform duration-400 group-hover:scale-103"
                     autoplay
                     muted
                     loop
@@ -652,30 +774,20 @@ function cancelSelection() {
                     :poster="item.image"
                     controls
                   />
-                  <!-- <div
-                    class="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0.55)_68%,rgba(0,0,0,0.9)_100%)]" /> -->
-
                   <div
                     v-if="
                       selectedStyle === (stylePage - 1) * stylePageSize + index
                     "
-                    class="absolute right-[8px] top-[8px] z-10 text-[#18d2e5]"
+                    class="absolute right-[8px] top-[8px] z-10 flex h-[24px] w-[24px] items-center justify-center rounded-full border border-[#18d2e5] bg-[#18d2e5] text-[#fff] [box-shadow:1px_1px_3px_2px_rgba(24,210,229,0.5)]"
                   >
-                    <i class="i-carbon-checkmark-circle text-[20px]"></i>
+                    <i class="i-carbon-checkmark text-sm"></i>
                   </div>
-
-                  <!-- <div
-                    class="absolute left-[8px] top-[8px] rounded-[2px] bg-[#ff6a00] px-[4px] py-[1px] text-[9px] font-semibold text-white">
-                    热门
-                  </div> -->
-                  <div class="h-full flex justify-center items-center">
-                    <div
-                      class="text-sm text-center font-extrabold text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
-                    >
-                      {{ item.title }}
-                    </div>
+                  <div
+                    class="text-sm py-[6px] h-full text-center font-extrabold text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]"
+                  >
+                    {{ item.title }}
                   </div>
-                </n-button>
+                </div>
               </div>
             </n-scrollbar>
           </div>
@@ -688,12 +800,12 @@ function cancelSelection() {
             class="flex items-center gap-[6px] self-end text-sm text-white/48"
           >
             <span>消耗算力：</span>
-            <i class="i-carbon-currency text-[#ffd24c] text-[14px]"></i>
+            <i class="i-carbon-currency text-sm text-[#ffd24c]"></i>
             <span class="font-medium text-[#ffd24c]">{{ totalPower }}</span>
             <n-tooltip trigger="hover">
               <template #trigger>
                 <i
-                  class="i-mingcute-question-line text-white/38 text-[12px] cursor-pointer"
+                  class="i-mingcute-question-line text-xs text-white/38 cursor-pointer"
                 ></i>
               </template>
               口播内容字数（150算力/500字，如果有主角则，1800算力/50字）+视频总数*1000算力
@@ -740,7 +852,7 @@ function cancelSelection() {
           <n-button
             size="small"
             ghost
-            class="inline-flex h-[18px] w-[18px] items-center justify-center border-0 bg-transparent p-0 text-[18px] leading-none text-white/55"
+            class="inline-flex h-[18px] w-[18px] items-center justify-center border-0 bg-transparent p-0 text-sm leading-none text-white/55"
             @click="closeVoiceModal"
             :native-type="'button'"
           >
@@ -764,7 +876,7 @@ function cancelSelection() {
               class="ml-[2px] inline-flex h-[34px] w-[34px] items-center justify-center rounded-full border border-white/65 bg-transparent text-white/78"
               :native-type="'button'"
             >
-              <i class="i-carbon-play-filled-alt text-[16px]"></i>
+              <i class="i-carbon-play-filled-alt text-sm"></i>
             </n-button>
           </div>
 
@@ -810,12 +922,12 @@ function cancelSelection() {
       >
         <div class="mb-[22px] flex items-start justify-between">
           <div>
-            <div class="text-xl font-semibold text-white/96">填写产品信息</div>
+            <div class="text-sm font-semibold text-white/96">填写产品信息</div>
           </div>
           <n-button
             size="small"
             quaternary
-            class="inline-flex bg-transparent! h-[24px] w-[24px] items-center justify-center rounded-full p-0 text-[20px] leading-none text-white/55"
+            class="inline-flex bg-transparent! h-[24px] w-[24px] items-center justify-center rounded-full p-0 text-sm leading-none text-white/55"
             @click="closeProductInfoModal"
             :native-type="'button'"
           >

@@ -151,6 +151,23 @@ const themeOverrides = {
     // borderFocusWarning: '1px solid #5eead4',
     // borderDisabledWarning: '1px solid #4fd1c5',
     // rippleColorWarning: '#4fd1c5',
+    // Success
+    // colorSuccess: '#4fd1c5',
+    // colorHoverSuccess: '#5eead4',
+    // colorPressedSuccess: '#38b2ac',
+    // colorFocusSuccess: '#5eead4',
+    // colorDisabledSuccess: '#4fd1c5',
+    textColorSuccess: '#fff',
+    textColorHoverSuccess: '#fff',
+    textColorPressedSuccess: '#fff',
+    textColorFocusSuccess: '#fff',
+    textColorDisabledSuccess: '#fff',
+    // borderSuccess: '1px solid #4fd1c5',
+    // borderHoverSuccess: '1px solid #5eead4',
+    // borderPressedSuccess: '1px solid #38b2ac',
+    // borderFocusSuccess: '1px solid #5eead4',
+    // borderDisabledSuccess: '1px solid #4fd1c5',
+    // rippleColorSuccess: '#4fd1c5',
   },
 }
 </script>

@@ -19,6 +19,7 @@ const props = defineProps({
     type: String,
     default: 'local',
   },
+  onChange: Function,
 })
 
 const emit = defineEmits(['update:show', 'close', 'change'])
@@ -32,6 +33,12 @@ function handleClose() {
 
 function handleChange(data) {
   emit('change', data)
+  if (props.onChange && data.fileList && data.fileList.length > 0) {
+    props.onChange(data)
+    setTimeout(() => {
+      handleClose()
+    }, 600)
+  }
 }
 </script>
 
@@ -92,7 +99,13 @@ function handleChange(data) {
           </label>
         </div>
 
-        <n-upload multiple directory-dnd :max="max" :accept="accept" @change="handleChange">
+        <n-upload
+          multiple
+          directory-dnd
+          :max="max"
+          :accept="accept"
+          @change="handleChange"
+        >
           <n-upload-dragger
             class="!border-dashed !border-white/10 !bg-[#17181a] hover:!border-[#18d2e5]/40"
           >
