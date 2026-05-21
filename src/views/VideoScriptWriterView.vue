@@ -128,12 +128,12 @@ function sendMessage() {
           <span class="text-sm font-medium text-white/88">会话列表</span>
           <n-button
             type="primary"
-            size="tiny"
+            size="small"
             class="text-white !rounded-[6px] !border-0 !bg-[#18d2e5] !px-[12px] !text-sm !font-medium"
             @click="createConversation"
           >
             <template #icon>
-              <n-icon :component="Add" :size="14" />
+              <n-icon :component="Add" :size="18" />
             </template>
             新建会话
           </n-button>
@@ -145,27 +145,46 @@ function sendMessage() {
               v-for="item in conversations"
               :key="item.id"
               type="button"
-              class="group relative mb-[12px] w-full rounded-[8px] border border-white/8 bg-[#1a1b1d] p-[14px] text-left transition-all"
+              class="group relative mb-[12px] w-full overflow-hidden rounded-[8px] border border-white/8 bg-[#1a1b1d] p-[14px] text-left transition-all duration-200"
               :class="
                 item.id === activeConversationId
-                  ? '!border-[#18d2e5] bg-[#222428]'
+                  ? 'border-[#18d2e5] bg-[linear-gradient(180deg,rgba(24,210,229,0.16)_0%,rgba(34,36,40,0.96)_100%)] shadow-[0_0_0_1px_rgba(24,210,229,0.28),0_10px_24px_rgba(0,0,0,0.22)]'
                   : 'border-transparent hover:bg-white/4'
               "
               @click="selectConversation(item.id)"
             >
               <div class="flex items-start justify-between">
-                <div class="truncate text-sm font-bold text-white/92">
+                <div
+                  class="truncate text-sm font-bold"
+                  :class="
+                    item.id === activeConversationId
+                      ? 'text-white'
+                      : 'text-white/92'
+                  "
+                >
                   {{ item.title }}
                 </div>
                 <n-icon
                   :component="TrashCan"
                   :size="14"
-                  class="text-red-500/60 hover:text-red-500 transition-colors"
+                  class="transition-colors"
+                  :class="
+                    item.id === activeConversationId
+                      ? 'text-red-400/80 hover:text-red-300'
+                      : 'text-red-500/60 hover:text-red-500'
+                  "
                   @click.stop="deleteConversationById(item.id)"
                 />
               </div>
 
-              <div class="mt-[6px] truncate text-sm text-white/45">
+              <div
+                class="mt-[6px] truncate text-sm"
+                :class="
+                  item.id === activeConversationId
+                    ? 'text-white/72'
+                    : 'text-white/45'
+                "
+              >
                 {{
                   item.messages.length > 0
                     ? item.messages[item.messages.length - 1].content
@@ -173,7 +192,16 @@ function sendMessage() {
                 }}
               </div>
 
-              <div class="mt-[6px] text-xs text-white/25">刚刚</div>
+              <div
+                class="mt-[6px] text-xs"
+                :class="
+                  item.id === activeConversationId
+                    ? 'text-[#7ceaf4]'
+                    : 'text-white/25'
+                "
+              >
+                刚刚
+              </div>
             </button>
           </div>
         </n-scrollbar>
@@ -189,22 +217,24 @@ function sendMessage() {
             {{ activeConversation?.title || '新会话' }}
           </div>
           <div class="flex items-center gap-[8px]">
-            <button
+            <n-button
+              ghost
               type="button"
-              class="inline-flex h-[26px] items-center justify-center rounded-[4px] border border-white/8 bg-transparent text-sm text-white/45 transition-colors hover:text-white/70"
+              class="inline-flex h-[26px] items-center justify-center rounded-[4px] border-[1px] border-solid border-white/8 bg-transparent text-sm text-white/45 transition-colors hover:text-white/70"
               @click="deleteConversation"
             >
               <n-icon :component="TrashCan" :size="12" />
-              清空会话
-            </button>
-            <button
+              <span class="ml-[2px]">清空会话</span>
+            </n-button>
+            <n-button
+              ghost
               type="button"
-              class="inline-flex h-[26px] items-center justify-center rounded-[4px] border border-white/8 bg-transparent text-sm text-white/45 transition-colors hover:text-white/70"
+              class="inline-flex h-[26px] items-center justify-center rounded-[4px] border-[1px] border-solid border-white/8 bg-transparent text-sm text-white/45 transition-colors hover:text-white/70"
               @click="exportConversation"
             >
               <n-icon :component="Download" :size="12" />
-              导出会话
-            </button>
+              <span class="ml-[2px]">导出会话</span>
+            </n-button>
           </div>
         </div>
 
@@ -279,8 +309,10 @@ function sendMessage() {
                 </div>
 
                 <n-button
+                  quaternary
                   type="primary"
                   size="small"
+                  style="--n-border-hover: 0px solid transparent !important"
                   class="!h-[28px] text-#fff! shadow-none! rounded-[4px] !bg-[#3a73aa] !px-[12px] !text-sm !font-medium"
                   @click="sendMessage"
                 >
