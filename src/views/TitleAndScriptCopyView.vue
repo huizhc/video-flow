@@ -81,7 +81,7 @@ function startGenerate() {
                 type="textarea"
                 :autosize="{ minRows: 3, maxRows: 3 }"
                 placeholder="请输入产品名称，例如：护发素"
-                class="[&_.n-input-wrapper]:!rounded-[2px] text-[12px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22"
+                class="[&_.n-input-wrapper]:!rounded-[2px] text-sm [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22"
               />
               <div class="mt-[6px] text-xs text-white/28">例如：护发素</div>
             </div>
@@ -92,7 +92,7 @@ function startGenerate() {
                 type="textarea"
                 :autosize="{ minRows: 3, maxRows: 3 }"
                 placeholder="请输入产品卖点，例如：深层滋养，修复受损发质"
-                class="text-[12px] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22"
+                class="text-sm [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[8px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22"
               />
               <div class="mt-[6px] text-xs text-white/28">
                 例如：深层滋养，修复受损发质
@@ -100,35 +100,33 @@ function startGenerate() {
             </div>
 
             <div class="mb-[10px] flex items-center gap-[10px]">
-              <div class="w-[58px] shrink-0 text-sm text-white/52">
+              <div class="w-[80px] shrink-0 text-sm text-white/52">
                 原文语种:
               </div>
               <div class="min-w-0 flex-1">
                 <n-select
                   v-model:value="sourceLanguage"
                   :options="languageOptions"
-                  size="small"
-                  class="[&_.n-base-selection]:!min-h-[30px] [&_.n-base-selection]:!rounded-[4px] [&_.n-base-selection]:!border-white/8 [&_.n-base-selection]:!bg-[#161719] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[30px] [&_.n-base-selection-label]:!text-[11px] [&_.n-base-selection__input]:!text-[11px] [&_.n-base-selection__render-label]:!text-white/82"
+                  class="[&_.n-base-selection]:!min-h-[30px] [&_.n-base-selection]:!rounded-[4px] [&_.n-base-selection]:!border-white/8 [&_.n-base-selection]:!bg-[#161719] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[30px] [&_.n-base-selection__render-label]:!text-white/82"
                 />
               </div>
             </div>
 
             <div class="mb-[10px] flex items-center gap-[10px]">
-              <div class="w-[58px] shrink-0 text-sm text-white/52">
+              <div class="w-[80px] shrink-0 text-sm text-white/52">
                 目标国家:
               </div>
               <div class="min-w-0 flex-1">
                 <n-select
                   v-model:value="targetCountry"
                   :options="countryOptions"
-                  size="small"
-                  class="[&_.n-base-selection]:!min-h-[30px] [&_.n-base-selection]:!rounded-[4px] [&_.n-base-selection]:!border-white/8 [&_.n-base-selection]:!bg-[#161719] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[30px] [&_.n-base-selection-label]:!text-[11px] [&_.n-base-selection__input]:!text-[11px] [&_.n-base-selection__render-label]:!text-white/82"
+                  class="[&_.n-base-selection]:!min-h-[30px] [&_.n-base-selection]:!rounded-[4px] [&_.n-base-selection]:!border-white/8 [&_.n-base-selection]:!bg-[#161719] [&_.n-base-selection]:!shadow-none [&_.n-base-selection-label]:!h-[30px] [&_.n-base-selection__render-label]:!text-white/82"
                 />
               </div>
             </div>
 
             <div class="mb-[14px] flex items-start gap-[10px]">
-              <div class="w-[58px] shrink-0 pt-[8px] text-sm text-white/52">
+              <div class="w-[80px] shrink-0 pt-[8px] text-sm text-white/52">
                 目标人群:
               </div>
               <div class="min-w-0 flex-1">
@@ -137,13 +135,13 @@ function startGenerate() {
                   type="textarea"
                   :autosize="{ minRows: 2, maxRows: 2 }"
                   placeholder="例如：学生党，宝妈，健身爱好者，职场白领"
-                  class="text-[12px] [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[6px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!text-[11px] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22"
+                  class="text-sm [&_.n-input-wrapper]:!rounded-[2px] [&_.n-input-wrapper]:!border-white/10 [&_.n-input-wrapper]:!bg-[#151618] [&_.n-input-wrapper]:!px-[10px] [&_.n-input-wrapper]:!py-[6px] [&_.n-input-wrapper]:!shadow-none [&_.n-input-wrapper]:focus-within:!border-[#18d2e5] [&_.n-input__textarea-el]:!leading-[1.7] [&_.n-input__textarea-el]:!text-white/82 [&_.n-input__textarea-el]:!resize-none [&_.n-input__placeholder]:!text-white/22"
                 />
               </div>
             </div>
 
             <div class="mt-[10px] flex items-center justify-between">
-              <div class="flex items-center gap-[4px] text-xs text-white/44">
+              <div class="flex items-center gap-[4px] text-sm text-white/44">
                 <span>消耗算力：</span>
                 <n-icon
                   :component="Currency"
@@ -163,8 +161,7 @@ function startGenerate() {
 
               <n-button
                 type="primary"
-                size="small"
-                class="!h-[30px] !rounded-[4px] text-#fff! !border-0 !bg-[#18d2e5] !px-[16px] !text-[12px] !font-medium"
+                class="!h-[30px] !rounded-[4px] text-#fff! !border-0 !bg-[#18d2e5] !px-[16px] !text-sm !font-medium"
                 @click="startGenerate"
               >
                 开始执行
