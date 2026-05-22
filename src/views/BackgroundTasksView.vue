@@ -58,7 +58,7 @@ function handleRefresh() {}
         size="medium"
         placeholder="工具名称"
         clearable
-        class="w-44 sm:w-52"
+        class="w-[180px]!"
       />
       <n-select
         v-model:value="status"
@@ -96,7 +96,7 @@ function handleRefresh() {}
       >
         <n-empty description="暂无任务数据">
           <template #icon>
-            <n-icon :size="72" :depth="3" :component="View" />
+            <n-icon :size="44" :depth="3" :component="View" />
           </template>
         </n-empty>
       </div>
