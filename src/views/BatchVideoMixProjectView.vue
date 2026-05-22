@@ -672,7 +672,7 @@ onUnmounted(() => {
         </section>
 
         <section
-          class="rounded-[8px] border w-full border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]"
+          class="rounded-[8px] border h-0 min-h-full flex flex-col w-full border-white/8 bg-[linear-gradient(180deg,#232323_0%,#1f1f20_100%)]"
         >
           <div
             class="border-b border-white/8 bg-[linear-gradient(180deg,#383838_0%,#2f2f2f_100%)] px-3 py-2"
@@ -682,171 +682,172 @@ onUnmounted(() => {
               将按照以下顺序合并视频，每个镜头至少要有一个片段
             </div>
           </div>
-
-          <div class="space-y-4 p-3">
-            <div
-              v-for="(shot, shotIndex) in shots"
-              :key="shot.id"
-              class="rounded-[8px] border-[1px] border-solid border-[#4a4a4a] bg-[#202020] p-4 cursor-pointer"
-              @click="previewShot(shotIndex)"
-            >
+          <n-scrollbar class="flex-1 overflow-hidden">
+            <div class="space-y-4 p-3">
               <div
-                class="mb-4 flex items-center justify-between border-b border-[#4a4a4a] pb-3"
+                v-for="(shot, shotIndex) in shots"
+                :key="shot.id"
+                class="rounded-[8px] border-[1px] border-solid border-[#4a4a4a] bg-[#202020] p-4 cursor-pointer"
+                @click="previewShot(shotIndex)"
               >
-                <div class="flex min-w-0 items-center gap-3">
-                  <i class="i-carbon-move text-[20px] text-white/60"></i>
-                  <div
-                    class="flex items-center gap-3 text-sm font-bold leading-none"
-                  >
-                    <span class="text-white">镜头{{ shotIndex + 1 }}:</span>
-                    <span class="text-white">{{ shot.name }}</span>
-                  </div>
-                  <span class="text-xs font-bold text-white/55">
-                    S:{{ shot.start }}/E:{{ shot.end }}/D:{{ shot.duration }}
-                  </span>
-                </div>
-                <div class="flex items-center gap-4">
-                  <button
-                    type="button"
-                    class="btn-close flex h-6 w-6 items-center justify-center text-white/45 transition hover:text-white/70"
-                    aria-label="复制镜头"
-                  >
-                    <i class="i-carbon-copy text-[16px]"></i>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn-close flex h-6 w-6 items-center justify-center text-[#d46660] transition hover:text-[#ff8079]"
-                    aria-label="删除镜头"
-                    @click.stop="removeShot(shotIndex)"
-                  >
-                    <i class="i-carbon-trash-can text-[16px]"></i>
-                  </button>
-                </div>
-              </div>
-
-              <div class="mb-3 flex gap-3 border-b border-[#4a4a4a] pb-3">
                 <div
-                  v-for="(clip, clipIndex) in shot.clips"
-                  :key="clip.id"
-                  class="group relative h-[72px] w-[72px] overflow-hidden rounded-[6px] bg-[#c3c7cd]"
+                  class="mb-4 flex items-center justify-between border-b border-[#4a4a4a] pb-3"
                 >
-                  <video
-                    v-if="clip.url"
-                    :src="clip.url"
-                    muted
-                    class="h-full w-full object-cover"
-                  />
+                  <div class="flex min-w-0 items-center gap-3">
+                    <i class="i-carbon-move text-[20px] text-white/60"></i>
+                    <div
+                      class="flex items-center gap-3 text-sm font-bold leading-none"
+                    >
+                      <span class="text-white">镜头{{ shotIndex + 1 }}:</span>
+                      <span class="text-white">{{ shot.name }}</span>
+                    </div>
+                    <span class="text-xs font-bold text-white/55">
+                      S:{{ shot.start }}/E:{{ shot.end }}/D:{{ shot.duration }}
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <button
+                      type="button"
+                      class="btn-close flex h-6 w-6 items-center justify-center text-white/45 transition hover:text-white/70"
+                      aria-label="复制镜头"
+                    >
+                      <i class="i-carbon-copy text-[16px]"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="btn-close flex h-6 w-6 items-center justify-center text-[#d46660] transition hover:text-[#ff8079]"
+                      aria-label="删除镜头"
+                      @click.stop="removeShot(shotIndex)"
+                    >
+                      <i class="i-carbon-trash-can text-[16px]"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="mb-3 flex gap-3 border-b border-[#4a4a4a] pb-3">
+                  <div
+                    v-for="(clip, clipIndex) in shot.clips"
+                    :key="clip.id"
+                    class="group relative h-[72px] w-[72px] overflow-hidden rounded-[6px] bg-[#c3c7cd]"
+                  >
+                    <video
+                      v-if="clip.url"
+                      :src="clip.url"
+                      muted
+                      class="h-full w-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      class="absolute btn-close right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-black/55 text-xs text-white/80 opacity-0 transition group-hover:opacity-100"
+                      aria-label="删除片段"
+                      @click.stop="removeShotClip(shot, clipIndex)"
+                    >
+                      <i class="i-carbon-trash-can text-[18px] text-red"></i>
+                    </button>
+                    <div
+                      class="absolute bottom-1 right-1 rounded-[3px] bg-[#3d3f45] px-1.5 py-[1px] text-xs font-bold leading-none text-white"
+                    >
+                      4s
+                    </div>
+                  </div>
+
                   <button
                     type="button"
-                    class="absolute btn-close right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-black/55 text-xs text-white/80 opacity-0 transition group-hover:opacity-100"
-                    aria-label="删除片段"
-                    @click.stop="removeShotClip(shot, clipIndex)"
+                    class="flex h-[72px] w-[72px] items-center justify-center rounded-[6px] border-2 border-dashed border-[#4f4f4f] bg-[#1f1f1f] text-white/60 transition hover:border-[#18d2e5]/50 hover:text-white"
+                    aria-label="上传片段"
+                    @click.stop="openShotUploadModal(shotIndex)"
                   >
-                    <i class="i-carbon-trash-can text-[18px] text-red"></i>
+                    <i class="i-carbon-add text-[30px]"></i>
                   </button>
-                  <div
-                    class="absolute bottom-1 right-1 rounded-[3px] bg-[#3d3f45] px-1.5 py-[1px] text-xs font-bold leading-none text-white"
-                  >
-                    4s
-                  </div>
                 </div>
 
-                <button
-                  type="button"
-                  class="flex h-[72px] w-[72px] items-center justify-center rounded-[6px] border-2 border-dashed border-[#4f4f4f] bg-[#1f1f1f] text-white/60 transition hover:border-[#18d2e5]/50 hover:text-white"
-                  aria-label="上传片段"
-                  @click.stop="openShotUploadModal(shotIndex)"
+                <div
+                  class="space-y-2 text-sm font-bold leading-[1.45] text-white/55"
                 >
-                  <i class="i-carbon-add text-[30px]"></i>
-                </button>
-              </div>
-
-              <div
-                class="space-y-2 text-sm font-bold leading-[1.45] text-white/55"
-              >
-                <div class="flex items-center gap-4">
-                  <div class="w-[72px] shrink-0">口播内容:</div>
-                  <div class="min-w-0 text-white/62">{{ shot.speech }}</div>
-                </div>
-                <div class="flex items-center gap-4">
-                  <div class="w-[72px] shrink-0">口播翻译:</div>
-                  <div class="text-white/62">{{ shot.translation }}</div>
-                </div>
-                <div class="flex items-center gap-4">
-                  <div class="w-[72px] shrink-0">片段音频:</div>
-                  <n-radio-group
-                    v-model:value="shot.audioMode"
-                    size="small"
-                    class="custom-radio-group"
-                    @click.stop
-                  >
-                    <n-radio-button value="使用口播" label="使用口播" />
-                    <n-radio-button value="素材原音" label="素材原音" />
-                    <n-radio-button value="静音" label="静音" />
-                  </n-radio-group>
-                </div>
-                <div class="flex items-center gap-4">
-                  <div class="w-[72px] shrink-0">片段时长:</div>
-                  <n-radio-group
-                    v-model:value="shot.durationMode"
-                    size="small"
-                    class="custom-radio-group"
-                    @click.stop
-                  >
-                    <n-radio-button value="参考口播" label="参考口播" />
-                    <n-radio-button value="参考素材" label="参考素材" />
-                    <n-radio-button value="自定义" label="自定义" />
-                  </n-radio-group>
-                </div>
-                <div class="flex items-center gap-4">
-                  <div class="w-[72px] shrink-0">人物位置:</div>
-                  <n-radio-group
-                    v-model:value="shot.position"
-                    size="small"
-                    class="custom-radio-group"
-                    @click.stop
-                  >
-                    <n-radio-button value="正中（置底）" label="正中(置底)" />
-                    <n-radio-button value="左上" label="左上" />
-                    <n-radio-button value="右上" label="右上" />
-                    <n-radio-button value="左下" label="左下" />
-                    <n-radio-button value="右下" label="右下" />
-                  </n-radio-group>
-                </div>
-                <div class="flex items-center gap-4">
-                  <div class="w-[72px] shrink-0">片段标题:</div>
-                  <div class="flex flex-wrap items-center gap-2">
-                    <button
-                      v-for="(title, titleIndex) in shot.titles"
-                      :key="title.id"
-                      type="button"
-                      class="rounded-[3px] text-[#57d7ea] border-[1px] border-solid border-[#57d7ea10] bg-[rgba(87,_215,_234,_0.12)] px-2 py-1 text-xs transition"
-                      @click.stop="openTitleModal(shotIndex, titleIndex)"
+                  <div class="flex items-center gap-4">
+                    <div class="w-[72px] shrink-0">口播内容:</div>
+                    <div class="min-w-0 text-white/62">{{ shot.speech }}</div>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <div class="w-[72px] shrink-0">口播翻译:</div>
+                    <div class="text-white/62">{{ shot.translation }}</div>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <div class="w-[72px] shrink-0">片段音频:</div>
+                    <n-radio-group
+                      v-model:value="shot.audioMode"
+                      size="small"
+                      class="custom-radio-group"
+                      @click.stop
                     >
-                      {{ title.name }}
-                    </button>
-                    <button
-                      type="button"
-                      class="flex btn-close py-[2px] w-10 items-center justify-center rounded-[4px] border-[1px]! border-solid! border-[#57595e] bg-[#242529] text-white/70 transition hover:border-[#18d2e5]/70 hover:text-white"
-                      aria-label="添加片段标题"
-                      @click.stop="openTitleModal(shotIndex)"
+                      <n-radio-button value="使用口播" label="使用口播" />
+                      <n-radio-button value="素材原音" label="素材原音" />
+                      <n-radio-button value="静音" label="静音" />
+                    </n-radio-group>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <div class="w-[72px] shrink-0">片段时长:</div>
+                    <n-radio-group
+                      v-model:value="shot.durationMode"
+                      size="small"
+                      class="custom-radio-group"
+                      @click.stop
                     >
-                      <i class="i-carbon-add text-[18px]"></i>
-                    </button>
+                      <n-radio-button value="参考口播" label="参考口播" />
+                      <n-radio-button value="参考素材" label="参考素材" />
+                      <n-radio-button value="自定义" label="自定义" />
+                    </n-radio-group>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <div class="w-[72px] shrink-0">人物位置:</div>
+                    <n-radio-group
+                      v-model:value="shot.position"
+                      size="small"
+                      class="custom-radio-group"
+                      @click.stop
+                    >
+                      <n-radio-button value="正中（置底）" label="正中(置底)" />
+                      <n-radio-button value="左上" label="左上" />
+                      <n-radio-button value="右上" label="右上" />
+                      <n-radio-button value="左下" label="左下" />
+                      <n-radio-button value="右下" label="右下" />
+                    </n-radio-group>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <div class="w-[72px] shrink-0">片段标题:</div>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <button
+                        v-for="(title, titleIndex) in shot.titles"
+                        :key="title.id"
+                        type="button"
+                        class="rounded-[3px] text-[#57d7ea] border-[1px] border-solid border-[#57d7ea10] bg-[rgba(87,_215,_234,_0.12)] px-2 py-1 text-xs transition"
+                        @click.stop="openTitleModal(shotIndex, titleIndex)"
+                      >
+                        {{ title.name }}
+                      </button>
+                      <button
+                        type="button"
+                        class="flex btn-close py-[2px] w-10 items-center justify-center rounded-[4px] border-[1px]! border-solid! border-[#57595e] bg-[#242529] text-white/70 transition hover:border-[#18d2e5]/70 hover:text-white"
+                        aria-label="添加片段标题"
+                        @click.stop="openTitleModal(shotIndex)"
+                      >
+                        <i class="i-carbon-add text-[18px]"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <button
-              type="button"
-              class="flex h-[180px] w-full flex-col items-center justify-center rounded-[8px] border-[3px] border-dashed border-[#4a4a4a] bg-[#151515] text-white/60 transition hover:border-[#18d2e5]/50 hover:text-white"
-              @click="addShot"
-            >
-              <i class="i-carbon-add text-[42px]"></i>
-              <span class="mt-3 text-sm font-bold">添加镜头</span>
-            </button>
-          </div>
+              <button
+                type="button"
+                class="flex h-[180px] w-full flex-col items-center justify-center rounded-[8px] border-[3px] border-dashed border-[#4a4a4a] bg-[#151515] text-white/60 transition hover:border-[#18d2e5]/50 hover:text-white"
+                @click="addShot"
+              >
+                <i class="i-carbon-add text-[42px]"></i>
+                <span class="mt-3 text-sm font-bold">添加镜头</span>
+              </button>
+            </div>
+          </n-scrollbar>
         </section>
 
         <section
@@ -1066,7 +1067,7 @@ onUnmounted(() => {
             </div>
 
             <div class="pt-2">
-              <n-button ghost class="bg-[#4f8a2a]! w-full text-white!"
+              <n-button type="success" class="w-full text-white!"
                 >预览</n-button
               >
             </div>
