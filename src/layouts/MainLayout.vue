@@ -24,16 +24,15 @@ import {
   Video,
 } from '@vicons/carbon'
 import AppTopHeader from '@/components/layout/AppTopHeader.vue'
-import { useAuthStore } from '@/stores/auth'
 
 const route = useRoute()
 const router = useRouter()
-const auth = useAuthStore()
-
-const isLoggedIn = computed(() => auth.isLoggedIn)
 
 const collapsed = ref(false)
 const activeKey = ref(null)
+
+const showSider = computed(() => route.meta.showSider !== false)
+const showBackButton = computed(() => route.meta.showBackButton === true)
 
 watch(
   () => route.meta.menuKey,
@@ -104,9 +103,13 @@ function onMenuUpdate(key) {
 
 <template>
   <n-layout class="h-screen bg-[#121212]">
-    <app-top-header logo-route-name="tools-all" />
+    <app-top-header
+      logo-route-name="tools-all"
+      :show-back-button="showBackButton"
+    />
 
     <n-layout
+      v-if="showSider"
       has-sider
       class="bg-[#121212]"
       style="height: calc(100vh - 3.5rem)"
@@ -151,5 +154,12 @@ function onMenuUpdate(key) {
         <router-view />
       </n-layout-content>
     </n-layout>
+
+    <n-layout-content
+      v-else
+      class="h-[calc(100vh-3.5rem)] overflow-auto bg-[#121212]"
+    >
+      <router-view />
+    </n-layout-content>
   </n-layout>
 </template>

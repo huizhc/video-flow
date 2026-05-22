@@ -42,7 +42,8 @@ const router = createRouter({
     },
     {
       path: '/tool',
-      component: () => import('@/layouts/ToolLayout.vue'),
+      component: () => import('@/layouts/MainLayout.vue'),
+      meta: { showSider: false, showBackButton: true },
       children: [
         {
           path: 'remove-watermark',
