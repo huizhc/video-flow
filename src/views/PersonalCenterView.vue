@@ -4,15 +4,21 @@ import { useRoute, useRouter } from 'vue-router'
 import {
   NAvatar,
   NButton,
+  NCard,
+  NCheckbox,
   NDataTable,
   NDatePicker,
   NForm,
   NFormItem,
   NInput,
+  NInputNumber,
   NPagination,
+  NRadioButton,
+  NRadioGroup,
   NSelect,
   NTabPane,
   NTabs,
+  NTag,
   NIcon,
 } from 'naive-ui'
 import { Currency, TrashCan, User } from '@vicons/carbon'
@@ -97,7 +103,7 @@ const rechargePlans = [
 
 const selectedRecharge = ref('500w')
 const customRechargeEnabled = ref(false)
-const customRechargeAmount = ref('20')
+const customRechargeAmount = ref(20)
 const paymentMethod = ref('alipay')
 
 const customRechargePrice = computed(() => {
@@ -148,116 +154,110 @@ function openSupportQr() {
 <template>
   <div class="min-h-full bg-[#121212] p-4">
     <div class="flex flex-col xl:flex-row gap-6 mb-6 items-stretch">
-      <div
-        class="flex flex-col sm:flex-row gap-5 items-start sm:items-center rounded-2xl bg-[#1a1a1a] border border-[#2a2a2a] p-5 xl:flex-1 min-w-0"
+      <n-card
+        :bordered="false"
+        class="profile-surface xl:flex-1 min-w-0 !rounded-2xl"
+        content-class="!p-5"
       >
-        <n-avatar
-          round
-          :size="80"
-          src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=160&h=160&fit=crop&crop=face"
-          class="shrink-0 ring-2 ring-white/10"
-        />
-        <div class="flex-1 min-w-0 space-y-3">
-          <div class="text-2xl font-bold text-white tracking-tight">9527</div>
-          <div class="flex items-center gap-1.5 text-white text-sm font-medium">
-            <n-icon :size="18" :component="Currency" class="text-amber-400" />
-            5000 算力
+        <div
+          class="flex flex-col sm:flex-row gap-5 items-start sm:items-center"
+        >
+          <n-avatar
+            round
+            :size="80"
+            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=160&h=160&fit=crop&crop=face"
+            class="shrink-0 ring-2 ring-white/10"
+          />
+          <div class="flex-1 min-w-0 space-y-3">
+            <div class="text-2xl font-bold text-white tracking-tight">9527</div>
+            <div
+              class="flex items-center gap-1.5 text-white text-sm font-medium"
+            >
+              <n-icon :size="18" :component="Currency" class="text-amber-400" />
+              5000 算力
+            </div>
+            <n-button
+              secondary
+              size="small"
+              class="!bg-[#2d2d2d] !text-gray-300"
+              @click="clearCache"
+            >
+              <template #icon>
+                <n-icon :component="TrashCan" />
+              </template>
+              清除系统缓存
+            </n-button>
           </div>
-          <n-button
-            secondary
-            size="small"
-            class="!bg-[#2d2d2d] !text-gray-300"
-            @click="clearCache"
-          >
-            <template #icon>
-              <n-icon :component="TrashCan" />
-            </template>
-            清除系统缓存
-          </n-button>
         </div>
-      </div>
+      </n-card>
 
       <div
         class="grid grid-cols-2 lg:grid-cols-4 gap-3 xl:flex-[1.4] min-w-0 w-full"
       >
-        <button
-          type="button"
-          class="rounded-xl p-4 flex flex-col items-center text-center gap-2 min-h-[132px] justify-center cursor-pointer transition-colors w-full"
-          :class="
-            selectedRecharge === '200w'
-              ? 'bg-[#242424] border-2 border-amber-400/70 shadow-[0_0_16px_rgba(234,179,8,0.25)]'
-              : 'bg-[#242424] border border-[#333333] hover:bg-[#2a2a2a]'
-          "
-          @click="switchToRechargeTab('200w')"
+        <n-card
+          v-for="plan in rechargePlans"
+          :key="plan.key"
+          :bordered="false"
+          embedded
+          class="quick-recharge-card !rounded-xl cursor-pointer"
+          :class="{
+            'quick-recharge-card--active': selectedRecharge === plan.key,
+          }"
+          content-class="!p-4 h-full"
+          @click="switchToRechargeTab(plan.key)"
         >
-          <div class="text-amber-400 text-sm font-semibold">200w +20K</div>
-          <div class="text-white text-lg font-semibold">¥ 2000</div>
-          <span
-            class="text-[11px] px-2 py-0.5 rounded bg-[#3d2e18] text-orange-400 border border-orange-900/40"
+          <div
+            v-if="plan.popular"
+            class="absolute -top-2 left-1/2 -translate-x-1/2"
           >
-            额外赠送 1%
-          </span>
-        </button>
-
-        <button
-          type="button"
-          class="rounded-xl bg-[#242424] p-4 flex flex-col items-center text-center gap-2 min-h-[132px] justify-center relative cursor-pointer transition-colors w-full"
-          :class="
-            selectedRecharge === '500w'
-              ? 'border-2 border-amber-400/70 shadow-[0_0_16px_rgba(234,179,8,0.25)]'
-              : 'border border-[#333333] hover:bg-[#2a2a2a]'
-          "
-          @click="switchToRechargeTab('500w')"
-        >
-          <span
-            class="absolute -top-2 left-1/2 -translate-x-1/2 text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 whitespace-nowrap"
-          >
-            82%用户选择
-          </span>
-          <div class="text-amber-400 text-sm font-semibold mt-2">
-            500w +100K
+            <n-tag round size="small" type="warning" :bordered="false">
+              {{ plan.popular }}
+            </n-tag>
           </div>
-          <div class="text-white text-lg font-semibold">¥ 5000</div>
-          <span
-            class="text-[11px] px-2 py-0.5 rounded bg-[#3d2e18] text-orange-400 border border-orange-900/40"
+          <div
+            class="h-full flex flex-col items-center justify-center text-center gap-2 min-h-[100px]"
           >
-            额外赠送 2%
-          </span>
-        </button>
+            <div class="text-amber-400 text-sm font-semibold">
+              {{ plan.power }} {{ plan.bonus }}
+            </div>
+            <div class="text-white text-lg font-semibold">
+              ¥ {{ plan.price }}
+            </div>
+            <n-tag
+              size="small"
+              round
+              :bordered="false"
+              class="recharge-extra-tag"
+            >
+              {{ plan.extra }}
+            </n-tag>
+          </div>
+        </n-card>
 
-        <button
-          type="button"
-          class="rounded-xl p-4 flex flex-col items-center text-center gap-2 min-h-[132px] justify-center cursor-pointer transition-colors w-full"
-          :class="
-            selectedRecharge === '980w'
-              ? 'bg-[#242424] border-2 border-amber-400/70 shadow-[0_0_16px_rgba(234,179,8,0.25)]'
-              : 'bg-[#242424] border border-[#333333] hover:bg-[#2a2a2a]'
-          "
-          @click="switchToRechargeTab('980w')"
-        >
-          <div class="text-amber-400 text-sm font-semibold">980w +490K</div>
-          <div class="text-white text-lg font-semibold">¥ 9800</div>
-          <span
-            class="text-[11px] px-2 py-0.5 rounded bg-[#3d2e18] text-orange-400 border border-orange-900/40"
-          >
-            额外赠送 5%
-          </span>
-        </button>
-
-        <button
-          type="button"
-          class="rounded-xl bg-[#242424] border border-[#333333] p-4 flex flex-col items-center text-center gap-2 min-h-[132px] justify-center cursor-pointer hover:bg-[#2a2a2a] transition-colors w-full"
+        <n-card
+          :bordered="false"
+          embedded
+          class="quick-recharge-card !rounded-xl cursor-pointer"
+          content-class="!p-4 h-full"
           @click="switchToRechargeTabOnly"
         >
-          <span class="text-amber-400 text-base font-bold">更多充值</span>
-          <span class="text-gray-400 text-xs">点击查看</span>
-        </button>
+          <div
+            class="h-full flex flex-col items-center justify-center text-center gap-2 min-h-[100px]"
+          >
+            <span class="text-amber-400 text-base font-bold">更多充值</span>
+            <span class="text-gray-400 text-xs">点击查看</span>
+          </div>
+        </n-card>
       </div>
     </div>
 
     <n-tabs v-model:value="activeTab" type="line" animated class="profile-tabs">
       <n-tab-pane name="flow" tab="账户流水">
-        <div class="rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] p-4 mt-2">
+        <n-card
+          :bordered="false"
+          class="profile-surface mt-2 !rounded-xl"
+          content-class="!p-4"
+        >
           <div
             class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4"
           >
@@ -313,12 +313,14 @@ function openSupportQr() {
               </template>
             </n-pagination>
           </div>
-        </div>
+        </n-card>
       </n-tab-pane>
 
       <n-tab-pane name="password" tab="修改密码">
-        <div
-          class="rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] p-6 mt-2 max-w-md"
+        <n-card
+          :bordered="false"
+          class="profile-surface mt-2 max-w-md !rounded-xl"
+          content-class="!p-6"
         >
           <n-form label-placement="top" label-width="auto">
             <n-form-item label="当前密码">
@@ -349,25 +351,31 @@ function openSupportQr() {
               <n-button type="primary" class="text-white">保存</n-button>
             </div>
           </n-form>
-        </div>
+        </n-card>
       </n-tab-pane>
 
       <n-tab-pane name="account" tab="账户信息">
-        <div class="rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] p-6 mt-2">
+        <n-card
+          :bordered="false"
+          class="profile-surface mt-2 !rounded-xl"
+          content-class="!p-6"
+        >
           <div class="flex flex-col lg:flex-row gap-8 items-start">
-            <div class="w-[120px] shrink-0 flex flex-col items-center pt-2">
-              <div
-                class="w-[54px] h-[54px] rounded-full border border-[#4a4a4a] text-[#8f8f8f] flex items-center justify-center"
-              >
-                <n-icon :size="28" :component="User" />
+            <n-button text size="small" class="">
+              <div class="w-[120px] shrink-0 flex flex-col items-center pt-2">
+                <div
+                  class="w-[54px] h-[54px] rounded-full border border-[#4a4a4a] text-[#8f8f8f] flex items-center justify-center"
+                >
+                  <n-icon :size="28" :component="User" />
+                </div>
+
+                <span
+                  class="mt-3 !text-xs !text-[#8a8a8a] hover:!text-[#b5b5b5]"
+                >
+                  点击头像修改
+                </span>
               </div>
-              <button
-                type="button"
-                class="mt-3 text-xs text-[#8a8a8a] bg-transparent border-0 p-0 cursor-pointer hover:text-[#b5b5b5] transition-colors"
-              >
-                点击头像修改
-              </button>
-            </div>
+            </n-button>
 
             <div class="flex-1 min-w-0 max-w-[620px]">
               <n-form
@@ -400,35 +408,40 @@ function openSupportQr() {
               </n-form>
             </div>
           </div>
-        </div>
+        </n-card>
       </n-tab-pane>
 
       <n-tab-pane name="recharge" tab="算力充值">
-        <div
-          class="rounded-xl bg-[#1f1f1f] border border-[#2a2a2a] p-3 sm:p-4 mt-2"
+        <n-card
+          :bordered="false"
+          class="profile-surface mt-2 !rounded-xl"
+          content-class="!p-3 sm:!p-4"
         >
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
-            <button
+            <n-card
               v-for="plan in rechargePlans"
               :key="plan.key"
-              type="button"
-              class="relative cursor-pointer min-h-[84px] rounded-xl bg-[linear-gradient(180deg,#363636_0%,#2a2a2a_100%)] px-5 py-4 text-left border transition-all"
-              :class="
-                selectedRecharge === plan.key
-                  ? 'border-amber-400/90 shadow-[0_0_18px_rgba(234,179,8,0.22)]'
-                  : 'border-[#3b3b3b] hover:border-amber-400/55'
-              "
+              :bordered="false"
+              embedded
+              class="recharge-plan-card !rounded-xl cursor-pointer"
+              :class="{
+                'recharge-plan-card--active': selectedRecharge === plan.key,
+              }"
+              content-class="!px-5 !py-4"
               @click="selectedRecharge = plan.key"
             >
               <div
                 class="flex items-center gap-1.5 text-[18px] font-bold text-amber-300"
               >
                 <span>{{ plan.power }}</span>
-                <span
-                  class="rounded-full border border-amber-500/25 bg-[#4b3918] px-1.5 py-[1px] text-[10px] leading-none text-amber-300"
+                <n-tag
+                  size="small"
+                  round
+                  :bordered="false"
+                  class="recharge-bonus-tag"
                 >
                   {{ plan.bonus }}
-                </span>
+                </n-tag>
               </div>
               <div
                 class="mt-2 text-[15px] leading-none font-bold text-amber-300"
@@ -436,23 +449,31 @@ function openSupportQr() {
                 ¥ {{ plan.price }}
               </div>
               <div class="mt-3 flex items-center gap-2">
-                <span
+                <n-tag
                   v-if="plan.popular"
-                  class="rounded-full bg-[#f1d54b] px-2 py-[2px] text-[10px] font-semibold text-[#2d2a17]"
+                  size="small"
+                  round
+                  type="warning"
+                  :bordered="false"
                 >
                   {{ plan.popular }}
-                </span>
-                <span
-                  class="rounded-full border border-amber-500/20 bg-[#4b3918] px-2 py-[2px] text-[10px] font-semibold text-amber-300"
+                </n-tag>
+                <n-tag
+                  size="small"
+                  round
+                  :bordered="false"
+                  class="recharge-extra-tag"
                 >
                   {{ plan.extra }}
-                </span>
+                </n-tag>
               </div>
-            </button>
+            </n-card>
 
-            <button
-              type="button"
-              class="cursor-pointer min-h-[84px] rounded-xl border border-[#3b3b3b] bg-[linear-gradient(180deg,#363636_0%,#2a2a2a_100%)] px-5 py-4 text-left hover:border-amber-400/55 transition-colors"
+            <n-card
+              :bordered="false"
+              embedded
+              class="recharge-plan-card !rounded-xl cursor-pointer"
+              content-class="!px-5 !py-4"
               @click="openSupportQr"
             >
               <div class="text-[18px] font-bold leading-[1.3] text-amber-300">
@@ -470,32 +491,24 @@ function openSupportQr() {
                   联系客服
                 </span>
               </div>
-            </button>
+            </n-card>
           </div>
 
           <div class="mt-7 flex flex-wrap items-center gap-3 text-sm">
-            <label class="flex items-center">
-              <input
-                v-model="customRechargeEnabled"
-                type="checkbox"
-                class="h-3.5 w-3.5 rounded border border-white/20 bg-transparent accent-[#14d2e2]"
-              />
-            </label>
+            <n-checkbox v-model:checked="customRechargeEnabled" />
 
-            <div
-              class="flex items-center rounded-[4px] border border-[#383838] bg-[#262626] h-8 overflow-hidden"
+            <n-input-number
+              v-model:value="customRechargeAmount"
+              :show-button="true"
+              button-placement="both"
+              :disabled="!customRechargeEnabled"
+              placeholder="20"
+              class="custom-recharge-input text-center w-[130px]"
             >
-              <input
-                v-model="customRechargeAmount"
-                type="text"
-                class="w-16 h-full bg-transparent px-3 text-center text-sm text-white outline-none"
-              />
-              <span
-                class="flex h-full w-8 items-center justify-center border-l border-[#383838] text-[#7d7d7d] text-xs"
-              >
-                W
-              </span>
-            </div>
+              <template #suffix>
+                <span class="text-white/40">W</span>
+              </template>
+            </n-input-number>
 
             <div class="text-[20px] font-bold text-amber-300">
               ¥{{ customRechargePrice }}
@@ -506,43 +519,70 @@ function openSupportQr() {
           </div>
 
           <div class="mt-6 flex items-center gap-5 text-sm text-[#bdbdbd]">
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input
-                v-model="paymentMethod"
-                type="radio"
-                name="paymentMethod"
-                value="alipay"
-                class="h-3.5 w-3.5 accent-[#14d2e2]"
-              />
-              <span class="text-[#14d2e2] font-medium">支付宝</span>
-            </label>
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input
-                v-model="paymentMethod"
-                type="radio"
-                name="paymentMethod"
-                value="wechat"
-                class="h-3.5 w-3.5 accent-[#9ca3af]"
-              />
-              <span>微信</span>
-            </label>
+            <n-radio-group v-model:value="paymentMethod" name="paymentMethod">
+              <n-radio value="alipay"
+                ><span :class="paymentMethod === 'alipay' ? 'text-theme' : ''"
+                  >支付宝</span
+                ></n-radio
+              >
+              <n-radio value="wechat"
+                ><span :class="paymentMethod === 'wechat' ? 'text-theme' : ''"
+                  >微信</span
+                ></n-radio
+              >
+            </n-radio-group>
           </div>
 
           <div class="mt-5">
-            <n-button
-              type="button"
-              class="h-9 rounded-[4px] bg-[#14d2e2] px-4 text-[13px] font-semibold text-white hover:bg-[#28d9e7] transition-colors"
-            >
-              确认支付
-            </n-button>
+            <n-button type="primary" class="text-white">确认支付</n-button>
           </div>
-        </div>
+        </n-card>
       </n-tab-pane>
     </n-tabs>
   </div>
 </template>
 
 <style scoped>
+.profile-surface {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+}
+.quick-recharge-card {
+  position: relative;
+  background: #242424;
+  border: 1px solid #333333;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+.quick-recharge-card:hover {
+  background: #2a2a2a;
+}
+.quick-recharge-card--active {
+  border-color: rgba(251, 191, 36, 0.7);
+  box-shadow: 0 0 16px rgba(234, 179, 8, 0.25);
+}
+.recharge-plan-card {
+  background: linear-gradient(180deg, #363636 0%, #2a2a2a 100%);
+  border: 1px solid #3b3b3b;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.recharge-plan-card:hover {
+  border-color: rgba(251, 191, 36, 0.55);
+}
+.recharge-plan-card--active {
+  border-color: rgba(251, 191, 36, 0.9);
+  box-shadow: 0 0 18px rgba(234, 179, 8, 0.22);
+}
+.recharge-extra-tag,
+.recharge-bonus-tag,
+.unit-tag {
+  background: #4b3918;
+  color: #fcd34d;
+}
 .profile-tabs :deep(.n-tabs-nav) {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -561,6 +601,24 @@ function openSupportQr() {
 }
 .profile-tabs :deep(.n-data-table-td) {
   background: #1a1a1a !important;
+}
+.profile-tabs :deep(.n-card),
+.profile-tabs :deep(.n-card > .n-card__content) {
+  background: transparent;
+}
+.profile-tabs :deep(.n-checkbox .n-checkbox-box) {
+  background: transparent;
+}
+.profile-tabs :deep(.n-radio-group .n-radio-button) {
+  --n-button-color: #232323;
+  --n-button-color-active: #4fd1c5;
+  --n-button-text-color: #cbd5e1;
+  --n-button-text-color-active: #ffffff;
+  --n-button-border-color: rgba(255, 255, 255, 0.12);
+  --n-button-border-color-active: #4fd1c5;
+}
+.custom-recharge-input :deep(.n-input__input-el) {
+  text-align: center;
 }
 .profile-tabs
   :deep(
