@@ -755,7 +755,7 @@ onUnmounted(() => {
                   :key="item.title + index"
                   size="small"
                   ghost
-                  class="relative w-full grid-rows-[1fr_34px] aspect-152/247 overflow-hidden grid grid-cols-1 rounded-[8px] border-[2px] border-solid border-[#ffffff10] bg-[#151618] text-left p-0"
+                  class="relative w-full grid-rows-[1fr_34px] aspect-205/316 overflow-hidden grid grid-cols-1 rounded-[8px] border-[2px] border-solid border-[#ffffff10] bg-[#151618] text-left p-0"
                   :class="
                     selectedStyle === (stylePage - 1) * stylePageSize + index
                       ? 'border-[#18d2e5]!'
@@ -826,7 +826,6 @@ onUnmounted(() => {
               :type="currentStep === 3 ? 'success' : 'primary'"
               size="small"
               class="!h-[30px] !rounded-[4px] !border-0 !px-[16px] !text-sm !font-medium"
-              :class="currentStep === 3 ? '!bg-[#4dd865]' : '!bg-[#18d2e5]'"
               @click="currentStep === 3 ? null : goNextStep()"
             >
               {{ currentStep === 3 ? '提交任务' : '下一步' }}
@@ -851,12 +850,12 @@ onUnmounted(() => {
           </div>
           <n-button
             size="small"
-            ghost
-            class="inline-flex h-[18px] w-[18px] items-center justify-center border-0 bg-transparent p-0 text-sm leading-none text-white/55"
+            quaternary
+            class="inline-flex h-[18px] w-[18px] items-center justify-center border-0 bg-transparent! p-0 text-sm leading-none text-white/55"
             @click="closeVoiceModal"
             :native-type="'button'"
           >
-            ×
+            <i class="i-carbon-close text-lg text-white/55"></i>
           </n-button>
         </div>
 
