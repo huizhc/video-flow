@@ -102,7 +102,7 @@ function onMenuUpdate(key) {
 </script>
 
 <template>
-  <n-layout class="h-screen bg-[#121212]">
+  <n-layout class="h-screen bg-[#141414]">
     <app-top-header
       logo-route-name="tools-all"
       :show-back-button="showBackButton"
@@ -111,7 +111,7 @@ function onMenuUpdate(key) {
     <n-layout
       v-if="showSider"
       has-sider
-      class="bg-[#121212]"
+      class="bg-[#141414]"
       style="height: calc(100vh - 3.5rem)"
     >
       <n-layout-sider
@@ -120,7 +120,7 @@ function onMenuUpdate(key) {
         collapse-mode="width"
         :collapsed-width="64"
         :width="240"
-        class="bg-[#1e1e1e]! border-[#ffffff0f]!"
+        class="bg-[#1b1b1d]! border-[#ffffff10]!"
         content-style="display: flex; flex-direction: column; height: 100%;"
       >
         <n-scrollbar class="flex-1 min-h-0">
@@ -137,7 +137,7 @@ function onMenuUpdate(key) {
         </n-scrollbar>
         <div
           v-if="!collapsed"
-          class="px-2 py-2 text-[10px] text-gray-600 text-center leading-snug border-t border-[#ffffff0f]"
+          class="px-2 py-2 text-[10px] text-white/50 text-center leading-snug border-t border-[#ffffff0f]"
         >
           © 2026 AIKC
         </div>
@@ -150,14 +150,14 @@ function onMenuUpdate(key) {
         </div>
       </n-layout-sider>
 
-      <n-layout-content class="bg-[#121212] overflow-auto">
+      <n-layout-content class="bg-[#141414] overflow-auto">
         <router-view />
       </n-layout-content>
     </n-layout>
 
     <n-layout-content
       v-else
-      class="h-[calc(100vh-3.5rem)] overflow-auto bg-[#121212]"
+      class="h-[calc(100vh-3.5rem)] overflow-auto bg-[#141414]"
     >
       <router-view />
     </n-layout-content>

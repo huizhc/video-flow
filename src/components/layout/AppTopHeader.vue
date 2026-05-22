@@ -82,7 +82,7 @@ function goBack() {
 <template>
   <n-layout-header
     bordered
-    class="flex h-14 shrink-0 items-center justify-between border-[#ffffff0f] bg-[#121212] px-4"
+    class="flex h-14 shrink-0 items-center justify-between border-[#ffffff10] bg-[#141414] px-4"
   >
     <div class="flex items-center gap-[10px]">
       <button
