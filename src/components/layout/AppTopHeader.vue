@@ -82,13 +82,13 @@ function goBack() {
 <template>
   <n-layout-header
     bordered
-    class="flex h-14 shrink-0 items-center justify-between border-[#ffffff10] bg-[#141414] px-4"
+    class="flex h-14 shrink-0 items-center justify-between border-[#2d2f35] bg-[#1f2025] px-4"
   >
     <div class="flex items-center gap-[10px]">
       <button
         v-if="showBackButton"
         type="button"
-        class="inline-flex h-[32px] w-[32px] items-center justify-center rounded-full border border-white/8 bg-white/4 p-0 text-white/72 transition hover:bg-white/8 hover:text-white"
+        class="inline-flex h-[32px] w-[32px] items-center justify-center rounded-full border border-white/8 bg-[#2a2c33] p-0 text-white/72 transition hover:border-white/12 hover:bg-[#31343c] hover:text-white"
         @click="goBack"
       >
         <n-icon :size="18" :component="ArrowLeft" />
@@ -100,20 +100,20 @@ function goBack() {
         @click="goLogoTarget"
       >
         <span
-          class="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-[#14b8a6] via-[#0ea5e9] to-[#8b5cf6] shadow-lg shadow-teal-900/30"
+          class="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-[#19b8ad] via-[#1098d9] to-[#247ba8] shadow-[0_10px_24px_rgba(16,152,217,0.2)]"
         />
         <span class="text-sm font-semibold tracking-tight text-white"
           >AIKC</span
         >
         <span
-          class="rounded bg-gradient-to-r from-[#0d9488] to-[#0ea5e9] px-1.5 py-0.5 text-[10px] font-semibold text-white"
+          class="rounded bg-[#2b3139] px-1.5 py-0.5 text-[10px] font-semibold text-[#71e7dd]"
         >
           AI
         </span>
       </button>
     </div>
 
-    <div class="flex items-center gap-5 text-sm text-gray-400">
+    <div class="flex items-center gap-5 text-sm text-white/46">
       <button
         type="button"
         class="top-nav-text-button top-nav-placeholder-button"
@@ -155,7 +155,7 @@ function goBack() {
         </button>
         <button
           type="button"
-          class="flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 text-amber-400/90 transition-colors hover:text-amber-300"
+          class="flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 text-[#f0c36b] transition-colors hover:text-[#ffd48a]"
           @click="goRechargeTab"
         >
           <n-icon :size="16" :component="Currency" />
@@ -164,7 +164,7 @@ function goBack() {
       </template>
 
       <n-dropdown trigger="click" :options="langOptions">
-        <n-button quaternary size="small" class="!text-gray-300">
+        <n-button quaternary size="small" class="!text-white/72">
           <span class="flex items-center gap-1">
             <n-icon :size="16" :component="Language" />
             简体中文

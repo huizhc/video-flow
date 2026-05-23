@@ -46,7 +46,7 @@ function openToolDetail(tool) {
 </script>
 
 <template>
-  <div class="p-4 min-h-full">
+  <div class="min-h-full bg-[#1a1b20] p-4">
     <div class="mb-5">
       <h1 class="text-xl font-semibold text-white m-0 tracking-tight">
         {{ pageTitle }}
@@ -67,7 +67,7 @@ function openToolDetail(tool) {
       <n-card
         v-for="tool in list"
         :key="tool.id + tool.title"
-        class="group !bg-[#1e1e1e] border border-[#2a2a2a] rounded-xl overflow-hidden transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+        class="group overflow-hidden rounded-xl border border-[#35353b] !bg-[#2b2c32] transition-all hover:!-translate-y-0.5 hover:!bg-[#30323a] hover:shadow-[0_16px_36px_rgba(0,0,0,0.26)]"
         :class="
           [
             '02',
@@ -97,7 +97,7 @@ function openToolDetail(tool) {
         @click="openToolDetail(tool)"
       >
         <div
-          class="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-[#151515]"
+          class="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-[#23242a]"
         >
           <img
             :src="tool.previewImage"
@@ -110,7 +110,7 @@ function openToolDetail(tool) {
             class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/22 via-transparent to-white/6"
           />
         </div>
-        <div class="p-3.5">
+        <div class="bg-[#2b2c32] p-3.5 transition-colors duration-300 group-hover:bg-[#30323a]">
           <div class="flex items-start justify-between gap-2 mb-2">
             <span class="text-[15px] font-medium text-white leading-snug">
               <span class="text-gray-400 font-normal tabular-nums">{{

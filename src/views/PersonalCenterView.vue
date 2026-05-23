@@ -152,7 +152,7 @@ function openSupportQr() {
 </script>
 
 <template>
-  <div class="min-h-full bg-[#121212] p-4">
+  <div class="min-h-full bg-[#1a1b20] p-4">
     <div class="flex flex-col xl:flex-row gap-6 mb-6 items-stretch">
       <n-card
         :bordered="false"
@@ -544,28 +544,29 @@ function openSupportQr() {
 
 <style scoped>
 .profile-surface {
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
+  background: #2a2b31;
+  border: 1px solid #35353b;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
 }
 .quick-recharge-card {
   position: relative;
-  background: #242424;
-  border: 1px solid #333333;
+  background: #2b2c32;
+  border: 1px solid #3a3b42;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
     background-color 0.2s ease;
 }
 .quick-recharge-card:hover {
-  background: #2a2a2a;
+  background: #30323a;
 }
 .quick-recharge-card--active {
   border-color: rgba(251, 191, 36, 0.7);
   box-shadow: 0 0 16px rgba(234, 179, 8, 0.25);
 }
 .recharge-plan-card {
-  background: linear-gradient(180deg, #363636 0%, #2a2a2a 100%);
-  border: 1px solid #3b3b3b;
+  background: linear-gradient(180deg, #33353c 0%, #2a2b31 100%);
+  border: 1px solid #3d3f46;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
@@ -597,10 +598,10 @@ function openSupportQr() {
   color: #e5e7eb;
 }
 .profile-tabs :deep(.n-data-table-th) {
-  background: #141414 !important;
+  background: #23242a !important;
 }
 .profile-tabs :deep(.n-data-table-td) {
-  background: #1a1a1a !important;
+  background: #2a2b31 !important;
 }
 .profile-tabs :deep(.n-card),
 .profile-tabs :deep(.n-card > .n-card__content) {
@@ -624,7 +625,7 @@ function openSupportQr() {
   :deep(
     .n-data-table-tr:not(.n-data-table-tr--summary):hover .n-data-table-td
   ) {
-  background: #222222 !important;
+  background: #30323a !important;
 }
 .account-form :deep(.n-form-item) {
   margin-bottom: 14px;
@@ -634,9 +635,9 @@ function openSupportQr() {
   font-size: 14px;
 }
 .account-form :deep(.n-input) {
-  --n-color: #232323;
-  --n-color-focus: #232323;
-  --n-color-disabled: #232323;
+  --n-color: #202126;
+  --n-color-focus: #202126;
+  --n-color-disabled: #202126;
   --n-border: 1px solid rgba(255, 255, 255, 0.1);
   --n-border-hover: 1px solid rgba(255, 255, 255, 0.18);
   --n-border-focus: 1px solid rgba(79, 209, 197, 0.55);

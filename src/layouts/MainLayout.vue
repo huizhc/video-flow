@@ -102,7 +102,7 @@ function onMenuUpdate(key) {
 </script>
 
 <template>
-  <n-layout class="h-screen bg-[#141414]">
+  <n-layout class="h-screen bg-[#17181c]">
     <app-top-header
       logo-route-name="tools-all"
       :show-back-button="showBackButton"
@@ -111,7 +111,7 @@ function onMenuUpdate(key) {
     <n-layout
       v-if="showSider"
       has-sider
-      class="bg-[#141414]"
+      class="bg-[#17181c]"
       style="height: calc(100vh - 3.5rem)"
     >
       <n-layout-sider
@@ -120,7 +120,7 @@ function onMenuUpdate(key) {
         collapse-mode="width"
         :collapsed-width="64"
         :width="240"
-        class="bg-[#2b2b2b]! border-[#ffffff10]!"
+        class="bg-[#1f2025]! border-[#2d2f35]!"
         content-style="display: flex; flex-direction: column; height: 100%;"
       >
         <n-scrollbar class="flex-1 min-h-0">
@@ -137,13 +137,11 @@ function onMenuUpdate(key) {
         </n-scrollbar>
         <div
           v-if="!collapsed"
-          class="px-2 py-2 text-[10px] text-white/50 text-center leading-snug border-t border-[#ffffff0f]"
+          class="border-t border-[#2d2f35] px-2 py-2 text-center text-[10px] leading-snug text-white/36"
         >
           © 2026 AIKC
         </div>
-        <div
-          class="p-3 border-t border-[#ffffff0f] shrink-0 flex justify-center"
-        >
+        <div class="shrink-0 flex justify-center border-t border-[#2d2f35] p-3">
           <n-button circle quaternary @click="collapsed = !collapsed">
             <n-icon :size="20" :component="Menu" />
           </n-button>
@@ -157,7 +155,7 @@ function onMenuUpdate(key) {
 
     <n-layout-content
       v-else
-      class="h-[calc(100vh-3.5rem)] overflow-auto bg-[#232326]"
+      class="h-[calc(100vh-3.5rem)] overflow-auto bg-[#141414]"
     >
       <router-view />
     </n-layout-content>

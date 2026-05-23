@@ -70,14 +70,14 @@ const stats = [
 </script>
 
 <template>
-  <div class="min-h-full bg-[#171717] px-[10px] pt-[10px] pb-4 sm:pb-0">
+  <div class="h-full flex flex-col bg-[#232326] p-4">
     <div
-      class="grid grid-cols-1 gap-[10px] sm:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5"
+      class="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5"
     >
       <div
         v-for="s in stats"
         :key="s.key"
-        class="flex min-h-[76px] items-center gap-3 rounded-[8px] border border-white/6 bg-[linear-gradient(180deg,rgba(30,30,30,0.96)_0%,rgba(24,24,24,0.98)_100%)] px-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]"
+        class="flex min-h-[76px] items-center gap-3 rounded-[10px] border border-[#35353b] bg-[#2b2b30] px-4 shadow-[0_10px_24px_rgba(0,0,0,0.16),0_0_0_1px_rgba(255,255,255,0.02)]"
       >
         <div
           class="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-[8px]"
@@ -99,40 +99,44 @@ const stats = [
     </div>
 
     <div
-      class="mt-[18px] flex flex-col items-stretch justify-between gap-3 rounded-t-[8px] border border-b-0 border-white/5 bg-[linear-gradient(180deg,rgba(21,21,21,0.98)_0%,rgba(18,18,18,0.98)_100%)] px-4 py-[10px] lg:flex-row lg:items-center"
+      class="overflow-hidden rounded-xl border border-[#34343a] bg-[#2a2a2f] shadow-[0_16px_36px_rgba(0,0,0,0.22)]"
     >
       <div
-        class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between lg:justify-start lg:gap-3"
+        class="flex flex-col items-stretch justify-between gap-3 px-4 py-4 lg:flex-row lg:items-center"
       >
-        <span class="whitespace-nowrap text-[14px] text-white/50"
-          >状态筛选:</span
+        <div
+          class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between lg:justify-start lg:gap-3"
         >
-        <n-select
-          v-model:value="statusFilter"
-          :options="statusOptions"
-          size="medium"
-          class="w-full sm:w-[146px] [&_.n-base-selection]:min-h-[34px] [&_.n-base-selection]:rounded-[4px] [&_.n-base-selection]:border-[1px] [&_.n-base-selection]:border-white/10 [&_.n-base-selection]:bg-[#151515]! [&_.n-base-selection]:text-white/82 [&_.n-base-selection]:shadow-none! [&_.n-base-selection-label]:text-[13px] [&_.n-base-selection-placeholder]:text-white/48"
-          :consistent-menu-width="false"
-        />
-      </div>
-      <div
-        class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between lg:justify-start lg:gap-3"
-      >
-        <span class="whitespace-nowrap text-[14px] text-white/50"
-          >排序方式:</span
+          <span class="whitespace-nowrap text-[14px] text-white/50"
+            >状态筛选:</span
+          >
+          <n-select
+            v-model:value="statusFilter"
+            :options="statusOptions"
+            size="medium"
+            class="task-square-field w-full sm:w-[146px]"
+            :consistent-menu-width="false"
+          />
+        </div>
+        <div
+          class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between lg:justify-start lg:gap-3"
         >
-        <n-select
-          v-model:value="sortBy"
-          :options="sortOptions"
-          size="medium"
-          class="w-full sm:w-[176px] [&_.n-base-selection]:min-h-[34px] [&_.n-base-selection]:rounded-[4px] [&_.n-base-selection]:border-[1px] [&_.n-base-selection]:border-white/10 [&_.n-base-selection]:bg-[#151515]! [&_.n-base-selection]:text-white/82 [&_.n-base-selection]:shadow-none! [&_.n-base-selection-label]:text-[13px] [&_.n-base-selection-placeholder]:text-white/48"
-          :consistent-menu-width="false"
-        />
+          <span class="whitespace-nowrap text-[14px] text-white/50"
+            >排序方式:</span
+          >
+          <n-select
+            v-model:value="sortBy"
+            :options="sortOptions"
+            size="medium"
+            class="task-square-field w-full sm:w-[176px]"
+            :consistent-menu-width="false"
+          />
+        </div>
       </div>
     </div>
 
     <div
-      class="flex min-h-[calc(100vh-210px)] items-center justify-center rounded-b-[8px] border border-t-0 border-white/5 bg-[linear-gradient(90deg,rgba(25,25,25,0.98)_0%,rgba(29,29,29,0.96)_52%,rgba(24,24,24,0.98)_100%)]"
+      class="flex-1 mt-4 flex items-center justify-center rounded-[10px] border border-[#35353b] bg-[#2b2b30] shadow-[0_10px_24px_rgba(0,0,0,0.16),0_0_0_1px_rgba(255,255,255,0.02)]"
     >
       <n-empty
         description="暂无任务数据"
@@ -141,3 +145,13 @@ const stats = [
     </div>
   </div>
 </template>
+
+<style scoped>
+.task-square-field :deep(.n-base-selection) {
+  background-color: #202126;
+}
+
+.task-square-field :deep(.n-base-selection:hover) {
+  background-color: #24252a;
+}
+</style>

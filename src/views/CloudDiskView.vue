@@ -27,9 +27,9 @@ const folderTreeData = [
 </script>
 
 <template>
-  <div class="min-h-full bg-[#1a1a1a] p-4">
+  <div class="min-h-full bg-[#1a1b20] p-4">
     <div
-      class="rounded-lg px-4 py-3 mb-4 text-sm text-white/95 leading-relaxed border border-[#6b4f1a]/40 bg-[#3e2f18]"
+      class="mb-4 rounded-lg border border-[#6b4f1a]/40 bg-[#3a3018] px-4 py-3 text-sm leading-relaxed text-white/95"
     >
       <p class="m-0 mb-2">
         所有任务产生的结果，都会存放在云盘空间，请及时下载，文件将在7天后自动删除！
@@ -40,13 +40,13 @@ const folderTreeData = [
     </div>
 
     <div
-      class="grid grid-cols-[300px_1fr] gap-x-[70px] min-h-[calc(100vh-18rem)] overflow-hidden rounded-xl border border-[#2a2a2a] bg-[#151515] xl:flex-row"
+      class="grid min-h-[calc(100vh-18rem)] grid-cols-[300px_1fr] overflow-hidden rounded-xl border border-[#34343a] bg-[#26272c] shadow-[0_16px_36px_rgba(0,0,0,0.22)] xl:flex-row"
     >
       <aside
-        class="w-full shrink-0 border-b border-[#2a2a2a] bg-[#141414] p-4 xl:border-b-0 xl:border-r"
+        class="w-full shrink-0 border-b border-[#34343a] bg-[#24252a] p-4 xl:border-r xl:border-b-0"
       >
         <div
-          class="mb-4 rounded-xl border border-[#2a2a2a] bg-[#161616] px-4 py-3"
+          class="mb-4 rounded-xl border border-[#35353b] bg-[#2b2c32] px-4 py-3"
         >
           <n-progress
             type="line"
@@ -92,8 +92,8 @@ const folderTreeData = [
         />
       </aside>
 
-      <div class="w-full bg-[#1a1a1a]">
-        <div class="border-b border-[#2a2a2a] bg-[#161616] p-4">
+      <div class="w-full bg-[#26272c]">
+        <div class="border-b border-[#34343a] bg-[#2a2b31] p-4">
           <div
             class="flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between"
           >
@@ -102,7 +102,7 @@ const folderTreeData = [
                 当前文件夹内容
               </div>
               <div
-                class="inline-flex w-full flex-wrap rounded-lg border border-[#333333] bg-[#252525] p-0.5 gap-0.5 sm:w-auto"
+                class="inline-flex w-full flex-wrap gap-0.5 rounded-lg border border-[#3a3b42] bg-[#23242a] p-0.5 sm:w-auto"
               >
                 <button
                   v-for="t in tabs"
@@ -173,11 +173,11 @@ const folderTreeData = [
   font-weight: 500;
 }
 
-.cloud-folder-tree :deep(.n-tree-node-content:hover) {
-  background: rgba(255, 255, 255, 0.05);
-}
+/* .cloud-folder-tree :deep(.n-tree-node-content:hover) {
+  background: rgba(255, 255, 255, 0.04);
+} */
 
-.cloud-folder-tree :deep(.n-tree-node--selected > .n-tree-node-content) {
-  background: rgba(255, 255, 255, 0.06);
-}
+/* .cloud-folder-tree :deep(.n-tree-node--selected > .n-tree-node-content) {
+  background: rgba(79, 209, 197, 0.1);
+} */
 </style>

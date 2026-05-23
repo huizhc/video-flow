@@ -36,7 +36,7 @@ function handleRefresh() {}
 </script>
 
 <template>
-  <div class="min-h-full bg-[#18181c] p-4 flex flex-col">
+  <div class="min-h-full bg-[#1a1b20] p-4 flex flex-col">
     <div
       class="rounded-lg px-4 py-3 mb-4 text-sm leading-relaxed border border-amber-900/35 bg-[#3a3018] text-amber-100/95"
     >
@@ -52,13 +52,15 @@ function handleRefresh() {}
       </p>
     </div>
 
-    <div class="flex flex-wrap items-center gap-2 mb-4">
+    <div
+      class="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-[#34343a] bg-[#2a2b31] p-4 shadow-[0_16px_36px_rgba(0,0,0,0.22)]"
+    >
       <n-input
         v-model:value="toolName"
         size="medium"
         placeholder="工具名称"
         clearable
-        class="w-[180px]!"
+        class="task-filter-field w-[180px]!"
       />
       <n-select
         v-model:value="status"
@@ -66,7 +68,7 @@ function handleRefresh() {}
         size="medium"
         placeholder="状态"
         clearable
-        class="w-36 sm:w-40"
+        class="task-filter-field w-36 sm:w-40"
         :consistent-menu-width="false"
       />
       <n-button type="primary" size="medium" @click="handleSearch">
@@ -121,3 +123,15 @@ function handleRefresh() {}
     </div>
   </div>
 </template>
+
+<style scoped>
+.task-filter-field :deep(.n-input-wrapper),
+.task-filter-field :deep(.n-base-selection) {
+  background-color: #202126;
+}
+
+.task-filter-field :deep(.n-input-wrapper:hover),
+.task-filter-field :deep(.n-base-selection:hover) {
+  background-color: #24252a;
+}
+</style>
