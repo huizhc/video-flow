@@ -220,111 +220,121 @@ function closeTaskDetail() {
 </script>
 
 <template>
-  <div class="p-4 min-h-full flex flex-col">
-    <div class="flex items-baseline justify-between gap-4 mb-4">
-      <h1 class="text-xl font-semibold text-white m-0">任务广场</h1>
-      <span class="text-sm text-gray-500 shrink-0">共 0 条任务</span>
-    </div>
-
-    <div class="rounded-xl border border-[#2a2a2a] bg-[#1a1a1a] p-4 mb-4">
-      <div class="grid grid-cols-1 sm:grid-cols-5 xl:grid-cols-5 gap-3">
-        <n-input
-          v-model:value="productName"
-          size="medium"
-          placeholder="筛选产品名称"
-          clearable
-          class="w-full min-w-0"
-        />
-        <n-select
-          v-model:value="salesRegion"
-          :options="emptyOptions"
-          size="medium"
-          placeholder="请选择目标销售区域"
-          clearable
-          class="w-full min-w-0"
-        />
-        <n-select
-          v-model:value="coreCategory"
-          :options="emptyOptions"
-          size="medium"
-          placeholder="请选择或输入核心类别"
-          clearable
-          filterable
-          tag
-          class="w-full min-w-0"
-        />
-        <n-select
-          v-model:value="filterMode"
-          :options="emptyOptions"
-          size="medium"
-          placeholder="筛选模式"
-          clearable
-          class="w-full min-w-0"
-        />
-        <n-select
-          v-model:value="filterModel"
-          :options="emptyOptions"
-          size="medium"
-          placeholder="筛选模型"
-          clearable
-          class="w-full min-w-0"
-        />
+  <div class="min-h-full bg-[#232326] p-4">
+    <div
+      class="mb-4 rounded-xl border border-[#34343a] bg-[#2a2a2f] shadow-[0_16px_36px_rgba(0,0,0,0.22)]"
+    >
+      <div
+        class="flex items-baseline justify-between gap-4 border-b border-white/6 px-4 py-4"
+      >
+        <h1 class="m-0 text-xl font-semibold text-white">任务广场</h1>
+        <span class="shrink-0 text-sm text-white/42">共 0 条任务</span>
       </div>
 
-      <div class="flex flex-col lg:flex-row lg:items-center gap-3 mt-3">
-        <div class="flex-1 min-w-0 w-full">
+      <div class="p-4">
+        <div class="flex flex-wrap gap-3 [&>div]:w-[210px]!">
+          <n-input
+            v-model:value="productName"
+            size="medium"
+            placeholder="筛选产品名称"
+            clearable
+            class="task-square-field w-full min-w-0"
+          />
+          <n-select
+            v-model:value="salesRegion"
+            :options="emptyOptions"
+            size="medium"
+            placeholder="请选择目标销售区域"
+            clearable
+            class="task-square-field w-full min-w-0"
+          />
+          <n-select
+            v-model:value="coreCategory"
+            :options="emptyOptions"
+            size="medium"
+            placeholder="请选择或输入核心类别"
+            clearable
+            filterable
+            tag
+            class="task-square-field w-full min-w-0"
+          />
+          <n-select
+            v-model:value="filterMode"
+            :options="emptyOptions"
+            size="medium"
+            placeholder="筛选模式"
+            clearable
+            class="task-square-field w-full min-w-0"
+          />
+          <n-select
+            v-model:value="filterModel"
+            :options="emptyOptions"
+            size="medium"
+            placeholder="筛选模型"
+            clearable
+            class="task-square-field w-full min-w-0"
+          />
           <n-date-picker
             v-model:value="publishRange"
             type="daterange"
             size="medium"
             clearable
-            class="w-full"
+            class="task-square-field min-w-[400px]!"
             start-placeholder="发布时间开始"
             end-placeholder="发布时间结束"
           />
-        </div>
-        <div class="flex items-center gap-3 shrink-0">
-          <n-button type="primary" class="min-w-[88px]" @click="handleQuery">
-            查询
-          </n-button>
-          <n-button secondary class="min-w-[88px]" @click="handleReset">
-            重置
-          </n-button>
+          <div>
+            <n-button type="primary" class="" @click="handleQuery">
+              查询
+            </n-button>
+            <n-button secondary class="ml-[15px]" @click="handleReset">
+              重置
+            </n-button>
+          </div>
         </div>
       </div>
     </div>
 
-    <div
-      class="flex-1 min-h-[320px] rounded-xl border border-[#2a2a2a] bg-[#161616] p-3"
-    >
+    <div class="flex-1 min-h-[320px]">
       <div class="grid grid-cols-1 gap-3 xl:grid-cols-3 2xl:grid-cols-3">
         <article
           v-for="item in filteredTaskItems"
           :key="item.id"
-          class="cursor-pointer overflow-hidden rounded-[10px] border border-[#2a2a2a] bg-[#141414] shadow-[0_0_0_1px_rgba(255,255,255,0.02)] transition hover:border-white/12 hover:bg-[#171717]"
+          class="group cursor-pointer overflow-hidden rounded-[10px] border border-[#35353b] bg-[#2b2b30] shadow-[0_10px_24px_rgba(0,0,0,0.18),0_0_0_1px_rgba(255,255,255,0.02)] transition-all duration-300 hover:-translate-y-1 hover:border-[#18d2e5] hover:bg-[#303038] hover:shadow-[0_0_0_1px_rgba(24,210,229,0.6),0_18px_40px_rgba(0,0,0,0.34)]"
           @click="openTaskDetail(item)"
         >
           <div
-            class="flex items-center justify-between border-b border-white/6 px-3 py-2"
+            class="flex items-center justify-between border-b border-white/6 bg-[#313138] px-3 py-[12px] transition-colors duration-300 group-hover:border-[#18d2e5]/14 group-hover:bg-[#363640]"
           >
-            <h3 class="m-0 truncate pr-3 text-[15px] font-semibold text-white">
+            <h3
+              class="m-0 truncate pr-3 text-[15px] font-semibold text-white transition-colors duration-300"
+            >
               {{ item.title }}
             </h3>
             <span
-              class="shrink-0 rounded-[4px] bg-[#5f4314] px-2 py-[2px] text-[10px] leading-none text-[#ffb84d]"
+              class="shrink-0 rounded-[4px] bg-[#5f4314] px-2 py-[2px] text-[10px] leading-none text-[#ffb84d] transition-colors duration-300 group-hover:bg-[#6c521b] group-hover:text-[#ffc86b]"
             >
               {{ item.region }}
             </span>
           </div>
 
-          <div class="flex gap-3 px-3 py-3">
-            <img
-              :src="item.image"
-              :alt="item.title"
-              class="h-[106px] w-[74px] shrink-0 rounded-[6px] border border-white/8 object-cover"
-              loading="lazy"
-              referrerpolicy="no-referrer"
-            />
+          <div
+            class="flex gap-3 bg-[#2b2b30] px-3 py-3 transition-colors duration-300 group-hover:bg-[#303038]"
+          >
+            <div
+              class="relative h-[106px] w-[74px] shrink-0 overflow-hidden rounded-[6px] border border-white/8"
+            >
+              <img
+                :src="item.image"
+                :alt="item.title"
+                class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+              />
+              <div
+                class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(24,210,229,0)_35%,rgba(24,210,229,0.14)_100%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              />
+            </div>
 
             <div class="min-w-0 flex-1 space-y-[5px] text-[12px] leading-[1.4]">
               <div class="flex">
@@ -357,9 +367,9 @@ function closeTaskDetail() {
           </div>
 
           <div
-            class="border-t border-white/6 px-3 py-2 text-[11px] text-white/34"
+            class="flex items-center justify-between border-t border-white/6 bg-[#2b2b30] px-3 py-2 text-[11px] text-white/34 transition-colors duration-300 group-hover:border-[#18d2e5]/14 group-hover:bg-[#303038]"
           >
-            发布时间： {{ item.publishTime }}
+            <span>发布时间： {{ item.publishTime }}</span>
           </div>
         </article>
       </div>
@@ -370,11 +380,11 @@ function closeTaskDetail() {
       preset="card"
       :bordered="false"
       :mask-closable="true"
-      class="w-[760px] max-w-[92vw] !rounded-[8px] !bg-[#0f1012] !shadow-[0_20px_80px_rgba(0,0,0,0.55)] [&_.n-card-header]:!hidden [&_.n-card__content]:!p-0"
+      class="w-[760px] max-w-[92vw] !rounded-[8px] !bg-[#202126] !shadow-[0_20px_80px_rgba(0,0,0,0.55)] [&_.n-card-header]:!hidden [&_.n-card__content]:!p-0"
     >
       <div
         v-if="selectedTask"
-        class="rounded-[8px] border border-white/8 bg-[#101113]"
+        class="rounded-[8px] border border-white/8 bg-[#26272c]"
       >
         <div
           class="flex items-center justify-between border-b border-white/8 px-[14px] py-[10px]"
@@ -444,7 +454,7 @@ function closeTaskDetail() {
           </div>
 
           <div
-            class="mt-[10px] overflow-hidden rounded-[6px] border border-white/8 bg-[#1a1b1e]"
+            class="mt-[10px] overflow-hidden rounded-[6px] border border-white/8 bg-[#1f2024]"
           >
             <div
               class="flex items-center justify-between border-b border-white/6 px-[10px] py-[8px]"
@@ -469,3 +479,17 @@ function closeTaskDetail() {
     </n-modal>
   </div>
 </template>
+
+<style scoped>
+.task-square-field :deep(.n-input-wrapper),
+.task-square-field :deep(.n-base-selection),
+.task-square-field :deep(.n-date-picker .n-input-wrapper) {
+  background-color: #202126;
+}
+
+.task-square-field :deep(.n-input-wrapper:hover),
+.task-square-field :deep(.n-base-selection:hover),
+.task-square-field :deep(.n-date-picker .n-input-wrapper:hover) {
+  background-color: #24252a;
+}
+</style>
