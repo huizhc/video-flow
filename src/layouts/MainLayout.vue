@@ -120,7 +120,7 @@ function onMenuUpdate(key) {
         collapse-mode="width"
         :collapsed-width="64"
         :width="240"
-        class="bg-[#1b1b1d]! border-[#ffffff10]!"
+        class="bg-[#2b2b2b]! border-[#ffffff10]!"
         content-style="display: flex; flex-direction: column; height: 100%;"
       >
         <n-scrollbar class="flex-1 min-h-0">
@@ -150,14 +150,14 @@ function onMenuUpdate(key) {
         </div>
       </n-layout-sider>
 
-      <n-layout-content class="bg-[#141414] overflow-auto">
+      <n-layout-content class="bg-[#232326] overflow-auto">
         <router-view />
       </n-layout-content>
     </n-layout>
 
     <n-layout-content
       v-else
-      class="h-[calc(100vh-3.5rem)] overflow-auto bg-[#141414]"
+      class="h-[calc(100vh-3.5rem)] overflow-auto bg-[#232326]"
     >
       <router-view />
     </n-layout-content>
