@@ -46,91 +46,94 @@ function openToolDetail(tool) {
 </script>
 
 <template>
-  <div class="min-h-full bg-[#1a1b20] p-4">
-    <div class="mb-5">
+  <div class="h-full flex flex-col bg-[#1a1b20]">
+    <!-- <div class="mb-5 px-4">
       <h1 class="text-xl font-semibold text-white m-0 tracking-tight">
         {{ pageTitle }}
       </h1>
       <p class="text-sm text-gray-500 mt-1 m-0">共 {{ list.length }} 个工具</p>
-    </div>
+    </div> -->
+    <n-scrollbar class="flex-1">
+      <n-empty
+        v-if="list.length === 0"
+        description="该分类下暂无工具"
+        class="py-20"
+      />
 
-    <n-empty
-      v-if="list.length === 0"
-      description="该分类下暂无工具"
-      class="py-20"
-    />
-
-    <div
-      v-else
-      class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
-    >
-      <n-card
-        v-for="tool in list"
-        :key="tool.id + tool.title"
-        class="group overflow-hidden rounded-xl border border-[#35353b] !bg-[#2b2c32] transition-all hover:!-translate-y-0.5 hover:!bg-[#30323a] hover:shadow-[0_16px_36px_rgba(0,0,0,0.26)]"
-        :class="
-          [
-            '02',
-            '03',
-            '04',
-            '06',
-            '07',
-            '08',
-            '09',
-            '11',
-            '12',
-            '15',
-            '16',
-            '17',
-            '18',
-            '19',
-            '62',
-            '81',
-            '90',
-          ].includes(tool.id)
-            ? 'cursor-pointer'
-            : 'cursor-default'
-        "
-        :bordered="false"
-        size="small"
-        :content-style="{ padding: '0' }"
-        @click="openToolDetail(tool)"
+      <div
+        v-else
+        class="grid px-4 py-4 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
       >
-        <div
-          class="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-[#23242a]"
+        <n-card
+          v-for="tool in list"
+          :key="tool.id + tool.title"
+          class="group overflow-hidden rounded-xl border border-[#35353b] !bg-[#2b2c32] transition-all hover:!-translate-y-0.5 hover:!bg-[#30323a] hover:shadow-[0_16px_36px_rgba(0,0,0,0.26)]"
+          :class="
+            [
+              '02',
+              '03',
+              '04',
+              '06',
+              '07',
+              '08',
+              '09',
+              '11',
+              '12',
+              '15',
+              '16',
+              '17',
+              '18',
+              '19',
+              '62',
+              '81',
+              '90',
+            ].includes(tool.id)
+              ? 'cursor-pointer'
+              : 'cursor-default'
+          "
+          :bordered="false"
+          size="small"
+          :content-style="{ padding: '0' }"
+          @click="openToolDetail(tool)"
         >
-          <img
-            :src="tool.previewImage"
-            :alt="tool.title"
-            class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-108"
-            loading="lazy"
-            referrerpolicy="no-referrer"
-          />
           <div
-            class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/22 via-transparent to-white/6"
-          />
-        </div>
-        <div class="bg-[#2b2c32] p-3.5 transition-colors duration-300 group-hover:bg-[#30323a]">
-          <div class="flex items-start justify-between gap-2 mb-2">
-            <span class="text-[15px] font-medium text-white leading-snug">
-              <span class="text-gray-400 font-normal tabular-nums">{{
-                tool.id
-              }}</span>
-              {{ ' ' }}
-              {{ tool.title }}
-            </span>
-            <span
-              class="flex items-center gap-1 text-amber-400/95 shrink-0 text-sm font-medium tabular-nums"
-            >
-              <n-icon :size="16" :component="Currency" />
-              {{ tool.cost }}
-            </span>
+            class="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-[#23242a]"
+          >
+            <img
+              :src="tool.previewImage"
+              :alt="tool.title"
+              class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-108"
+              loading="lazy"
+              referrerpolicy="no-referrer"
+            />
+            <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/22 via-transparent to-white/6"
+            />
           </div>
-          <p class="text-xs text-gray-500 m-0 leading-relaxed line-clamp-2">
-            {{ tool.description }}
-          </p>
-        </div>
-      </n-card>
-    </div>
+          <div
+            class="bg-[#2b2c32] p-3.5 transition-colors duration-300 group-hover:bg-[#30323a]"
+          >
+            <div class="flex items-start justify-between gap-2 mb-2">
+              <span class="text-[15px] font-medium text-white leading-snug">
+                <span class="text-gray-400 font-normal tabular-nums">{{
+                  tool.id
+                }}</span>
+                {{ ' ' }}
+                {{ tool.title }}
+              </span>
+              <span
+                class="flex items-center gap-1 text-amber-400/95 shrink-0 text-sm font-medium tabular-nums"
+              >
+                <n-icon :size="16" :component="Currency" />
+                {{ tool.cost }}
+              </span>
+            </div>
+            <p class="text-xs text-gray-500 m-0 leading-relaxed line-clamp-2">
+              {{ tool.description }}
+            </p>
+          </div>
+        </n-card>
+      </div>
+    </n-scrollbar>
   </div>
 </template>
