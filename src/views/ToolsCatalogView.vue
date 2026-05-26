@@ -60,8 +60,9 @@ function openToolDetail(tool) {
   }
   const detailRouteName = detailRouteNameById[tool.id]
   if (!detailRouteName) return
-  const href = router.resolve({ name: detailRouteName }).href
-  window.open(href, '_blank', 'noopener,noreferrer')
+  router.push({ name: detailRouteName })
+  // const href = router.resolve({ name: detailRouteName }).href
+  // window.open(href, '_blank', 'noopener,noreferrer')
 }
 </script>
 
