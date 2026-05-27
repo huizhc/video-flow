@@ -34,9 +34,9 @@ const prefersReducedMotion =
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 const entranceKeyframes = [
-  { progress: 0, x: 0.18, y: 0.24, intensity: 0.42 },
-  { progress: 0.26, x: 0.34, y: 0.26, intensity: 0.9 },
-  { progress: 0.72, x: 0.84, y: 0.7, intensity: 0.94 },
+  { progress: 0, x: 0.18, y: 0.24, intensity: 0.58 },
+  { progress: 0.26, x: 0.34, y: 0.26, intensity: 1 },
+  { progress: 0.72, x: 0.84, y: 0.7, intensity: 1 },
   { progress: 1, x: 0.5, y: 0.5, intensity: 0 },
 ]
 
@@ -155,7 +155,7 @@ function applyCardPointerEffect(scene, clientX, clientY) {
   const y =
     clientY === undefined ? 0.5 : clamp((clientY - rect.top) / rect.height, 0, 1)
 
-  applyCardScene(scene, x, y, 1)
+  applyCardScene(scene, x, y, 1.24)
 }
 
 function clearEntranceAnimation() {
@@ -551,11 +551,11 @@ onBeforeUnmount(() => {
 }
 
 .tool-catalog-card.is-hovered .tool-catalog-card__media {
-  transform: translateZ(48px);
+  transform: translateZ(62px);
 }
 
 .tool-catalog-card.is-hovered .tool-catalog-card__body {
-  transform: translateZ(70px);
+  transform: translateZ(92px);
   background-color: #30323a;
 }
 
