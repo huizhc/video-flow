@@ -97,7 +97,7 @@ function openToolDetail(tool) {
 
       <div
         v-else
-        class="grid px-4 py-4 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
+        class="grid px-4 py-4 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6"
       >
         <ToolCatalogCard
           v-for="(tool, index) in list"

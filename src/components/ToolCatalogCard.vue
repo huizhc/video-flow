@@ -151,9 +151,13 @@ function applyCardScene(scene, x, y, intensity = 1) {
 function applyCardPointerEffect(scene, clientX, clientY) {
   const rect = scene.getBoundingClientRect()
   const x =
-    clientX === undefined ? 0.5 : clamp((clientX - rect.left) / rect.width, 0, 1)
+    clientX === undefined
+      ? 0.5
+      : clamp((clientX - rect.left) / rect.width, 0, 1)
   const y =
-    clientY === undefined ? 0.5 : clamp((clientY - rect.top) / rect.height, 0, 1)
+    clientY === undefined
+      ? 0.5
+      : clamp((clientY - rect.top) / rect.height, 0, 1)
 
   applyCardScene(scene, x, y, 1.24)
 }
@@ -225,8 +229,7 @@ function startEntranceAnimation() {
     const step = (timestamp) => {
       if (!startTime) startTime = timestamp
       const progress = clamp((timestamp - startTime) / duration, 0, 1)
-      const revealProgress =
-        progress < 0.58 ? easeOutCubic(progress / 0.58) : 1
+      const revealProgress = progress < 0.58 ? easeOutCubic(progress / 0.58) : 1
       const frame = sampleEntranceFrame(progress)
 
       setCardEntranceState(scene, revealProgress)
@@ -347,7 +350,9 @@ onBeforeUnmount(() => {
     class="tool-catalog-card group"
     :class="[
       clickable ? 'cursor-pointer' : 'cursor-default',
-      entranceEnabled && !prefersReducedMotion ? 'tool-catalog-card--with-entrance' : '',
+      entranceEnabled && !prefersReducedMotion
+        ? 'tool-catalog-card--with-entrance'
+        : '',
     ]"
     :role="clickable ? 'button' : undefined"
     :tabindex="clickable ? 0 : undefined"
@@ -385,7 +390,9 @@ onBeforeUnmount(() => {
           class="tool-catalog-card__body bg-[#2b2c32] p-3.5 transition-colors duration-300 group-hover:bg-[#30323a]"
         >
           <div class="mb-2 flex items-start justify-between gap-2">
-            <span class="text-[15px] leading-snug font-medium text-white">
+            <span
+              class="text-[12px] leading-snug font-medium text-white min-[1700px]:text-[16px]"
+            >
               <span class="tabular-nums font-normal text-gray-400">{{
                 tool.id
               }}</span>
@@ -399,7 +406,9 @@ onBeforeUnmount(() => {
               {{ tool.cost }}
             </span>
           </div>
-          <p class="m-0 line-clamp-2 text-xs leading-relaxed text-gray-500">
+          <p
+            class="m-0 line-clamp-2 h-[calc(12*1.75*2px)] text-xs leading-relaxed text-gray-500"
+          >
             {{ tool.description }}
           </p>
         </div>
@@ -413,7 +422,8 @@ onBeforeUnmount(() => {
   perspective: 1400px;
   transform-style: preserve-3d;
   opacity: var(--card-enter-opacity);
-  transform: translate3d(0, var(--card-enter-y), 0) scale(var(--card-enter-scale));
+  transform: translate3d(0, var(--card-enter-y), 0)
+    scale(var(--card-enter-scale));
   will-change: transform, opacity;
   --card-rotate-x: 0deg;
   --card-rotate-y: 0deg;
@@ -442,14 +452,12 @@ onBeforeUnmount(() => {
 
 .tool-catalog-card__tilt {
   transform-style: preserve-3d;
-  transform:
-    translate3d(
+  transform: translate3d(
       var(--card-shift-x),
       var(--card-shift-y),
       calc(var(--card-depth) + var(--card-press-depth))
     )
-    rotateX(var(--card-rotate-x))
-    rotateY(var(--card-rotate-y))
+    rotateX(var(--card-rotate-x)) rotateY(var(--card-rotate-y))
     rotateZ(var(--card-rotate-z));
   transition:
     transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -485,14 +493,13 @@ onBeforeUnmount(() => {
   z-index: 2;
   pointer-events: none;
   opacity: 0;
-  background:
-    radial-gradient(
-      circle at var(--card-glow-x) var(--card-glow-y),
-      rgba(255, 255, 255, 0.22) 0,
-      rgba(255, 255, 255, 0.08) 22%,
-      rgba(255, 255, 255, 0.02) 34%,
-      transparent 60%
-    );
+  background: radial-gradient(
+    circle at var(--card-glow-x) var(--card-glow-y),
+    rgba(255, 255, 255, 0.22) 0,
+    rgba(255, 255, 255, 0.08) 22%,
+    rgba(255, 255, 255, 0.02) 34%,
+    transparent 60%
+  );
   mix-blend-mode: screen;
   transition: opacity 220ms ease;
 }
@@ -504,14 +511,13 @@ onBeforeUnmount(() => {
   z-index: 2;
   pointer-events: none;
   opacity: 0;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.12) 0%,
-      rgba(255, 255, 255, 0.04) 18%,
-      transparent 42%,
-      rgba(255, 255, 255, 0.05) 100%
-    );
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 18%,
+    transparent 42%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
   transition: opacity 220ms ease;
 }
 
@@ -560,20 +566,32 @@ onBeforeUnmount(() => {
 }
 
 .tool-catalog-card__image {
-  transform: translate3d(var(--card-media-shift-x), var(--card-media-shift-y), 0)
+  transform: translate3d(
+      var(--card-media-shift-x),
+      var(--card-media-shift-y),
+      0
+    )
     scale(1.02);
   transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
 .tool-catalog-card.is-hovered .tool-catalog-card__image {
-  transform: translate3d(var(--card-media-shift-x), var(--card-media-shift-y), 0)
+  transform: translate3d(
+      var(--card-media-shift-x),
+      var(--card-media-shift-y),
+      0
+    )
     scale(1.12);
 }
 
 .tool-catalog-card.is-entering .tool-catalog-card__image,
 .tool-catalog-card.is-entering.is-hovered .tool-catalog-card__image {
-  transform: translate3d(var(--card-media-shift-x), var(--card-media-shift-y), 0)
+  transform: translate3d(
+      var(--card-media-shift-x),
+      var(--card-media-shift-y),
+      0
+    )
     scale(1.02);
 }
 
