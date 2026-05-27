@@ -1,4 +1,5 @@
 <script setup>
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { NCard, NIcon } from 'naive-ui'
 import { Currency } from '@vicons/carbon'
 
@@ -11,16 +12,55 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  entranceEnabled: {
+    type: Boolean,
+    default: false,
+  },
+  entranceDelay: {
+    type: Number,
+    default: 0,
+  },
+  entranceKey: {
+    type: [String, Number],
+    default: 0,
+  },
 })
 
 const emit = defineEmits(['click'])
+const cardRef = ref(null)
 
 const prefersReducedMotion =
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+const entranceKeyframes = [
+  { progress: 0, x: 0.18, y: 0.24, intensity: 0.42 },
+  { progress: 0.26, x: 0.34, y: 0.26, intensity: 0.9 },
+  { progress: 0.72, x: 0.84, y: 0.7, intensity: 0.94 },
+  { progress: 1, x: 0.5, y: 0.5, intensity: 0 },
+]
+
+let entranceTimerId = 0
+let entranceFrameId = 0
+
 function emitClick() {
   emit('click', props.tool)
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max)
+}
+
+function lerp(start, end, amount) {
+  return start + (end - start) * amount
+}
+
+function easeInOutSine(value) {
+  return -(Math.cos(Math.PI * value) - 1) / 2
+}
+
+function easeOutCubic(value) {
+  return 1 - (1 - value) ** 3
 }
 
 function resetCardScene(scene) {
@@ -40,38 +80,59 @@ function resetCardScene(scene) {
   scene.style.setProperty('--card-media-shift-y', '0px')
 }
 
+function setCardEntranceState(scene, progress) {
+  const clampedProgress = clamp(progress, 0, 1)
+  const translateY = (1 - clampedProgress) * 34
+  const scale = 0.952 + clampedProgress * 0.048
+
+  scene.style.setProperty('--card-enter-opacity', clampedProgress.toFixed(3))
+  scene.style.setProperty('--card-enter-y', `${translateY.toFixed(2)}px`)
+  scene.style.setProperty('--card-enter-scale', scale.toFixed(4))
+}
+
+function resetCardEntranceState(scene) {
+  scene.style.setProperty('--card-enter-opacity', '1')
+  scene.style.setProperty('--card-enter-y', '0px')
+  scene.style.setProperty('--card-enter-scale', '1')
+}
+
 function shouldSkipPointerEffect(event) {
   return prefersReducedMotion || event.pointerType === 'touch'
 }
 
-function applyCardPointerEffect(scene, clientX, clientY) {
-  const rect = scene.getBoundingClientRect()
-  const x =
-    clientX === undefined
-      ? 0.5
-      : Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1)
-  const y =
-    clientY === undefined
-      ? 0.5
-      : Math.min(Math.max((clientY - rect.top) / rect.height, 0), 1)
-  const offsetX = x - 0.5
-  const offsetY = y - 0.5
+function applyCardScene(scene, x, y, intensity = 1) {
+  const clampedX = clamp(x, 0, 1)
+  const clampedY = clamp(y, 0, 1)
+  const clampedIntensity = clamp(intensity, 0, 1)
+  const offsetX = clampedX - 0.5
+  const offsetY = clampedY - 0.5
+  const scaledOffsetX = offsetX * clampedIntensity
+  const scaledOffsetY = offsetY * clampedIntensity
   const distance = Math.min(Math.hypot(offsetX, offsetY) / 0.7071, 1)
   const centerPull = 1 - distance
 
-  const rotateX = -offsetY * 10
-  const rotateY = offsetX * 10
-  const rotateZ = offsetX * offsetY * -5
-  const shiftX = offsetX * 8
-  const shiftY = offsetY * 6
-  const depth = -26 - centerPull * 10
-  const shadowX = -offsetX * 24
-  const shadowY = 30 + Math.abs(offsetY) * 12 + centerPull * 8
-  const shadowBlur = 52 + centerPull * 12
-  const mediaShiftX = -offsetX * 14
-  const mediaShiftY = -offsetY * 10
+  const rotateX = -scaledOffsetY * 10
+  const rotateY = scaledOffsetX * 10
+  const rotateZ = scaledOffsetX * scaledOffsetY * -5
+  const shiftX = scaledOffsetX * 8
+  const shiftY = scaledOffsetY * 6
+  const depth = lerp(0, -26 - centerPull * 10, clampedIntensity)
+  const shadowX = lerp(0, -offsetX * 24, clampedIntensity)
+  const shadowY = lerp(
+    18,
+    30 + Math.abs(offsetY) * 12 + centerPull * 8,
+    clampedIntensity
+  )
+  const shadowBlur = lerp(38, 52 + centerPull * 12, clampedIntensity)
+  const mediaShiftX = lerp(0, -offsetX * 14, clampedIntensity)
+  const mediaShiftY = lerp(0, -offsetY * 10, clampedIntensity)
 
-  scene.classList.add('is-hovered')
+  if (clampedIntensity > 0.01) {
+    scene.classList.add('is-hovered')
+  } else {
+    scene.classList.remove('is-hovered')
+  }
+
   scene.style.setProperty('--card-rotate-x', `${rotateX.toFixed(2)}deg`)
   scene.style.setProperty('--card-rotate-y', `${rotateY.toFixed(2)}deg`)
   scene.style.setProperty('--card-rotate-z', `${rotateZ.toFixed(2)}deg`)
@@ -81,16 +142,120 @@ function applyCardPointerEffect(scene, clientX, clientY) {
   scene.style.setProperty('--card-shadow-x', `${shadowX.toFixed(2)}px`)
   scene.style.setProperty('--card-shadow-y', `${shadowY.toFixed(2)}px`)
   scene.style.setProperty('--card-shadow-blur', `${shadowBlur.toFixed(2)}px`)
-  scene.style.setProperty('--card-glow-x', `${(x * 100).toFixed(2)}%`)
-  scene.style.setProperty('--card-glow-y', `${(y * 100).toFixed(2)}%`)
+  scene.style.setProperty('--card-glow-x', `${(clampedX * 100).toFixed(2)}%`)
+  scene.style.setProperty('--card-glow-y', `${(clampedY * 100).toFixed(2)}%`)
   scene.style.setProperty('--card-media-shift-x', `${mediaShiftX.toFixed(2)}px`)
   scene.style.setProperty('--card-media-shift-y', `${mediaShiftY.toFixed(2)}px`)
+}
+
+function applyCardPointerEffect(scene, clientX, clientY) {
+  const rect = scene.getBoundingClientRect()
+  const x =
+    clientX === undefined ? 0.5 : clamp((clientX - rect.left) / rect.width, 0, 1)
+  const y =
+    clientY === undefined ? 0.5 : clamp((clientY - rect.top) / rect.height, 0, 1)
+
+  applyCardScene(scene, x, y, 1)
+}
+
+function clearEntranceAnimation() {
+  if (entranceTimerId) {
+    window.clearTimeout(entranceTimerId)
+    entranceTimerId = 0
+  }
+
+  if (entranceFrameId) {
+    window.cancelAnimationFrame(entranceFrameId)
+    entranceFrameId = 0
+  }
+}
+
+function cancelEntranceAnimation(scene) {
+  clearEntranceAnimation()
+  scene.classList.remove('is-entering')
+  resetCardEntranceState(scene)
+}
+
+function sampleEntranceFrame(progress) {
+  const easedProgress = easeInOutSine(clamp(progress, 0, 1))
+
+  for (let index = 1; index < entranceKeyframes.length; index += 1) {
+    const previous = entranceKeyframes[index - 1]
+    const current = entranceKeyframes[index]
+
+    if (easedProgress <= current.progress) {
+      const range = current.progress - previous.progress || 1
+      const localProgress = (easedProgress - previous.progress) / range
+      return {
+        x: lerp(previous.x, current.x, localProgress),
+        y: lerp(previous.y, current.y, localProgress),
+        intensity: lerp(previous.intensity, current.intensity, localProgress),
+      }
+    }
+  }
+
+  return entranceKeyframes[entranceKeyframes.length - 1]
+}
+
+function startEntranceAnimation() {
+  if (
+    typeof window === 'undefined' ||
+    prefersReducedMotion ||
+    !props.entranceEnabled
+  ) {
+    return
+  }
+
+  const scene = cardRef.value
+  if (!(scene instanceof HTMLElement)) return
+
+  clearEntranceAnimation()
+  scene.classList.remove('is-hovered')
+  scene.classList.remove('is-pressed')
+  scene.classList.add('is-entering')
+  resetCardScene(scene)
+  setCardEntranceState(scene, 0)
+
+  const duration = 980
+  const delay = Math.max(props.entranceDelay, 0)
+
+  entranceTimerId = window.setTimeout(() => {
+    let startTime = 0
+
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp
+      const progress = clamp((timestamp - startTime) / duration, 0, 1)
+      const revealProgress =
+        progress < 0.58 ? easeOutCubic(progress / 0.58) : 1
+      const frame = sampleEntranceFrame(progress)
+
+      setCardEntranceState(scene, revealProgress)
+      applyCardScene(scene, frame.x, frame.y, frame.intensity)
+
+      if (progress < 1) {
+        entranceFrameId = window.requestAnimationFrame(step)
+        return
+      }
+
+      scene.classList.remove('is-entering')
+      scene.classList.remove('is-hovered')
+      scene.classList.remove('is-pressed')
+      resetCardScene(scene)
+      resetCardEntranceState(scene)
+      entranceFrameId = 0
+    }
+
+    entranceFrameId = window.requestAnimationFrame(step)
+    entranceTimerId = 0
+  }, delay)
 }
 
 function handleCardPointerEnter(event) {
   if (shouldSkipPointerEffect(event)) return
   const scene = event.currentTarget
   if (!(scene instanceof HTMLElement)) return
+
+  cancelEntranceAnimation(scene)
   applyCardPointerEffect(scene, event.clientX, event.clientY)
 }
 
@@ -98,6 +263,8 @@ function handleCardPointerMove(event) {
   if (shouldSkipPointerEffect(event)) return
   const scene = event.currentTarget
   if (!(scene instanceof HTMLElement)) return
+
+  cancelEntranceAnimation(scene)
   applyCardPointerEffect(scene, event.clientX, event.clientY)
 }
 
@@ -105,6 +272,7 @@ function handleCardPointerLeave(event) {
   const scene = event.currentTarget
   if (!(scene instanceof HTMLElement)) return
 
+  cancelEntranceAnimation(scene)
   scene.classList.remove('is-hovered')
   scene.classList.remove('is-pressed')
   resetCardScene(scene)
@@ -115,6 +283,7 @@ function handleCardPointerPress(event) {
   const scene = event.currentTarget
   if (!(scene instanceof HTMLElement)) return
 
+  cancelEntranceAnimation(scene)
   scene.classList.add('is-pressed')
   scene.style.setProperty('--card-press-depth', '-12px')
 }
@@ -134,12 +303,52 @@ function handleKeydown(event) {
   event.preventDefault()
   emitClick()
 }
+
+onMounted(() => {
+  startEntranceAnimation()
+})
+
+watch(
+  () => props.entranceKey,
+  async () => {
+    if (!props.entranceEnabled) return
+    await nextTick()
+    startEntranceAnimation()
+  }
+)
+
+watch(
+  () => props.entranceEnabled,
+  async (enabled) => {
+    const scene = cardRef.value
+    if (!(scene instanceof HTMLElement)) return
+
+    if (!enabled) {
+      cancelEntranceAnimation(scene)
+      scene.classList.remove('is-hovered')
+      scene.classList.remove('is-pressed')
+      resetCardScene(scene)
+      return
+    }
+
+    await nextTick()
+    startEntranceAnimation()
+  }
+)
+
+onBeforeUnmount(() => {
+  clearEntranceAnimation()
+})
 </script>
 
 <template>
   <div
+    ref="cardRef"
     class="tool-catalog-card group"
-    :class="clickable ? 'cursor-pointer' : 'cursor-default'"
+    :class="[
+      clickable ? 'cursor-pointer' : 'cursor-default',
+      entranceEnabled && !prefersReducedMotion ? 'tool-catalog-card--with-entrance' : '',
+    ]"
     :role="clickable ? 'button' : undefined"
     :tabindex="clickable ? 0 : undefined"
     @pointerenter="handleCardPointerEnter"
@@ -203,6 +412,9 @@ function handleKeydown(event) {
 .tool-catalog-card {
   perspective: 1400px;
   transform-style: preserve-3d;
+  opacity: var(--card-enter-opacity);
+  transform: translate3d(0, var(--card-enter-y), 0) scale(var(--card-enter-scale));
+  will-change: transform, opacity;
   --card-rotate-x: 0deg;
   --card-rotate-y: 0deg;
   --card-rotate-z: 0deg;
@@ -217,6 +429,15 @@ function handleKeydown(event) {
   --card-glow-y: 50%;
   --card-media-shift-x: 0px;
   --card-media-shift-y: 0px;
+  --card-enter-opacity: 1;
+  --card-enter-y: 0px;
+  --card-enter-scale: 1;
+}
+
+.tool-catalog-card--with-entrance {
+  --card-enter-opacity: 0;
+  --card-enter-y: 34px;
+  --card-enter-scale: 0.952;
 }
 
 .tool-catalog-card__tilt {
@@ -296,11 +517,17 @@ function handleKeydown(event) {
 
 .tool-catalog-card.is-hovered .tool-catalog-card__surface {
   border-color: #464751;
+  background-color: #30323a !important;
 }
 
 .tool-catalog-card.is-hovered .tool-catalog-card__surface::before,
 .tool-catalog-card.is-hovered .tool-catalog-card__surface::after {
   opacity: 1;
+}
+
+.tool-catalog-card.is-entering .tool-catalog-card__surface::before,
+.tool-catalog-card.is-entering .tool-catalog-card__surface::after {
+  opacity: 0;
 }
 
 .tool-catalog-card__media,
@@ -329,6 +556,7 @@ function handleKeydown(event) {
 
 .tool-catalog-card.is-hovered .tool-catalog-card__body {
   transform: translateZ(70px);
+  background-color: #30323a;
 }
 
 .tool-catalog-card__image {
@@ -343,7 +571,14 @@ function handleKeydown(event) {
     scale(1.12);
 }
 
+.tool-catalog-card.is-entering .tool-catalog-card__image,
+.tool-catalog-card.is-entering.is-hovered .tool-catalog-card__image {
+  transform: translate3d(var(--card-media-shift-x), var(--card-media-shift-y), 0)
+    scale(1.02);
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .tool-catalog-card,
   .tool-catalog-card__tilt,
   .tool-catalog-card__surface,
   .tool-catalog-card__media,

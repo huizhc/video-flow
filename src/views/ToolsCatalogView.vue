@@ -1,16 +1,15 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { NEmpty } from 'naive-ui'
 import ToolCatalogCard from '@/components/ToolCatalogCard.vue'
-import { categoryTitles, toolsCatalog } from '@/data/toolsCatalog'
+import { toolsCatalog } from '@/data/toolsCatalog'
 
 const route = useRoute()
 const router = useRouter()
 
 const filter = computed(() => route.meta.toolFilter ?? 'all')
-
-const pageTitle = computed(() => categoryTitles[filter.value] ?? '工具')
+const entranceSeed = ref(0)
 
 const clickableToolIds = new Set([
   '02',
@@ -37,6 +36,21 @@ const list = computed(() => {
   if (f === 'all') return toolsCatalog
   return toolsCatalog.filter((t) => t.categories.includes(f))
 })
+
+watch(
+  filter,
+  () => {
+    entranceSeed.value += 1
+  },
+  { immediate: true }
+)
+
+function getEntranceDelay(index) {
+  const parityGroupDelay = index % 2 === 0 ? 0 : 140
+  const batchIndex = Math.floor(index / 2)
+
+  return parityGroupDelay + Math.min(batchIndex * 52, 208)
+}
 
 function openToolDetail(tool) {
   const detailRouteNameById = {
@@ -86,10 +100,13 @@ function openToolDetail(tool) {
         class="grid px-4 py-4 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
       >
         <ToolCatalogCard
-          v-for="tool in list"
-          :key="tool.id + tool.title"
+          v-for="(tool, index) in list"
+          :key="`${entranceSeed}-${tool.id}-${tool.title}`"
           :tool="tool"
           :clickable="clickableToolIds.has(String(tool.id))"
+          :entrance-enabled="true"
+          :entrance-delay="getEntranceDelay(index)"
+          :entrance-key="`${entranceSeed}-${tool.id}`"
           @click="openToolDetail"
         />
       </div>
