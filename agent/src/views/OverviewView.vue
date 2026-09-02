@@ -243,7 +243,7 @@ function refresh() {
   align-items: center;
   gap: 12px;
   padding: 10px 16px;
-  border-bottom: 1px solid #151d28;
+  border-bottom: 1px solid #1E4170;
 }
 
 .list-row:last-child {

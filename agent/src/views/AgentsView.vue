@@ -458,7 +458,7 @@ function onImportFile(event) {
 }
 
 .prompt {
-  background: #0b1219;
+  background: #0D2139;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   padding: 10px 12px;

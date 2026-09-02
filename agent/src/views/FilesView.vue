@@ -398,7 +398,7 @@ function download(node) {
 
 .crumb:hover {
   color: var(--text);
-  background: #16202c;
+  background: #1B3861;
 }
 
 .crumb.active {
@@ -415,7 +415,7 @@ function download(node) {
   align-items: center;
   gap: 14px;
   padding: 9px 16px;
-  background: rgba(34, 211, 238, 0.07);
+  background: rgba(52, 161, 225, 0.07);
   border-bottom: 1px solid var(--line);
   color: var(--text-2);
   font-size: 12px;
@@ -461,8 +461,8 @@ function download(node) {
 }
 
 .card.picked {
-  border-color: rgba(34, 211, 238, 0.5);
-  background: rgba(34, 211, 238, 0.07);
+  border-color: rgba(52, 161, 225, 0.5);
+  background: rgba(52, 161, 225, 0.07);
 }
 
 .card-top,
@@ -536,15 +536,15 @@ function download(node) {
 }
 
 .move-item.active {
-  border-color: rgba(34, 211, 238, 0.5);
-  background: rgba(34, 211, 238, 0.08);
+  border-color: rgba(52, 161, 225, 0.5);
+  background: rgba(52, 161, 225, 0.08);
   color: #e6f9ff;
 }
 
 .preview-body {
   margin: 16px 0 0;
   padding: 14px;
-  background: #0b1219;
+  background: #0D2139;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   color: var(--text-2);

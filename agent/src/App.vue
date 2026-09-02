@@ -164,7 +164,7 @@ onUnmounted(() => clearInterval(timer))
   display: grid;
   place-items: center;
   font-size: 16px;
-  background: linear-gradient(135deg, #2563eb, #22d3ee);
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
 }
 
 .brand-name {
@@ -206,12 +206,12 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .menu-item:hover {
-  background: #101923;
+  background: #27508A;
   color: var(--text);
 }
 
 .menu-item.router-link-active {
-  background: rgba(34, 211, 238, 0.1);
+  background: rgba(52, 161, 225, 0.15);
   color: #e6f9ff;
 }
 
@@ -247,7 +247,7 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .user:hover {
-  background: #101923;
+  background: #27508A;
 }
 
 .avatar {
@@ -301,7 +301,7 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .collapse:hover {
-  background: #131c27;
+  background: #152C4E;
   color: var(--text);
 }
 

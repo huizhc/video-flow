@@ -348,12 +348,12 @@ async function copyDoc(doc) {
 
 .base-item:hover {
   border-color: var(--line-2);
-  background: #16202c;
+  background: #1B3861;
 }
 
 .base-item.active {
-  border-color: rgba(34, 211, 238, 0.45);
-  background: rgba(34, 211, 238, 0.08);
+  border-color: rgba(52, 161, 225, 0.45);
+  background: rgba(52, 161, 225, 0.08);
 }
 
 .bi-top {
@@ -394,7 +394,7 @@ async function copyDoc(doc) {
 }
 
 .doc.open {
-  border-color: rgba(34, 211, 238, 0.32);
+  border-color: rgba(52, 161, 225, 0.32);
 }
 
 .doc-head {
@@ -406,7 +406,7 @@ async function copyDoc(doc) {
 }
 
 .doc-head:hover {
-  background: #16202c;
+  background: #1B3861;
 }
 
 .doc-title {

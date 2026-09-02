@@ -388,7 +388,7 @@ function runTest() {
 
 .mv:hover:not(:disabled) {
   color: var(--cyan);
-  border-color: rgba(34, 211, 238, 0.45);
+  border-color: rgba(52, 161, 225, 0.45);
 }
 
 .mv:disabled {

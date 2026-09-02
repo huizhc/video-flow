@@ -277,8 +277,8 @@ onMounted(() => {
   display: grid;
   place-items: center;
   font-size: 26px;
-  background: linear-gradient(135deg, #2563eb, #22d3ee);
-  box-shadow: 0 10px 24px rgba(34, 211, 238, 0.2);
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow: 0 10px 24px rgba(52, 161, 225, 0.35);
 }
 
 .welcome-title {
@@ -318,9 +318,9 @@ onMounted(() => {
 }
 
 .suggest:hover {
-  border-color: rgba(34, 211, 238, 0.45);
+  border-color: rgba(52, 161, 225, 0.45);
   color: var(--text);
-  background: #16202c;
+  background: #1B3861;
 }
 
 .msg {
@@ -342,7 +342,7 @@ onMounted(() => {
   display: grid;
   place-items: center;
   font-size: 13px;
-  background: linear-gradient(135deg, #0891b2, #22d3ee);
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
 }
 
 .avatar.user {
@@ -377,7 +377,7 @@ onMounted(() => {
 }
 
 .bubble.pending {
-  background: #141d28;
+  background: #18355A;
 }
 
 .thinking {
@@ -439,14 +439,14 @@ onMounted(() => {
 .cite {
   font-size: 11.5px;
   color: var(--cyan);
-  background: rgba(34, 211, 238, 0.08);
-  border: 1px solid rgba(34, 211, 238, 0.22);
+  background: rgba(52, 161, 225, 0.08);
+  border: 1px solid rgba(52, 161, 225, 0.22);
   border-radius: 5px;
   padding: 2px 8px;
 }
 
 .cite:hover {
-  background: rgba(34, 211, 238, 0.18);
+  background: rgba(52, 161, 225, 0.18);
 }
 
 .msg-foot {
@@ -488,8 +488,8 @@ onMounted(() => {
   flex: none;
   border-radius: 9px;
   border: none;
-  background: linear-gradient(135deg, #22d3ee, #2dd4bf);
-  color: #04222a;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #fff;
   font-size: 13px;
   cursor: pointer;
   transition: 0.15s;
@@ -535,12 +535,12 @@ onMounted(() => {
 }
 
 .history-item:hover {
-  background: #101923;
+  background: #27508A;
   color: var(--text);
 }
 
 .history-item.active {
-  background: rgba(34, 211, 238, 0.1);
+  background: rgba(52, 161, 225, 0.15);
   color: #e6f9ff;
 }
 

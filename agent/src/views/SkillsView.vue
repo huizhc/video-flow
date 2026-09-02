@@ -559,7 +559,7 @@ function execute(skill, input) {
 .result-body {
   margin: 0;
   padding: 12px;
-  background: #0b1219;
+  background: #0D2139;
   color: var(--text-2);
   font-family: 'SFMono-Regular', Menlo, Consolas, monospace;
   font-size: 11.5px;

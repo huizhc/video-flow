@@ -35,7 +35,7 @@ const ui = useUiStore()
   min-width: 190px;
   padding: 9px 13px;
   border-radius: 8px;
-  background: #131c27;
+  background: #152C4E;
   border: 1px solid var(--line-2);
   box-shadow: var(--shadow);
   font-size: 12.5px;

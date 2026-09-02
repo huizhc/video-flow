@@ -429,9 +429,9 @@ function enterSpace(item) {
 }
 
 .btn-outline {
-  border-color: rgba(34, 211, 238, 0.45);
+  border-color: rgba(52, 161, 225, 0.45);
   color: var(--cyan);
-  background: rgba(34, 211, 238, 0.07);
+  background: rgba(52, 161, 225, 0.07);
 }
 
 .icon-round {
@@ -447,7 +447,7 @@ function enterSpace(item) {
 }
 
 .icon-round:hover {
-  border-color: rgba(34, 211, 238, 0.45);
+  border-color: rgba(52, 161, 225, 0.45);
   color: var(--cyan);
 }
 
@@ -472,7 +472,7 @@ function enterSpace(item) {
 }
 
 .space-card.current {
-  border-color: rgba(34, 211, 238, 0.4);
+  border-color: rgba(52, 161, 225, 0.4);
 }
 
 .card-head {
@@ -614,7 +614,7 @@ function enterSpace(item) {
 
 .color-btn.active {
   border-color: #fff;
-  box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.35);
+  box-shadow: 0 0 0 2px rgba(52, 161, 225, 0.35);
 }
 
 .sec-title {
