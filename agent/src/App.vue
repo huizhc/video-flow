@@ -196,7 +196,7 @@ onUnmounted(() => clearInterval(timer))
   display: flex;
   align-items: center;
   gap: 9px;
-  height: 32px;
+  height: 40px;
   padding: 0 10px;
   border-radius: 6px;
   color: var(--text-2);
@@ -219,8 +219,8 @@ onUnmounted(() => clearInterval(timer))
   content: '';
   position: absolute;
   left: 0;
-  top: 7px;
-  bottom: 7px;
+  top: 9px;
+  bottom: 9px;
   width: 2px;
   border-radius: 2px;
   background: var(--cyan);
