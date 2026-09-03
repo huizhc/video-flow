@@ -21,11 +21,14 @@
 
       <div ref="scroller" class="chat-body">
         <div v-if="!messages.length" class="welcome">
-          <div class="welcome-logo">🤖</div>
-          <h3 class="welcome-title">Agent 智能对话</h3>
-          <p class="welcome-desc">通过 Main Agent 调度，与团队空间内的业务 Agent 进行智能交互</p>
-          <div class="suggests">
-            <button v-for="item in suggestions" :key="item.text" class="suggest" @click="ask(item.text)">
+          <div class="welcome-logo">
+            <img v-if="iconIsImage" :src="welcome.icon" class="welcome-logo-img" alt="" />
+            <template v-else>{{ welcome.icon }}</template>
+          </div>
+          <h3 class="welcome-title">{{ welcome.title }}</h3>
+          <p class="welcome-desc">{{ welcome.desc }}</p>
+          <div v-if="welcome.questions.length" class="suggests">
+            <button v-for="item in welcome.questions" :key="item.id" class="suggest" @click="ask(item.text)">
               <span>{{ item.icon }}</span>
               <span>{{ item.text }}</span>
             </button>
@@ -122,11 +125,13 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import BaseModal from '@/components/BaseModal.vue'
 import { useChatStore } from '@/stores/chat'
 import { useAgentStore } from '@/stores/agents'
+import { useSettingsStore } from '@/stores/settings'
 import { useUiStore } from '@/stores/ui'
 import { formatTime, copyText, downloadFile } from '@/utils/format'
 
 const chat = useChatStore()
 const agentStore = useAgentStore()
+const settings = useSettingsStore()
 const ui = useUiStore()
 
 const draft = ref('')
@@ -136,16 +141,11 @@ const renaming = ref(null)
 const renameText = ref('')
 
 const messages = computed(() => chat.messages)
+const welcome = computed(() => settings.welcome)
+const iconIsImage = computed(() => /^data:image\//.test(welcome.value.icon))
 const mode = computed(() => chat.active?.mode || 'chat')
 const agentId = ref(chat.active?.agentId || '')
 const runningAgents = computed(() => agentStore.agents.filter((a) => a.status === 'running'))
-
-const suggestions = [
-  { icon: '📊', text: '帮我分析当前团队的Agent状态' },
-  { icon: '📚', text: '查询知识库中关于排污许可申报的文档' },
-  { icon: '📝', text: '帮我生成一份周报模板' },
-  { icon: '🧩', text: '介绍一下我有哪些可用的技能' }
-]
 
 function scrollToEnd() {
   nextTick(() => {
@@ -277,8 +277,15 @@ onMounted(() => {
   display: grid;
   place-items: center;
   font-size: 26px;
+  overflow: hidden;
   background: linear-gradient(135deg, var(--brand), var(--brand-2));
   box-shadow: 0 10px 24px rgba(52, 161, 225, 0.35);
+}
+
+.welcome-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .welcome-title {

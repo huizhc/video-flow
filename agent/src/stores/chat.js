@@ -9,6 +9,7 @@ import { useAgentStore } from './agents'
 import { useSkillStore } from './skills'
 import { useKnowledgeStore } from './knowledge'
 import { useRuleStore } from './rules'
+import { useSettingsStore } from './settings'
 
 export const useChatStore = defineStore('chat', () => {
   const sessions = persisted(KEYS.sessions, [])
@@ -17,6 +18,7 @@ export const useChatStore = defineStore('chat', () => {
   const skillStore = useSkillStore()
   const knowledgeStore = useKnowledgeStore()
   const ruleStore = useRuleStore()
+  const settingsStore = useSettingsStore()
 
   const activeId = ref(sessions.value[0]?.id || '')
   const generating = ref(false)
@@ -39,7 +41,8 @@ export const useChatStore = defineStore('chat', () => {
       skills: skillStore.skills,
       bases: knowledgeStore.bases,
       documents: knowledgeStore.documents,
-      rules: ruleStore.rules
+      rules: ruleStore.rules,
+      retrieval: settingsStore.retrieval
     }
   }
 

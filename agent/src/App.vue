@@ -90,6 +90,7 @@ const ORDER = [
   '/rules',
   '/members',
   '/spaces',
+  '/space-settings',
   '/system'
 ]
 

@@ -57,6 +57,12 @@ const routes = [
     meta: { title: '业务空间管理', icon: '🗂️' },
   },
   {
+    path: '/space-settings',
+    name: 'space-settings',
+    component: () => import('@/views/SpaceSettingsView.vue'),
+    meta: { title: '空间设置', icon: '⚙️' },
+  },
+  {
     path: '/system',
     name: 'system',
     component: () => import('@/views/SystemView.vue'),

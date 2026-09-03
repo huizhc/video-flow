@@ -19,6 +19,8 @@ export const CURRENT_USER = {
 export const DEFAULT_SPACE = {
   name: '团队空间',
   subtitle: '环境Agent',
+  spaceId: '5a1b2c3d4e5f67890abcdef123456780',
+  mainAgentEndpoint: 'http://localhost:3003',
   description: '面向环境管理与合规业务的 Agent 协同空间，由 Main Agent 统一调度团队内智能体、知识库与技能。',
   icon: '🤖',
   memberLimit: 15,
@@ -704,6 +706,46 @@ function seedKeys() {
   ]
 }
 
+export function defaultSpaceSettings() {
+  return {
+    welcome: {
+      icon: '🤖',
+      title: 'Agent 智能对话',
+      desc: '通过 Main Agent 调度，与团队空间内的业务 Agent 进行智能交互',
+      questions: [
+        { id: 'wq-status', icon: '📊', text: '帮我分析当前团队的Agent状态' },
+        { id: 'wq-doc', icon: '📚', text: '查询知识库中关于排污许可申报的文档' },
+        { id: 'wq-report', icon: '📝', text: '帮我生成一份周报模板' },
+        { id: 'wq-skill', icon: '🧩', text: '介绍一下我有哪些可用的技能' }
+      ]
+    },
+    resources: {
+      skill: ['kb.query', 'llm.reason', 'web.fetch', 'embed.vector'],
+      tool: ['dev.insulation', 'dev.leakage', 'dev.winding'],
+      agent: ['agt-env-brain', 'agt-ts-prep'],
+      workflow: ['wf-env-compliance', 'wf-emission-alert', 'wf-insulation-risk']
+    },
+    knowledge: {
+      model: 'bge-large-zh',
+      topK: 3,
+      minScore: 8,
+      chunkSize: 512,
+      chunkOverlap: 64,
+      fallback: 'notice',
+      citation: true,
+      loosen: true,
+      bases: {}
+    },
+    synonyms: [
+      { id: 'syn-permit', term: '排污许可', aliases: ['排污证', '排污许可证'], note: '许可管理相关提问统一归并', updatedAt: ago(12, 3) },
+      { id: 'syn-cod', term: '化学需氧量', aliases: ['COD', '需氧量'], note: '废水指标英文缩写映射', updatedAt: ago(9, 6) },
+      { id: 'syn-nh3', term: '氨氮', aliases: ['NH3-N', '氨态氮'], note: '监测报表字段口径一致', updatedAt: ago(9, 6) },
+      { id: 'syn-eia', term: '环境影响评价', aliases: ['环评', 'EIA'], note: '覆盖口语化表述', updatedAt: ago(5, 2) },
+      { id: 'syn-carbon', term: '碳排放', aliases: ['温室气体排放', 'GHG'], note: '核算类提问归并', updatedAt: ago(3, 8) }
+    ]
+  }
+}
+
 export const SERVICE_NODES = [
   { name: '调度服务', node: 'scheduler-01', latency: 18 },
   { name: 'Agent 运行时', node: 'runtime-01', latency: 24 },
@@ -723,6 +765,7 @@ export const LICENSE = {
 
 export const KEYS = {
   space: 'space',
+  spaceSettings: 'spaceSettings',
   businessSpaces: 'businessSpaces',
   activeSpaceId: 'activeSpaceId',
   user: 'user',
@@ -743,6 +786,7 @@ export const KEYS = {
 export function buildSeed() {
   return {
     [KEYS.space]: { ...DEFAULT_SPACE },
+    [KEYS.spaceSettings]: defaultSpaceSettings(),
     [KEYS.businessSpaces]: seedBusinessSpaces(),
     [KEYS.activeSpaceId]: '',
     [KEYS.user]: { ...CURRENT_USER },

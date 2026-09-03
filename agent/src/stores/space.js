@@ -7,6 +7,7 @@ import { ROLES } from '@/services/catalog'
 import { formatBytes } from '@/utils/format'
 
 const formatKb = (bytes) => formatBytes(Math.max(bytes, 0))
+const randomHex = (len) => Array.from({ length: len }, () => Math.floor(Math.random() * 16).toString(16)).join('')
 
 export const useSpaceStore = defineStore('space', () => {
   const space = persisted(KEYS.space, { ...DEFAULT_SPACE })
@@ -48,6 +49,18 @@ export const useSpaceStore = defineStore('space', () => {
 
   function updateSpace(patch) {
     space.value = { ...space.value, ...patch }
+  }
+
+  function ensureIdentity() {
+    const patch = {}
+    if (!space.value.spaceId) patch.spaceId = randomHex(32)
+    if (!space.value.mainAgentEndpoint) patch.mainAgentEndpoint = DEFAULT_SPACE.mainAgentEndpoint
+    if (Object.keys(patch).length) updateSpace(patch)
+  }
+
+  function saveBasics(patch) {
+    updateSpace(patch)
+    log('空间设置', '保存基本设置', `${patch.name} · 成员上限 ${patch.memberLimit}`)
   }
 
   function addMember(payload) {
@@ -153,6 +166,8 @@ export const useSpaceStore = defineStore('space', () => {
     roleLabel,
     log,
     updateSpace,
+    ensureIdentity,
+    saveBasics,
     addMember,
     updateMember,
     removeMember,

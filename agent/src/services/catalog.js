@@ -19,6 +19,7 @@ export const ROLE_MATRIX = [
   { feature: '业务规则', super: '全部', admin: '全部', member: '查看', viewer: '查看' },
   { feature: '成员管理', super: '全部', admin: '邀请 / 编辑', member: '—', viewer: '—' },
   { feature: '业务空间管理', super: '全部', admin: '新增 / 修改', member: '进入', viewer: '进入' },
+  { feature: '空间设置', super: '全部', admin: '全部', member: '查看', viewer: '查看' },
   { feature: '系统管理', super: '全部', admin: '日志查看', member: '—', viewer: '—' }
 ]
 
@@ -132,4 +133,80 @@ export const REGISTRY = [
   registryItem('emergency-drill', '突发环境事件应急Agent', '应急响应', 'v1.5.5', '生成应急预案演练脚本并评估处置响应时效。', ['预案匹配', '演练脚本', '响应评估']),
   registryItem('cleaner-production', '清洁生产审核Agent', '体系审核', 'v1.4.3', '识别清洁生产机会并测算方案投入产出。', ['机会识别', '方案测算', '绩效评估']),
   registryItem('carbon-quota', '碳配额履约Agent', '申报审批', 'v1.2.7', '跟踪碳配额缺口与履约节点，生成履约方案建议。', ['缺口测算', '履约排期', '方案建议'])
+]
+
+export const WELCOME_ICONS = ['🤖', '💬', '📊', '📚', '📝', '🧩', '🔍', '📁', '⚙️', '🌱', '⚡', '✅']
+
+export const EMBED_MODELS = ['bge-large-zh', 'bge-base-zh', 'm3e-base', 'text-embedding-3-large']
+
+export const RETRIEVAL_FALLBACKS = [
+  { value: 'notice', label: '提示补充知识文档', hint: '未命中时列出已接入知识库并建议补充对应文档' },
+  { value: 'main', label: '由 Main Agent 直接应答', hint: '未命中时改由调度中枢依据空间配置作答' }
+]
+
+const resourceGroup = (key, icon, title, rows) => ({
+  key,
+  icon,
+  title,
+  items: rows.map(([code, name, desc]) => ({ code, name, desc }))
+})
+
+export const RESOURCE_GROUPS = [
+  resourceGroup('skill', '🧩', 'SKILL 技能', [
+    ['kb.query', '知识库查询', '通过 OpenClaw 检索知识库文档并返回原文片段'],
+    ['file.submit', '文件提交', '通过 OpenClaw 将文件提交至文件中心并登记'],
+    ['agent.chat', 'Agent对话', '通过 OpenClaw 与指定 Agent 建立对话'],
+    ['llm.reason', 'LLM 推理', '通过 OpenClaw 调用大模型完成文本推理'],
+    ['image.generate', '图片生成', '通过 OpenClaw 按描述生成图片'],
+    ['image.caption', '图片描述', '通过 OpenClaw 识别图片内容并生成描述'],
+    ['audio.tts', '语音合成', '通过 OpenClaw 将文字转换为语音'],
+    ['audio.asr', '音频转录', '通过 OpenClaw 将音频转写为文字'],
+    ['video.generate', '视频生成', '通过 OpenClaw 按脚本生成短视频'],
+    ['web.search', '网页搜索', '通过 OpenClaw 搜索公开网页内容'],
+    ['web.fetch', '网页抓取', '通过 OpenClaw 抓取网页正文并解析为结构化文本'],
+    ['browser.auto', '浏览器自动化', '通过 OpenClaw 驱动浏览器完成页面操作'],
+    ['embed.vector', '嵌入向量', '通过 OpenClaw 生成文本嵌入向量']
+  ]),
+  resourceGroup('tool', '🔧', 'TOOL 工具', [
+    ['dev.insulation', '查询绝缘电阻', '调用 ACR1V01 设备属性绝缘电阻（01947000001001）'],
+    ['dev.leakage', '查询泄漏电流', '调用 ACR1V01 设备属性泄漏电流（01947000001101）'],
+    ['dev.winding', '查询绕组温度', '调用 ACR1V01 设备属性绕组温度（01947000001201）'],
+    ['dev.runtime', '查询累计运行时长', '调用 ACR1V01 设备属性累计运行时长（01947000001301）'],
+    ['browser.operate', '浏览器操作', '通过 OpenClaw 在门户网站完成点击、输入与跳转'],
+    ['browser.shot', '浏览器截屏', '通过 OpenClaw 获取当前页面截图并回传']
+  ]),
+  resourceGroup('agent', '🛡️', 'Agent 智能体', [
+    ['agt-vuln-scan', '自动发现漏洞测试', '扫描接口与页面并输出安全缺陷清单'],
+    ['agt-verify-test', '验证测试Agent', '按用例集执行验证测试并汇总结果'],
+    ['agt-ui-repair', 'UI修复测试Agent', '定位界面缺陷并给出修复方案'],
+    ['agt-code-writer', '代码编写Agent生产版', '按需求生成可运行代码与单元测试'],
+    ['agt-rd', '研发Agent生产版', '承接研发任务拆解与技术方案输出'],
+    ['agt-env-brain', '环保大脑Agent v2.0.0', '汇聚环境数据完成合规判定与处置建议'],
+    ['agt-space-scheduler', '团队空间调度Agent', '按业务标签在空间内分发任务'],
+    ['agt-ts-prep', '时序数据预处理Agent', '对设备时序数据做清洗、对齐与补缺']
+  ]),
+  resourceGroup('workflow', '🔀', 'Workflow 工作流模板', [
+    ['wf-data-analysis', '数据分析工作流', '通过 MCP Server 获取数据并输出分析图表'],
+    ['wf-customer-check', '客户信息核查', '调用业务系统接口核查客户主体信息'],
+    ['wf-weather-report', '天气报告生成', '按厂区位置生成逐日天气报告'],
+    ['wf-device-status', '设备状态监控', '采集设备运行状态并输出监控结论'],
+    ['wf-line-anomaly', '产线异常检测（排产管理）', '比对排产计划识别产线异常工单'],
+    ['wf-risk-assess', '综合风险评估（关联分析）', '汇总多源指标输出综合风险评分'],
+    ['wf-fault-diagnose', '故障诊断（知识增强）', '结合故障知识库定位设备故障原因'],
+    ['wf-factory-audit', '工厂全面审计（逻辑校验）', '按审计清单逐项校验记录一致性'],
+    ['wf-line-perf', '产线绩效监测（事件驱动）', '按事件触发统计产线绩效指标'],
+    ['wf-prod-overview', '生产数据总览', '汇总班次产量、能耗与质量数据'],
+    ['wf-device-inspect', '设备巡检', '生成巡检路线并归集巡检记录'],
+    ['wf-craft-qa', '工艺知识问答', '面向工艺文件的条款问答与引用'],
+    ['wf-line-config', '产线绿色配置', '输出低碳工艺参数配置建议'],
+    ['wf-device-anomaly', '设备异常分析', '分析异常测点并给出处置优先级'],
+    ['wf-env-compliance', '环保合规监控', '比对许可要求监控排放合规状态'],
+    ['wf-emission-alert', '排放异常预警', '识别排放数据异常趋势并触发预警'],
+    ['wf-energy-audit', '用能审核辅助', '拆解用能结构并定位节能空间'],
+    ['wf-fraud-detect', '交易反欺诈检测', '识别异常交易特征并输出核查建议'],
+    ['wf-credit-review', '信贷审核流程', '归集材料要素并输出审核结论草稿'],
+    ['wf-agent-collab', '跨Agent协作调度', '拆分复杂任务并汇总多 Agent 结果'],
+    ['wf-ontology-query', 'ontology-query', '基于本体模型查询设备与工艺关系'],
+    ['wf-insulation-risk', '评估绝缘老化风险', '结合绝缘电阻与温度趋势评估老化风险']
+  ])
 ]

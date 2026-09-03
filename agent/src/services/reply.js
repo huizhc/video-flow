@@ -135,15 +135,30 @@ function retrievalAnswer(question, ctx, hits) {
   return lines.join('\n')
 }
 
-function emptyRetrievalAnswer(question, ctx) {
-  const lines = [
-    `未在当前可见的知识库中检索到与「${question.slice(0, 30)}」直接相关的内容。`,
-    '',
-    `已接入知识库 ${ctx.bases.length} 个：`,
-    ...ctx.bases.map((b) => `· ${b.name}（${b.domain}，${ctx.documents.filter((d) => d.kbId === b.id).length} 篇文档）`),
-    '',
-    '你可以在知识库中新增对应文档后重新提问，或换用更具体的业务表述，例如排污许可申报材料、自行监测方案、碳排放核算口径。'
-  ]
+function emptyRetrievalAnswer(question, ctx, bases) {
+  if (ctx.retrieval?.fallback === 'main') {
+    return [
+      `未在参与检索的知识库中命中与「${question.slice(0, 30)}」直接相关的文档，已由 ${
+        ctx.mainAgent?.name || 'Main Agent'
+      } 依据空间配置直接应答：`,
+      '',
+      spaceAnswer(ctx)
+    ].join('\n')
+  }
+  const lines = bases.length
+    ? [
+        `未在参与检索的知识库中检索到与「${question.slice(0, 30)}」直接相关的内容。`,
+        '',
+        `参与检索的知识库 ${bases.length} 个：`,
+        ...bases.map((b) => `· ${b.name}（${b.domain}，${ctx.documents.filter((d) => d.kbId === b.id).length} 篇文档）`),
+        '',
+        '你可以在知识库中新增对应文档后重新提问，或换用更具体的业务表述，例如排污许可申报材料、自行监测方案、碳排放核算口径。'
+      ]
+    : [
+        `当前没有知识库参与检索，无法为「${question.slice(0, 30)}」提供知识库依据。`,
+        '',
+        '请在空间设置的知识库配置中开启需要参与检索的知识库，或先在知识库页面新建知识库并导入文档。'
+      ]
   return lines.join('\n')
 }
 
@@ -165,8 +180,15 @@ export function composeReply(question, ctx, targetAgentId) {
   const started = Date.now()
   const routed = route(question, ctx, targetAgentId)
   const agent = routed.agent || ctx.mainAgent
-  const visibleDocs = ctx.documents
-  const hits = retrieve(question, visibleDocs)
+  const cfg = { topK: 3, minScore: 8, loosen: true, citation: true, fallback: 'notice', baseIds: null, synonyms: [], ...ctx.retrieval }
+  const activeBases = cfg.baseIds ? ctx.bases.filter((b) => cfg.baseIds.includes(b.id)) : ctx.bases
+  const baseIds = activeBases.map((b) => b.id)
+  const visibleDocs = ctx.documents.filter((d) => baseIds.includes(d.kbId))
+  const options = { limit: cfg.topK, minScore: cfg.minScore, synonyms: cfg.synonyms }
+  let hits = retrieve(question, visibleDocs, options)
+  if (!hits.length && cfg.loosen) {
+    hits = retrieve(question, visibleDocs, { ...options, minScore: Math.max(3, Math.round(cfg.minScore / 2)) })
+  }
   let text
   let usedSkills = []
 
@@ -183,15 +205,17 @@ export function composeReply(question, ctx, targetAgentId) {
     text = retrievalAnswer(question, ctx, hits)
     usedSkills = ctx.skills.filter((s) => s.code === 'law.retrieval' && s.status === 'enabled')
   } else {
-    text = emptyRetrievalAnswer(question, ctx)
+    text = emptyRetrievalAnswer(question, ctx, activeBases)
   }
 
-  const citations = hits.map((hit) => ({
-    id: hit.doc.id,
-    title: hit.doc.title,
-    kbId: hit.doc.kbId,
-    kbName: ctx.bases.find((b) => b.id === hit.doc.kbId)?.name || ''
-  }))
+  const citations = cfg.citation
+    ? hits.map((hit) => ({
+        id: hit.doc.id,
+        title: hit.doc.title,
+        kbId: hit.doc.kbId,
+        kbName: ctx.bases.find((b) => b.id === hit.doc.kbId)?.name || ''
+      }))
+    : []
 
   return {
     text,

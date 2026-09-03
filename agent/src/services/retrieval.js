@@ -35,8 +35,20 @@ function countOccurrences(text, term) {
   return count
 }
 
-export function retrieve(query, documents, limit = 3) {
-  const grams = terms(query)
+export function expandTerms(query, synonyms = []) {
+  const grams = new Set(terms(query))
+  const text = String(query || '')
+  synonyms.forEach((entry) => {
+    const words = [entry.term, ...(entry.aliases || [])].filter((w) => w && w.length >= 2)
+    if (!words.some((word) => text.includes(word))) return
+    words.forEach((word) => grams.add(word))
+  })
+  return [...grams]
+}
+
+export function retrieve(query, documents, options = {}) {
+  const { limit = 3, minScore = 8, synonyms = [] } = options
+  const grams = expandTerms(query, synonyms)
   if (!grams.length) return []
   const scored = documents.map((doc) => {
     const title = doc.title || ''
@@ -52,7 +64,7 @@ export function retrieve(query, documents, limit = 3) {
     return { doc, score, hits }
   })
   const ranked = scored
-    .filter((item) => item.score >= 8)
+    .filter((item) => item.score >= minScore)
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
   const cached = read(CACHE_KEY, [])
