@@ -36,7 +36,7 @@
         </div>
 
         <div v-for="msg in messages" :key="msg.id" class="msg" :class="msg.role">
-          <div class="avatar" :class="msg.role">{{ msg.role === 'user' ? '👤' : '🤖' }}</div>
+          <img class="avatar" :src="msg.role === 'user' ? avatarUser : avatarBot" :class="msg.role"></img>
           <div class="msg-main">
             <div class="bubble" :class="{ pending: msg.pending && !msg.text }">
               <span v-if="msg.pending && !msg.text" class="thinking">🤔 正在思考回答...</span>
@@ -128,7 +128,8 @@ import { useAgentStore } from '@/stores/agents'
 import { useSettingsStore } from '@/stores/settings'
 import { useUiStore } from '@/stores/ui'
 import { formatTime, copyText, downloadFile } from '@/utils/format'
-
+import avatarBot from '@/assets/images/avatar-bot.png'
+import avatarUser from '@/assets/images/avatar-user.png'
 const chat = useChatStore()
 const agentStore = useAgentStore()
 const settings = useSettingsStore()
