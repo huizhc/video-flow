@@ -21,16 +21,6 @@ export default defineConfig({
       },
     },
   },
-  build: {
-    rollupOptions: {
-      input: {
-        // 项目A的主入口
-        main: resolve(__dirname, 'index.html'),
-        // 项目B的入口，指定到 project-b 目录下的 index.html
-        agent: resolve(__dirname, 'agent/index.html'),
-      },
-    },
-  },
   plugins: [
     vue(),
     UnoCSS(),
