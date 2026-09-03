@@ -8,7 +8,7 @@
         :class="{ active: tab === item.key }"
         @click="tab = item.key"
       >
-        <span v-if="item.icon">{{ item.icon }}</span>
+        <span>{{ item.icon }}</span>
         <span>{{ item.label }}</span>
       </button>
     </nav>
@@ -16,6 +16,7 @@
     <template v-if="tab === 'basic'">
       <section class="panel">
         <div class="panel-head">
+          <span>⚙️</span>
           <span class="panel-title">基本设置</span>
           <span class="spacer"></span>
           <span class="section-desc">团队信息与系统配置</span>
@@ -534,8 +535,8 @@ import { formatDateTime } from '@/utils/format'
 
 const TABS = [
   { key: 'basic', icon: '⚙️', label: '基本设置' },
-  { key: 'resource', label: '资源管理' },
-  { key: 'knowledge', label: '知识库配置' },
+  { key: 'resource', icon: '📦', label: '资源管理' },
+  { key: 'knowledge', icon: '📚', label: '知识库配置' },
 ]
 
 const DEFAULT_WELCOME_ICON = '🤖'
