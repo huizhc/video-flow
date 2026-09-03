@@ -596,7 +596,7 @@ table.data .cell-sub {
 /* ---------- misc ---------- */
 .page {
   padding: 16px 20px 28px;
-  max-width: 1360px;
+  /* max-width: 1360px; */
   margin: 0 auto;
 }
 

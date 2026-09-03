@@ -210,7 +210,7 @@
               />
               <span class="res-text">
                 <span class="res-name">{{ item.name }}</span>
-                <span class="res-desc">{{ item.desc }}</span>
+                <span v-if="item.desc" class="res-desc">{{ item.desc }}</span>
               </span>
             </label>
           </div>
@@ -997,9 +997,11 @@ async function dropSynonym(item) {
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 10px 14px;
+  padding: 10px 14px 0px 14px;
   background: var(--panel-2);
-  border-bottom: 1px solid var(--line);
+  font-size: 20px;
+  font-weight: 600;
+  /* border-bottom: 1px solid var(--line); */
 }
 
 .res-head .spacer {
@@ -1016,17 +1018,18 @@ async function dropSynonym(item) {
   font-size: 11.5px;
 }
 .res-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  background: var(--panel-2);
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   padding: 14px;
 }
 
 .res-item {
   display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 9px 11px;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 11px;
   border: 1px solid var(--line-2);
   border-radius: var(--radius-sm);
   background: #0d2139;
@@ -1059,6 +1062,7 @@ async function dropSynonym(item) {
 .res-name {
   display: block;
   font-size: 12.5px;
+  white-space: nowrap;
 }
 
 .res-desc {
@@ -1067,6 +1071,7 @@ async function dropSynonym(item) {
   color: var(--text-3);
   font-size: 11px;
   line-height: 1.5;
+  white-space: nowrap;
 }
 .res-foot {
   display: flex;

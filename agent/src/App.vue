@@ -11,22 +11,24 @@
 
       <nav class="menu">
         <template v-for="(item, index) in menu" :key="item.path">
-          <div v-if="index === 2" class="menu-divider"></div>
+          <!-- <div v-if="index === 2" class="menu-divider"></div> -->
           <router-link :to="item.path" class="menu-item" :title="item.title">
             <span class="mi-icon">{{ item.icon }}</span>
-            <span v-if="!ui.sidebarCollapsed" class="mi-text">{{ item.title }}</span>
+            <span v-if="!ui.sidebarCollapsed" class="mi-text">{{
+              item.title
+            }}</span>
           </router-link>
         </template>
         <div id="sidebar-extra" class="sidebar-extra"></div>
       </nav>
 
-      <div class="user" @click="accountOpen = true">
+      <!-- <div class="user" @click="accountOpen = true">
         <div class="avatar">{{ space.user.name.slice(0, 1) }}</div>
         <div v-if="!ui.sidebarCollapsed" class="user-text">
           <div class="user-name">{{ space.user.name }}</div>
           <div class="user-role">{{ space.roleLabel(space.user.role) }}</div>
         </div>
-      </div>
+      </div> -->
     </aside>
 
     <div class="main">
@@ -35,9 +37,8 @@
         <span class="page-icon">{{ route.meta.icon }}</span>
         <span class="page-title">{{ route.meta.title }}</span>
         <span class="spacer"></span>
-        <span class="clock">{{ clock }}</span>
-        <div class="logo">
-        </div>
+        <!-- <span class="clock">{{ clock }}</span> -->
+        <div class="logo"></div>
       </header>
 
       <section class="content">
@@ -45,18 +46,39 @@
       </section>
     </div>
 
-    <BaseModal v-if="accountOpen" title="账号信息" :width="420" @close="accountOpen = false">
+    <BaseModal
+      v-if="accountOpen"
+      title="账号信息"
+      :width="420"
+      @close="accountOpen = false"
+    >
       <div class="kv">
-        <div class="kv-item"><div class="k">姓名</div><div class="v">{{ space.user.name }}</div></div>
-        <div class="kv-item"><div class="k">账号</div><div class="v">{{ space.user.account }}</div></div>
-        <div class="kv-item"><div class="k">角色</div><div class="v">{{ space.roleLabel(space.user.role) }}</div></div>
-        <div class="kv-item"><div class="k">加入时间</div><div class="v">{{ formatDate(space.user.joinedAt) }}</div></div>
+        <div class="kv-item">
+          <div class="k">姓名</div>
+          <div class="v">{{ space.user.name }}</div>
+        </div>
+        <div class="kv-item">
+          <div class="k">账号</div>
+          <div class="v">{{ space.user.account }}</div>
+        </div>
+        <div class="kv-item">
+          <div class="k">角色</div>
+          <div class="v">{{ space.roleLabel(space.user.role) }}</div>
+        </div>
+        <div class="kv-item">
+          <div class="k">加入时间</div>
+          <div class="v">{{ formatDate(space.user.joinedAt) }}</div>
+        </div>
       </div>
       <div class="acct-tags">
         <div class="k">业务标签</div>
         <div class="row" style="flex-wrap: wrap; margin-top: 6px">
-          <span v-for="tag in space.user.tags" :key="tag" class="tag-chip">{{ tag }}</span>
-          <span v-if="!space.user.tags.length" class="section-desc">未分配业务标签</span>
+          <span v-for="tag in space.user.tags" :key="tag" class="tag-chip">{{
+            tag
+          }}</span>
+          <span v-if="!space.user.tags.length" class="section-desc"
+            >未分配业务标签</span
+          >
         </div>
       </div>
       <template #footer>
@@ -91,7 +113,7 @@ const ORDER = [
   '/members',
   '/spaces',
   '/space-settings',
-  '/system'
+  '/system',
 ]
 
 const route = useRoute()
@@ -103,7 +125,8 @@ const clock = ref('')
 let timer = null
 
 const menu = computed(() =>
-  router.getRoutes()
+  router
+    .getRoutes()
     .filter((r) => r.meta?.title)
     .map((r) => ({ path: r.path, title: r.meta.title, icon: r.meta.icon }))
     .sort((a, b) => ORDER.indexOf(a.path) - ORDER.indexOf(b.path))
@@ -207,7 +230,7 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .menu-item:hover {
-  background: #27508A;
+  background: #27508a;
   color: var(--text);
 }
 
@@ -248,7 +271,7 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .user:hover {
-  background: #27508A;
+  background: #27508a;
 }
 
 .avatar {
@@ -302,7 +325,7 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .collapse:hover {
-  background: #152C4E;
+  background: #152c4e;
   color: var(--text);
 }
 

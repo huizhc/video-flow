@@ -176,14 +176,14 @@ export const RESOURCE_GROUPS = [
     ['browser.shot', '浏览器截屏', '通过 OpenClaw 获取当前页面截图并回传']
   ]),
   resourceGroup('agent', '🛡️', 'Agent 智能体', [
-    ['agt-vuln-scan', '自动发现漏洞测试', '扫描接口与页面并输出安全缺陷清单'],
-    ['agt-verify-test', '验证测试Agent', '按用例集执行验证测试并汇总结果'],
-    ['agt-ui-repair', 'UI修复测试Agent', '定位界面缺陷并给出修复方案'],
-    ['agt-code-writer', '代码编写Agent生产版', '按需求生成可运行代码与单元测试'],
-    ['agt-rd', '研发Agent生产版', '承接研发任务拆解与技术方案输出'],
-    ['agt-env-brain', '环保大脑Agent v2.0.0', '汇聚环境数据完成合规判定与处置建议'],
-    ['agt-space-scheduler', '团队空间调度Agent', '按业务标签在空间内分发任务'],
-    ['agt-ts-prep', '时序数据预处理Agent', '对设备时序数据做清洗、对齐与补缺']
+    ['agt-vuln-scan', '自动发现漏洞测试'],
+    ['agt-verify-test', '验证测试Agent'],
+    ['agt-ui-repair', 'UI修复测试Agent'],
+    ['agt-code-writer', '代码编写Agent生产版'],
+    ['agt-rd', '研发Agent生产版'],
+    ['agt-env-brain', '环保大脑Agent v2.0.0'],
+    ['agt-space-scheduler', '团队空间调度Agent'],
+    ['agt-ts-prep', '时序数据预处理Agent']
   ]),
   resourceGroup('workflow', '🔀', 'Workflow 工作流模板', [
     ['wf-data-analysis', '数据分析工作流', '通过 MCP Server 获取数据并输出分析图表'],

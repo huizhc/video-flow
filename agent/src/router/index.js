@@ -44,12 +44,12 @@ const routes = [
     component: () => import('@/views/RulesView.vue'),
     meta: { title: '业务规则', icon: '📋' },
   },
-  {
-    path: '/members',
-    name: 'members',
-    component: () => import('@/views/MembersView.vue'),
-    meta: { title: '成员管理', icon: '👥' },
-  },
+  // {
+  //   path: '/members',
+  //   name: 'members',
+  //   component: () => import('@/views/MembersView.vue'),
+  //   meta: { title: '成员管理', icon: '👥' },
+  // },
   {
     path: '/spaces',
     name: 'spaces',
