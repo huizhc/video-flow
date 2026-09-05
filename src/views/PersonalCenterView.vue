@@ -169,7 +169,7 @@ function openSupportQr() {
             class="shrink-0 ring-2 ring-white/10"
           />
           <div class="flex-1 min-w-0 space-y-3">
-            <div class="text-2xl font-bold text-white tracking-tight">9527</div>
+            <div class="text-2xl font-bold text-white tracking-tight">AIKC</div>
             <div
               class="flex items-center gap-1.5 text-white text-sm font-medium"
             >
