@@ -44,9 +44,9 @@ export const SKILL_CATEGORIES = ['知识检索', '文档处理', '数据计算',
 
 export const BUSINESS_TAGS = ['环境合规', '碳管理', '监测运维', '安全生产', 'ESG披露', '危废管理']
 
-export const SPACE_CATEGORIES = ['业务域', '职能域', '技术域', '数据域']
+export const SPACE_CATEGORIES = ['业务域', '功能域', '角色域', '场景域', '项目域']
 
-export const SPACE_ORGS = ['行政部门', 'AI快车', '人力资源', '销售部门', '制造部门', '生产部门', '财务部门']
+export const SPACE_ORGS = ['行政部门', 'AI快车', '人力资源', '销售部门', '制造部门', '生产部门', '财务部门', '测试部门']
 
 export const SPACE_COLORS = [
   { value: 'red', from: '#fb7185', to: '#e11d48' },
