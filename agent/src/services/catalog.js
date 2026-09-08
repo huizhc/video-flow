@@ -46,7 +46,7 @@ export const BUSINESS_TAGS = ['环境合规', '碳管理', '监测运维', '安�
 
 export const SPACE_CATEGORIES = ['业务域', '职能域', '技术域', '数据域']
 
-export const SPACE_ORGS = [ '行政部门', '研发中心', '质量部', '环保部', '能源管理部', '设备部']
+export const SPACE_ORGS = ['行政部门', 'AI快车', '人力资源', '销售部门', '制造部门', '生产部门', '财务部门']
 
 export const SPACE_COLORS = [
   { value: 'red', from: '#fb7185', to: '#e11d48' },

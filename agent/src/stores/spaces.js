@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { persisted, reloadPersisted } from '@/services/persist'
 import { uid } from '@/services/storage'
 import { KEYS, seedBusinessSpaces } from '@/services/seed'
@@ -20,7 +20,7 @@ const RUNTIME_FIELDS = [
 ]
 
 export const useBusinessSpaceStore = defineStore('businessSpaces', () => {
-  const spaces = persisted(KEYS.businessSpaces, seedBusinessSpaces())
+  const spaces = ref(seedBusinessSpaces())
   const activeId = persisted(KEYS.activeSpaceId, '')
   const spaceStore = useSpaceStore()
 
@@ -123,7 +123,7 @@ export const useBusinessSpaceStore = defineStore('businessSpaces', () => {
   }
 
   function reload() {
-    reloadPersisted(spaces, KEYS.businessSpaces, seedBusinessSpaces())
+    spaces.value = seedBusinessSpaces()
     reloadPersisted(activeId, KEYS.activeSpaceId, '')
   }
 

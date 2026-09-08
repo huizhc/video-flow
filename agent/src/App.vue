@@ -2,10 +2,11 @@
   <div class="shell" :class="{ collapsed: ui.sidebarCollapsed }">
     <aside class="sidebar">
       <div class="brand">
-        <div class="brand-icon">{{ space.space.icon }}</div>
+        <!-- <div class="brand-icon">{{ space.space.icon }}</div> -->
+        <img src="@/assets/images/avatar-bot.png" class="brand-icon"></img>
         <div v-if="!ui.sidebarCollapsed" class="brand-text">
-          <div class="brand-name">{{ space.space.name }}</div>
-          <div class="brand-sub">{{ space.space.subtitle }}</div>
+          <div class="brand-name">团队工作坊</div>
+          <!-- <div class="brand-sub"></div> -->
         </div>
       </div>
 

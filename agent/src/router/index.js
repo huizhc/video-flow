@@ -54,7 +54,7 @@ const routes = [
     path: '/spaces',
     name: 'spaces',
     component: () => import('@/views/BusinessSpacesView.vue'),
-    meta: { title: '业务空间管理', icon: '🗂️' },
+    meta: { title: '业务工作坊', icon: '🗂️' },
   },
   {
     path: '/space-settings',
