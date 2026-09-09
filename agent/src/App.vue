@@ -176,26 +176,26 @@ onUnmounted(() => clearInterval(timer))
   display: flex;
   align-items: center;
   gap: 10px;
-  height: 56px;
+  height: 66px;
   padding: 0 14px;
   border-bottom: 1px solid var(--line);
 }
 
 .brand-icon {
-  width: 30px;
-  height: 30px;
+  width: 45px;
+  height: 45px;
   flex: none;
   border-radius: 8px;
   display: grid;
   place-items: center;
   font-size: 16px;
-  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  /* background: linear-gradient(135deg, var(--brand), var(--brand-2)); */
 }
 
 .brand-name {
-  font-size: 13.5px;
-  font-weight: 700;
-  letter-spacing: 0.3px;
+  font-size: 16px;
+  font-weight: bold !important;
+  /* letter-spacing: 0.3px; */
 }
 
 .brand-sub {
