@@ -1,0 +1,19 @@
+name: GiotHub Actions Demo
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Check-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run a one-line script
+        run: echo "Hello, GitHub Actions!"
+
+      - name: Run a multi-line script
+        run: |
+          echo "This is a multi-line script."
+          echo "You can add multiple commands here."
